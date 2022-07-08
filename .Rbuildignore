@@ -1,2 +1,6 @@
 ^R4SPISE2022\.Rproj$
 ^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
