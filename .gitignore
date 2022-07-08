@@ -1,4 +1,8 @@
+.DS_Store
 .Rproj.user
 inst/doc
 docs
+<<<<<<< HEAD
 .DS_Store
+=======
+>>>>>>> 5c8086baf70237d8af50603e53f88c50b79a3aac
