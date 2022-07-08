@@ -7,6 +7,6 @@
 #' @rdname empty
 #' @export
 empty <- function(toto = NULL){
-    if (is.null(toto)){ toto <- "Toto est en Batoto"} # Titi est partiti
+    if (is.null(toto)){ toto <- "Toto est en Batiti"} # Titi est partiti
     print(toto)
 }
