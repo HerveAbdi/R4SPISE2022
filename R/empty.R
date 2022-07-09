@@ -8,6 +8,6 @@
 #' @export
 empty <- function(toto = NULL){
     if (is.null(toto)){
-        toto <- "Toto est un BoBo totaux"}
+        toto <- "Toto Est un Beau BoBo Totaux "}
     print(toto)
 }

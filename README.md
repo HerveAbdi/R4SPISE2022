@@ -4,16 +4,17 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of R4SPISE2022 is to provide data, programms and documentation for the PSE2022 Advanced Workshop.
+The goal of R4SPISE2022 is to provide data, programms, and documentation for the SPISE-2022 Advanced Workshop on Sensory Evaluation.
 
 ## Installation
 
-You can install the development version of R4SPISE2022 like so:
+You can install the development version o
+f R4SPISE2022 with the following lines of code:
 
 ``` r
-# if remotes is not installed
+# if remotes is not installed, decomment the following line
 # install.packages('remotes')
-# remotes::remotes::install_github('HerveAbdi/R4SPISE2022')
+# remotes::install_github('HerveAbdi/R4SPISE2022')
 ```
 
 ## Example
@@ -25,4 +26,9 @@ library(R4SPISE2022)
 ## basic example code
 empty()
 ```
+
+## List of functions
+
+## List of data sets
+
 

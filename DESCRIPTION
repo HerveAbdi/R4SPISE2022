@@ -3,9 +3,9 @@ Type: Package
 Title: Provides a set of Programs, Vignettes, and Data for the SPISE2022 Workshop
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Hervé",   family = "Abdi",      email = "herve@utdallas.edu",           role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID"))
-    person(given = "Vincent", family = "Guillemot", email = "vincent.guillemot@pasteur.fr", role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID"))
-    person(given = "Ju-Chi",  family = "Yu",        email = "Ju-Chi.Yu@camh.org",           role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID"))
+   c( person(given = "Hervé",   family = "Abdi",      email = "herve@utdallas.edu",           role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID")),
+    person(given = "Vincent", family = "Guillemot", email = "vincent.guillemot@pasteur.fr", role = c("ctb"), comment = c(ORCID = "YOUR-ORCID-ID")),
+    person(given = "Ju-Chi",  family = "Yu",        email = "Ju-Chi.Yu@camh.org",           role = c("ctb"), comment = c(ORCID = "YOUR-ORCID-ID")) )
 Description: Provides a set of Programs, Vignettes, and Data for the SPISE2022 Advanced Workshop (Hanoi Vietnam).
 License: GPL-2
 Encoding: UTF-8
@@ -21,3 +21,8 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: utils, knitr
+Imports:
+    ggplot2,
+    data4PCCAR
+Remotes:
+    HerveAbdi/data4PCCAR
