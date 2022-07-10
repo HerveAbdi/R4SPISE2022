@@ -22,7 +22,10 @@ Suggests:
     rmarkdown
 VignetteBuilder: utils, knitr
 Imports:
+    ExPosition,
     ggplot2,
-    data4PCCAR
+    data4PCCAR,
+    PTCA4CATA
 Remotes:
-    HerveAbdi/data4PCCAR
+    HerveAbdi/data4PCCAR,
+    HerveAbdi/PTCA4CATA
