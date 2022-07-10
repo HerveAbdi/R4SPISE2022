@@ -202,13 +202,15 @@ plotCtr <- function(signed.ctr, col4, nfac = 1,
 
 } # eof
 
-resPCA <- ExPosition::epPCA(DATA = data,
+resPCA <- nameExpositionResults(ExPosition::epPCA(DATA = data,
                             center = center,
                             scale = scale,
                             DESIGN = DESIGN,
             make_design_nominal = make_design_nominal,
             graphs = FALSE,
-            k = k)
+            k = k) )
+# NB use namenameExpositionResults() to have
+# Dimensions named
 if (is.null(col4I)) {col4I <- resPCA$Plotting.Data$fi.col}
 if (is.null(col4J)) {col4J <- resPCA$Plotting.Data$fj.col}
 laMat <- resPCA$ExPosition.Data$X
