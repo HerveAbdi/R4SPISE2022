@@ -118,6 +118,7 @@
 #' @export
 #' @import  PTCA4CATA data4PCCAR corrplot
 #' @importFrom ExPosition epPCA
+#' @importFrom ggplot2 labs
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
 #' @importFrom stats cor  cov varimax
