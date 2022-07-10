@@ -23,9 +23,10 @@ Suggests:
 VignetteBuilder: utils, knitr
 Imports:
     ExPosition,
+    corrplot,
     ggplot2,
-    data4PCCAR,
-    PTCA4CATA
+    PTCA4CATA,
+    data4PCCAR
 Remotes:
     HerveAbdi/data4PCCAR,
     HerveAbdi/PTCA4CATA

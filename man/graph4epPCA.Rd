@@ -39,12 +39,12 @@ defaults to \code{SS1}.
 Passed to
 \code{ExPosition::epPCA}.}
 
-\item{center}{PARAM_DESCRIPTION, Default: TRUE.
+\item{center}{Default: TRUE.
 do we center the columns of \code{data}
 Passed to
 \code{ExPosition::epPCA}.}
 
-\item{DESIGN}{PARAM_DESCRIPTION, Default: NULL.
+\item{DESIGN}{Default: NULL.
 A design vector (could be factor or character)
 or (Boolean) matrix used to assigne oobservations
 to groups.
@@ -112,7 +112,7 @@ Not yet implemented,}
 Not yet implemented,.}
 }
 \value{
-OUTPUT_DESCRIPTION
+A list made of two lists
 }
 \description{
 \code{graph4epPCA}

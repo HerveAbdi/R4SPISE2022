@@ -38,11 +38,11 @@
 #'  Passed to
 #' \code{ExPosition::epPCA}.
 #'
-#' @param center PARAM_DESCRIPTION, Default: TRUE.
+#' @param center Default: TRUE.
 #' do we center the columns of \code{data}
 #' Passed to
 #' \code{ExPosition::epPCA}.
-#' @param DESIGN PARAM_DESCRIPTION, Default: NULL.
+#' @param DESIGN  Default: NULL.
 #' A design vector (could be factor or character)
 #' or (Boolean) matrix used to assigne oobservations
 #' to groups.
@@ -98,7 +98,8 @@
 #' @param title4pptx PARAM_DESCRIPTION, Default:
 #' 'PCA Results'.
 #' Not yet implemented,.
-#' @return OUTPUT_DESCRIPTION
+#' @return A list made of two lists
+#'
 #' @details Work in Progress
 #' @author Hervé Abdi
 #' @examples
@@ -115,11 +116,11 @@
 #'  \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 #' @rdname graph4epPCA
 #' @export
-#' @import  PTCA4CATA data4PCCAR
+#' @import  PTCA4CATA data4PCCAR corrplot
 #' @importFrom ExPosition epPCA
-##  @importFrom PTCA4CATA PlotScree createFactorMap
+##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
-#' @importFrom stats cor  cov df varimax
+#' @importFrom stats cor  cov varimax
 # function ----
 graph4epPCA <- function(
 data         ,# the data. No default
@@ -230,7 +231,7 @@ if (isTRUE(rotation)){
 ## 1. Slices of Inertia ----
 loadings.1 <- resPCA$ExPosition.Data$fj
 ## 2. Correlations ----
-loadings.2 <- t(cor(df, resPCA$ExPosition.Data$fi))
+loadings.2 <- t(cor(data, resPCA$ExPosition.Data$fi))
 # Loadings as coefficients
 # of the optimal linear combination
 cor4print <- loadings.2
@@ -363,9 +364,9 @@ if (printGraphs){
   dev.off() }
 #________________________________________________
 ### A heat map ----
-####  V1a df raw ----
+####  V1a data raw ----
 a001.heatMap <- suppressWarnings(makeggHeatMap4CT(
-  df,
+  data,
   colorProducts = col4I,
   colorAttributes = col4J,
   fontSize.x = 15,
@@ -381,8 +382,8 @@ png('JIntensityHeatMap.png')
 print(a001.heatMap)
 dev.off() }
  if(printTest){a001.heatMap}
-####  V1b df centered ----
-df.centered <- apply(df, 2, scale0, scale = FALSE)
+####  V1b data centered ----
+df.centered  <- apply(data, 2, scale0, scale = FALSE)
 a002.heatMap <- suppressWarnings(makeggHeatMap4CT(
   df.centered,
   colorProducts = col4I,
@@ -401,7 +402,7 @@ if (printGraphs){
   print(df.centered)
   dev.off() }
 ####  V1c df normed ----
-df.normed <- apply(df, 2, scale0, scale = 'SS1')
+df.normed <- apply(data, 2, scale0, scale = 'SS1')
 a002n.heatMap <- suppressWarnings(makeggHeatMap4CT(
   df.normed,
   colorProducts = col4I,
@@ -421,8 +422,8 @@ if (printGraphs){
   dev.off() }
 
 # Covariance ----
-nI <- nrow(df)
-Smat <- cov(df) #  *(  (nI - 1) / N)
+nI <- nrow(data)
+Smat <- cov(data) #  *(  (nI - 1) / N)
 # covariance with N - 1
 # Covariance mat ----
 ### 0. Cov Mat
@@ -456,7 +457,7 @@ if (printGraphs){
   print(a5.02.covMap)
   dev.off() }
 # Correlation mat ----
-Rmat <- cor(df) #
+Rmat <- cor(data) #
 corrplot(Rmat,
          is.corr = TRUE,
          method = "color", # "number"
@@ -506,7 +507,7 @@ b2.jolieggMap.J <- jolie.ggplot.J$zeMap_background +
   jolie.ggplot.J$zeMap_text +
   addCircleOfCor() +
   arrows + label4Map2
-print(b2.jolieggMap.J)
+# print(b2.jolieggMap.J)
 if (printGraphs){
     png('J-CircleOfCorr.png')
     print(b2.jolieggMap.J)
@@ -515,7 +516,7 @@ if (printGraphs){
 b2.jolieggMap.IJ <- b2.jolieggMap.J +
    jolie.ggplot.I$zeMap_text +
    jolie.ggplot.I$zeMap_dots
-print(b2.jolieggMap.IJ)
+#print(b2.jolieggMap.IJ)
 if (printGraphs){
   png('IJ-CircleOfCorr.png')
   print(b2.jolieggMap.IJ)
@@ -624,7 +625,7 @@ dev.off() }
 #__________________----
 # return lists ----
 ## stat ----
-results.stat <- list(
+results.stats <- list(
             ExPosition.Data = resPCA$ExPosition.Data,
             Plotting.Data = resPCA$Plotting.Data,
             loadings.as.inertia = loadings.1,
@@ -635,7 +636,7 @@ results.stat <- list(
             )
 ### stat rotation ----
 if (isTRUE(rotation)){
-    results.stat <-  append(results.stat,
+    results.stats <-  append(results.stats,
              list(varimax.rotation.res = resVar,
                   rotated.Fj = Fj_rot,
                   rotated.Fi = Fi_rot)
@@ -643,7 +644,7 @@ if (isTRUE(rotation)){
 }
 ### stat Biplot ----
 if (isTRUE(biplot)){
-    results.stat <-  append(results.stat,
+    results.stats <-  append(results.stats,
              list(
                   Fi_biplot = Fi_bi,
                   Fj_biplot = Fj_bi)
@@ -652,7 +653,7 @@ if (isTRUE(biplot)){
 }
 # Question for graphs: separate ggplot2 from Recordplot
 ## graphs ----
-results.graph <- list(
+results.graphs <- list(
                 # cor and cov mat here
                 rawData = a001.heatMap,
                 centeredData = df.centered,
@@ -673,15 +674,39 @@ results.graph <- list(
             loadings12.arrow = b3.jolieggMap.J.Q.arrow #,
             # biplot12 = e.JolieBiplot
                  )
+description.graphs <- list(
+    rawData = "The Row Data (Heat Map)",
+    centeredData = "The Centered Data",
+    centeredScaledData = "The Centered and Normalized Data",
+    covariance = "The Covariance Matrix Heat Map",
+    correlation = "The Correlation Matrix Heat Map",
+    scree = "The Eigenvalues Scree Plot",
+    ctrI.1 = "Observations: Contributions Dimension 1",
+    ctrI.2 = "Observations: Contributions Dimension 2",
+    factorScoresI12 =  "Observations: Factor Scores 1*2",
+    cosineCircle4I12 = "Observations: Cosine Circle 1*2",
+    cosineCircleJ12  = "Variables: Correlation Circle 1*2",
+    ctrJ.1 = "Variables: Contributions Dimension 1",
+    ctrJ.2 = "Variables: Contributions Dimension 2",
+    cosineCircleArrowJ12  =  "Variables: Correlation Circle 1*2 (with arrows)",
+    cosineCircleArrowIJ12 = "Variables & Observations: Correlation Circle 1*2",
+    loadings12 = "Variables: Loadings as Inertia  1*2",
+    loadings12.arrow = "Variables: Loadings as Weights  1*2" #,
+    # biplot12 = e.JolieBiplot
+)
+
 ### graph biplots ----
 if (isTRUE(biplot)){
-    results.graph <-  append(results.graph,
+    results.graphs <-  append(results.graph,
                   list(biplots12 = e.JolieBiplot))
+    description.graphs <- append(description.graphs,
+                    list(biplots12 = "Biplot 1*2"))
 
 }
 ## list stat & graphs ----
-results <- list(results.stat = results.stat,
-                results.graph = results.graph
+results <- list(results.stats = results.stats,
+                results.graphs = results.graphs,
+                description.graphs = description.graphs
                 )
 return(results)
 # EOF ----
