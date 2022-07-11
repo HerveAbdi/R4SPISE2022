@@ -4,7 +4,7 @@
 # Current Version 07/10/2022
 # Goal: generates standard graphs and tables for PCA
 # Author Hervé
-# Entêtee -----
+# Entête -----
 # install.packages('sinew')
 # sinew::makeOxygen(graph4epPCA)
 # Preamble ----
@@ -596,7 +596,7 @@ label4Map4Bi <- list(label4Map,
    ) )
 # get constraints
 # Fi_bi & Fj_bi
-lesContraintes <- minmaxHelper(Fi_bi,Fj_bi)
+lesContraintes <- minmaxHelper(Fi_bi, Fj_bi)
 # look at the help for PTCA4CATA::createFactorMap
 sizeFontI  <- 5
 jolie.biplot.I <- PTCA4CATA::createFactorMap(
@@ -701,7 +701,7 @@ description.graphs <- list(
 
 ### graph biplots ----
 if (isTRUE(biplot)){
-    results.graphs <-  append(results.graph,
+    results.graphs <-  append(results.graphs,
                   list(biplots12 = e.JolieBiplot))
     description.graphs <- append(description.graphs,
                     list(biplots12 = "Biplot 1*2"))
