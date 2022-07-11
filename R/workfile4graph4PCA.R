@@ -403,7 +403,7 @@ a002.heatMap <- suppressWarnings(makeggHeatMap4CT(
 if(printTest){df.centered}
 if (printGraphs){
   png('JIntensityHeatMapCentered.png')
-  print(df.centered)
+  print(a002.heatMap)
   dev.off() }
 ####  V1c df normed ----
 df.normed <- apply(data, 2, scale0, scale = 'SS1')
@@ -660,7 +660,7 @@ if (isTRUE(biplot)){
 results.graphs <- list(
                 # cor and cov mat here
                 rawData = a001.heatMap,
-                centeredData = df.centered,
+                centeredData = a002.heatMap,
                 centeredScaledData = a002n.heatMap,
                 covariance = a5.02.covMap,
                 correlation = a5.02.correlationMap,
