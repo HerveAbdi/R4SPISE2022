@@ -25,6 +25,9 @@ Imports:
     ExPosition,
     corrplot,
     ggplot2,
+    officer,
+    rvg,
+    prettyGraphs,
     PTCA4CATA,
     data4PCCAR
 Remotes:
