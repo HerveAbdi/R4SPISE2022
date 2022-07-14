@@ -40,4 +40,7 @@ More to come soon
 
 ## List of data sets
 
+## Other material
+
+ * Principal Component Analysis [paper](../inst/extdata/abdi-awPCA2010.pdf).
 
