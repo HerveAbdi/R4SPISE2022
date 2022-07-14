@@ -42,5 +42,9 @@ More to come soon
 
 ## Other material
 
+<<<<<<< HEAD
  * Principal Component Analysis [paper](../inst/extdata/abdi-awPCA2010.pdf).
+=======
+ * Principal Component Analysis [paper](inst/extdata/abdi-awPCA2010.pdf).
+>>>>>>> 9040d5d440239231d99b625b665877a29378be54
 
