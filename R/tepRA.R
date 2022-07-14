@@ -67,6 +67,7 @@
 #' New York: Springer Verlag.
 #' @importFrom ExPosition epGPCA
 #' @import TExPosition
+#' @import data4PCCAR
 # #' @importFrom TExPosition tepGraphs
 #' @export
 #' @examples
@@ -111,16 +112,19 @@ tepRA <- function (DATA1, DATA2,
     DATA2 <- expo.scale(DATA2, scale = scale2, center = center2)
     R <- t(DATA1) %*% DATA2
     M <- t(DATA1) %*% DATA1
-    W <- t(DATA2) %*% DATA2
-    res <- epPCA(DATA = R,
+    Mm1 <- data4PCCAR:::matrix.exponent(M, power = -1)
+    res <- data4PCCAR::epGPCA2(DATA = R,
                    k = k,
                    graphs = FALSE,
+                   masses = Mm1,
+                   weights = NULL,
                    scale = FALSE,
                    center = FALSE)
     res <- res$ExPosition.Data
     res$center <- NULL
     res$scale <- NULL
-    res$M <- res$W <- NULL
+    res$W1 <- res$M
+    res$W2 <- res$M <- res$W <- NULL
     res$data1.norm <- list(center = attributes(DATA1)$`scaled:center`,
                            scale = attributes(DATA1)$`scaled:scale`)
     res$data2.norm <- list(center = attributes(DATA2)$`scaled:center`,
