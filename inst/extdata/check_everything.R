@@ -15,7 +15,8 @@ X1 <- matrix(rnorm(n * p1), n, p1)
 X2 <- matrix(rnorm(n * p2), n, p2)
 DATA1 <- ExPosition::expo.scale(X1, scale = "SS1", center = TRUE)
 DATA2 <- ExPosition::expo.scale(X2, scale = "SS1", center = TRUE)
-
+RX <- t(DATA1) %*% DATA1
+RY <- t(DATA2) %*% DATA2
 
 # vegan::cca(X1, X2) # Not the correct one
 res.ra <- vegan::rda(X1, X2) # Redundancy Analysis
@@ -39,11 +40,27 @@ Wra <- res.tepra$TExPosition.Data$W2
 LXra <- res.tepra$TExPosition.Data$lx
 LYra <- res.tepra$TExPosition.Data$ly
 delta_ra <- res.tepra$TExPosition.Data$pdq$Dv
+Fira <- res.tepra$TExPosition.Data$fi
+Fjra <- res.tepra$TExPosition.Data$fj
+
+sum((Fira -  Ura %*% diag(delta_ra))**2)
+sum((Fjra -  Vra %*% diag(delta_ra))**2)
+
+t(Fira) %*% RX %*% Fira
+t(Fjra) %*% Fjra
 
 t(Pra) %*% Mra %*% Pra
 t(Qra) %*% Wra %*% Qra
 
-diag(t(LXra) %*% LYra)
+t(Ura) %*% RX %*% Ura
+t(Vra) %*% Vra
+
+sum((diag(t(LXra) %*% LYra) - delta_ra)**2)
+
+sum((LXra - DATA1 %*% Mra %*% Pra)**2)
+sum((LXra - DATA1 %*% Ura)**2)
+sum((LYra - DATA2 %*% Wra %*% Qra)**2)
+sum((LYra - DATA2 %*% Vra)**2)
 
 ### CCA : check ###
 Ucca <- res.tepcca$TExPosition.Data$u
@@ -59,8 +76,6 @@ Ficca <- res.tepcca$TExPosition.Data$fi
 Fjcca <- res.tepcca$TExPosition.Data$fj
 
 
-RX <- t(DATA1) %*% DATA1
-RY <- t(DATA2) %*% DATA2
 solve(RX) - Mcca
 solve(RY) - Wcca
 
