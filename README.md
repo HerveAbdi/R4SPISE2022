@@ -3,10 +3,7 @@
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-The goal of
-the package
-R4SPISE2022 is to provide data, programs, 
+R4SPISE2022 provide data, programs, 
 and documentation for the SPISE-2022 
 *Advanced Workshop on Sensory Evaluation*
 (July 27, 2022 to July 28, 2022;
@@ -43,4 +40,5 @@ More to come soon
 ## Other material
 
  * Principal Component Analysis [paper](inst/extdata/abdi-awPCA2010.pdf).
+ * Partial Least Methods: A review [paper](inst/extdata/abdi-PLSC_and_PLSR2012.pdf).
 
