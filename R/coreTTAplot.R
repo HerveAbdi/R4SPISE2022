@@ -217,13 +217,34 @@ coreTTAplot <- function(
       main = 'Important Contributions J-set: LV1',
       ylab = "Signed Contributions")
 
-  return(
-      list(
-          heatmap.rxy = heatmap.rxy,
-          scree.eig = scree.eig,
-          scree.sv = scree.sv,
-          lv.plot = lv.plot,
-          ctrX.plot = ctrX.plot,
-          ctrY.plot = ctrY.plot))
+  ### Prepare to save as PPTX ###
+  results.stats <- list(
+      TExPosition.Data = res$TExPosition.Data,
+      Plotting.Data = res$Plotting.Data,
+      loadings.as.correlation = loadingsAsCorr
+  )
+  results.graphs <- list(
+      heatmap.rxy = heatmap.rxy,
+      scree.eig = scree.eig,
+      scree.sv = scree.sv,
+      lv.plot = lv.plot,
+      ctrX.plot = ctrX.plot,
+      ctrY.plot = ctrY.plot
+  )
+  description.graphs <- list(
+      heatmap.rxy = "The XY Correlation Matrix (Heat Map)",
+      scree.eig = "The Eigenvalues Scree Plot",
+      scree.sv = "The Singular Values Scree Plot",
+      lv.plot = "Latent Variable Map",
+      ctrX.plot = "Contributions for X",
+      ctrY.plot = "Contributions for Y",
+  )
+  ## list stat & graphs ----
+  results <- list(results.stats = results.stats,
+                  results.graphs = results.graphs,
+                  description.graphs = description.graphs
+  )
+  return(results)
+  # EOF ----
 }
 
