@@ -10,7 +10,7 @@ coreTTAplot(
   color.obs = NULL,
   color.tab = NULL,
   title.plot = "Results",
-  alpha.points = 0.05,
+  alpha.points = 0.15,
   DESIGN = NULL,
   sigbar.p = FALSE,
   sigbar.q = FALSE,
