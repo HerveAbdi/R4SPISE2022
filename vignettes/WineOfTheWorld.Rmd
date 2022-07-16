@@ -2,16 +2,12 @@
 title: "Wine of The World"
 author: "Vincent Guillemot & Hervé Abdi & Soudeh Aderstani Khoubrouy"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Wine of The World}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-<style>
-.forceBreak { -webkit-column-break-after: always; break-after: column; }
-</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
