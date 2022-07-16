@@ -1,6 +1,6 @@
 ---
 title: "Wine of The World"
-author: "Vincent Guillemot & Hervé Abdi & Soudeh Aderstani Khoubrouy"
+author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Wine of The World}
