@@ -1,7 +1,6 @@
 ---
 title: "Wine of The World"
 author: "Vincent Guillemot & Hervé Abdi & Soudeh Aderstani Khoubrouy"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Wine of The World}

@@ -1,6 +1,7 @@
 rm(list = ls()) ; gc() ; graphics.off()
 
 library(R4SPISE2022) # Our package
+library(dplyr)
 library(TExPosition)
 library(data4PCCAR)
 library(ggplot2)
@@ -68,12 +69,12 @@ res.plot <- coreTTAplot(
     color.tab = color.tab,
     alpha.points = 0.7)
 
-res.plot$heatmap.rxy
-res.plot$scree.eig
-res.plot$scree.sv
-res.plot$lv.plot
-res.plot$ctrX.plot
-res.plot$ctrY.plot
+res.plot$results.graphs$heatmap.rxy
+res.plot$results.graphs$scree.eig
+res.plot$results.graphs$scree.sv
+res.plot$results.graphs$lv.plot
+res.plot$results.graphs$ctrX.plot
+res.plot$results.graphs$ctrY.plot
 ######### THIS GOES IN THE FUNCTION #########
 ### 1. Heatmaps
 corrplot::corrplot(RX, tl.col = "black")

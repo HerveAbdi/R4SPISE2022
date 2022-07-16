@@ -20,6 +20,13 @@ R4SPISE2022 with the following lines of code:
 remotes::install_github('HerveAbdi/R4SPISE2022')
 ```
 
+To install the vignettes while installing the package, then run the following commands:
+
+``` r
+remotes::install_github('HerveAbdi/R4SPISE2022', 
+  build_vignettes = TRUE,
+  force = TRUE)
+```
 ## Example
 
 This is a basic example which shows 

@@ -34,7 +34,7 @@ coreTTAplot <- function(
         color.obs = NULL,
         color.tab = NULL,
         title.plot = "Results",
-        alpha.points = 0.05,
+        alpha.points = 0.15,
         DESIGN = NULL,
         sigbar.p = FALSE,
         sigbar.q = FALSE,
@@ -220,8 +220,8 @@ coreTTAplot <- function(
   ### Prepare to save as PPTX ###
   results.stats <- list(
       TExPosition.Data = res$TExPosition.Data,
-      Plotting.Data = res$Plotting.Data,
-      loadings.as.correlation = loadingsAsCorr
+      Plotting.Data = res$Plotting.Data#,
+      # loadings.as.correlation = loadingsAsCorr
   )
   results.graphs <- list(
       heatmap.rxy = heatmap.rxy,
@@ -237,7 +237,7 @@ coreTTAplot <- function(
       scree.sv = "The Singular Values Scree Plot",
       lv.plot = "Latent Variable Map",
       ctrX.plot = "Contributions for X",
-      ctrY.plot = "Contributions for Y",
+      ctrY.plot = "Contributions for Y"
   )
   ## list stat & graphs ----
   results <- list(results.stats = results.stats,
