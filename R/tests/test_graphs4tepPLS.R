@@ -53,9 +53,27 @@ col4J <- rep(c("#1CBE4F", "#C4451C"),
 col4K <- rep(c("#1CFFCE", "tomato"),
              c(p2 %/% 2, p2 - p2 %/% 2))
 
-res.tepPLS <- tepPLS(X, Y, DESIGN = DESIGN, graphs = FALSE)
-# graph4tepPLS(res.tepPLS)
+color.obs <- list(
+    oc = matrix(col4I, ncol = 1, dimnames = list(indnames)),
+    gc = rbind(group1 = "hotpink1", group2 = "#436EEE")
+)
 
+color.tab <- list(oc = list(col4J, col4K))
+
+res.tepPLS <- tepPLS(X, Y, DESIGN = DESIGN, graphs = FALSE)
+res.plot <- coreTTAplot(res = res.tepPLS)
+res.plot <- coreTTAplot(
+    res = res.tepPLS,
+    color.obs = color.obs,
+    color.tab = color.tab,
+    alpha.points = 0.7)
+
+res.plot$heatmap.rxy
+res.plot$scree.eig
+res.plot$scree.sv
+res.plot$lv.plot
+res.plot$ctrX.plot
+res.plot$ctrY.plot
 ######### THIS GOES IN THE FUNCTION #########
 ### 1. Heatmaps
 corrplot::corrplot(RX, tl.col = "black")

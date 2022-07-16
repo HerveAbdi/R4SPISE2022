@@ -30,7 +30,7 @@ graph4tepPLS(
 \arguments{
 \item{data}{A data frame or a matrix with
 numerical data suitable for a PCA. Passed to
-\code{ExPosition::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{scale}{scale (i.e., normalize) the
 columns of \code{data}.
@@ -38,31 +38,31 @@ Default: \code{TRUE}. Values could
 be \code{TRUE, FALSE, 'Z', 'SS1'}. \code{TRUE}
 defaults to \code{SS1}.
 Passed to
-\code{ExPosition::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{center}{Default: TRUE.
 do we center the columns of \code{data}
 Passed to
-\code{data4PCCAR::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{DESIGN}{Default: NULL.
 A design vector (could be factor or character)
 or (Boolean) matrix used to assigne oobservations
 to groups.
 Passed to
-\code{data4PCCAR::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{make_design_nominal}{if TRUE (Default) transform
 the vector from \code{DESIGN} into
 a Boolean matrix.
 Passed to
-\code{data4PCCAR::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{k}{number
 of factor to keep; when equql to
 0  (Default), all factors are kept.
 Passed to
-\code{data4PCCAR::tepPLS}.}
+\code{TExPosition::tepPLS}.}
 
 \item{graphs}{do we want graphs?
 Current Default is \code{12} which indicates that
@@ -76,11 +76,11 @@ do we want to print the graphics as \code{.png}?}
 
 \item{col4I}{a color vector for
 plotting the observations (if \code{NULL}
-Default) use colors from \code{data4PCCAR::tepPLS}.}
+Default) use colors from \code{TExPosition::tepPLS}.}
 
 \item{col4J}{a color vector for
 plotting the variables (if \code{NULL}
-Default) use colors from \code{data4PCCAR::tepPLS}.}
+Default) use colors from \code{TExPosition::tepPLS}.}
 
 \item{biplot}{De we want to create biplots
 (Default: \code{FALSE})?}
@@ -142,7 +142,7 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[data4PCCAR]{tepPLS}}
+\code{\link[TExPosition]{tepPLS}}
 \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 }
 \author{
