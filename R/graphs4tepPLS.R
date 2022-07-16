@@ -152,7 +152,7 @@ graph4tepPLS <- function(
         title4pptx = "PLS Results" # title of pptx
 ){
 
-    res.core <- coreTTAplot(title = "PLS-C")
+    res.core <- coreTTAplot(title.plot = "PLS-C")
 
     return(results)
     # EOF ----

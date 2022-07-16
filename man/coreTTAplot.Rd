@@ -6,20 +6,23 @@
 \usage{
 coreTTAplot(
   res,
+  tab1,
+  tab2,
   leDim = c(1, 1),
+  leDim4CirCor = c(1, 2),
   color.obs = NULL,
   color.tab = NULL,
   title.plot = "Results",
-  alpha.points = 0.05,
+  alpha.points = 0.25,
   DESIGN = NULL,
   sigbar.p = FALSE,
   sigbar.q = FALSE,
-  tab1.name = NULL,
-  tab2.name = NULL,
+  tab1.name = "J-set",
+  tab2.name = "K-set",
   TI = FALSE,
   mean.cex = 3,
   mean.textcex = 3,
-  only.mean = TRUE,
+  only.mean = FALSE,
   only.ind = FALSE,
   score.constraints = NULL,
   mean.constraints = NULL,
@@ -29,7 +32,13 @@ coreTTAplot(
 \arguments{
 \item{res}{the result of a two-table analysis;}
 
+\item{tab1}{the result of a two-table analysis;}
+
+\item{tab2}{the result of a two-table analysis;}
+
 \item{leDim}{vector containning the dimensions to be plotted;}
+
+\item{leDim4CirCor}{vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;}
 
 \item{color.obs}{list containing the colors for the observations;}
 

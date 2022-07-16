@@ -1,7 +1,10 @@
 #' Core function to generate two-table analysis plots.
 #'
 #' @param res the result of a two-table analysis;
+#' @param tab1 the result of a two-table analysis;
+#' @param tab2 the result of a two-table analysis;
 #' @param leDim vector containning the dimensions to be plotted;
+#' @param leDim4CirCor vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;
 #' @param color.obs list containing the colors for the observations;
 #' @param color.tab list containing the colors for the two-tables;
 #' @param title.plot plot of the title;
@@ -30,20 +33,23 @@
 #'
 coreTTAplot <- function(
         res,
+        tab1,
+        tab2,
         leDim = c(1, 1),
+        leDim4CirCor = c(1, 2),
         color.obs = NULL,
         color.tab = NULL,
         title.plot = "Results",
-        alpha.points = 0.15,
+        alpha.points = 0.25,
         DESIGN = NULL,
         sigbar.p = FALSE,
         sigbar.q = FALSE,
-        tab1.name = NULL,
-        tab2.name = NULL,
+        tab1.name = "J-set",
+        tab2.name = "K-set",
         TI = FALSE,
         mean.cex = 3,
         mean.textcex = 3,
-        only.mean = TRUE,
+        only.mean = FALSE,
         only.ind = FALSE,
         score.constraints = NULL,
         mean.constraints = NULL,
@@ -61,6 +67,12 @@ coreTTAplot <- function(
   rxy <- res$TExPosition.Data$X
   I <- nrow(rxy)
   J <- ncol(rxy)
+
+  if ((is.data.frame(DESIGN)|is.matrix(DESIGN)) && ncol(DESIGN) > 1){
+      DESIGN <- DESIGN %*% diag(1:ncol(DESIGN)) |> rowSums()
+  }else if((is.data.frame(DESIGN)|is.matrix(DESIGN)) && ncol(DESIGN) == 1){
+      DESIGN <- as.vector(as.matrix(DESIGN))
+  }
 
   lv2plot <- cbind(
       res$TExPosition.Data$lx[, leDim[1]],
@@ -89,12 +101,12 @@ coreTTAplot <- function(
   ### 1. Heatmaps
   rxy_long <- tibble::tibble(
       yids = rownames(rxy),
-      tibble::as_tibble(rxy))%>%
+      tibble::as_tibble(rxy)) |>
       tidyr::pivot_longer(
           -yids,
           values_to = "correlation",
           names_to = "xids")
-  heatmap.rxy <- rxy_long  %>%
+  heatmap.rxy <- rxy_long  |>
       ggplot2::ggplot(ggplot2::aes(xids, yids, fill = correlation)) +
       ggplot2::geom_tile() +
       ggplot2::scale_fill_gradient2(limits = c(-1, 1)) +
@@ -147,7 +159,7 @@ coreTTAplot <- function(
                                     col.background = NULL,
                                     col.axes = "orchid4",
                                     alpha.axes = 0.5,
-                                    col.point = color.obs$gc[rownames(lv2plot.mean),],
+                                    col.points = color.obs$gc[rownames(lv2plot.mean),],
                                     col.labels =  color.obs$gc[rownames(lv2plot.mean),],
                                     constraints = mean.constraints,
                                     cex = mean.cex,
@@ -186,37 +198,99 @@ coreTTAplot <- function(
 
   }
 
-  ##### Ctr I-set ----
+
+  ##_________________________________________________
+  ##### Ctr J-set ----
   Fi   <- res$TExPosition.Data$fi
   ctri <- res$TExPosition.Data$ci
   signed.ctri <- ctri * sign(Fi)
   # LV1
   ctrX.plot <- PrettyBarPlot2(
-      bootratio = round(100*signed.ctri[,1]),
+      bootratio = round(100*signed.ctri[,leDim[1]]),
       threshold = 100/ nrow(signed.ctri),
       ylim = NULL,
       color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = 'Important Contributions I-set: LV1',
+      main = paste0("Important Contributions ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
-
-  ##_________________________________________________
-  ##### Ctr J-set ----
+  ##### Ctr K-set ----
   Fj   <- res$TExPosition.Data$fj
   ctrj <- res$TExPosition.Data$cj
   signed.ctrj <- ctrj * sign(Fj)
   # LV1
   ctrY.plot <- PrettyBarPlot2(
-      bootratio = round(100*signed.ctrj[,1]),
+      bootratio = round(100*signed.ctrj[,leDim[2]]),
       threshold = 100 / nrow(signed.ctrj),
       ylim = NULL,
       color4bar = color.tab$oc[[2]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = 'Important Contributions J-set: LV1',
+      main = paste0("Important Contributions ", tab2.name, ": LV", leDim[2]),
       ylab = "Signed Contributions")
 
+  ##_________________________________________________
+  ### Circle of corr:
+  # Create labels
+  label4Map <- createxyLabels.gen(leDim4CirCor[1],leDim4CirCor[2],
+                                  lambda = res$TExPosition.Data$eigs,
+                                  tau = res$TExPosition.Data$t)
+  label4Map2 <- list(label4Map,
+                     # The standard label from createxyLabels.gen
+                     theme(axis.title = element_text(# the new theme
+                         color = "darkorchid4",
+                         size = rel(1.1),    # relative to default
+                         family = 'Times',   # "Times", "sans", "Courier"
+                         face   = "italic" , # 'plain','italic', 'bold',
+                         # NB: face does not work with current ggplot2
+                     ), # end of element_text
+                     plot.title = element_text(color = '#5826A3')
+                     ) )
+  ### Circle of corr for J-set ----
+  # Create the map
+  loadingsX.cor <- t(cor(tab1, res$TExPosition.Data$lx[, leDim4CirCor]))
+  map4Cir.X <- PTCA4CATA::createFactorMap(
+      t(loadingsX.cor),
+      col.points = col4J,
+      col.labels = col4J,
+      col.background = NULL,
+      col.axes = "darkorchid4",
+      alpha.axes = 0.5,
+      constraints = list(minx = -1, miny = -1,
+                         maxx = 1 , maxy = 1),
+      title = paste0("Circle of Correlation for ", tab1.name))
+  #  Add some arrows
+  arrows.X <- addArrows(t(loadingsX.cor), color = col4J)
+
+  # draw the circle
+  cirCorX.plot <- map4Cir.X$zeMap_background +
+      map4Cir.X$zeMap_text +
+      addCircleOfCor() +
+      arrows.X + label4Map2
+
+  ### Circle of corr for K-set ----
+  # Create the map
+  loadingsY.cor <- t(cor(tab2, res$TExPosition.Data$ly[, leDim4CirCor]))
+  map4Cir.Y <- PTCA4CATA::createFactorMap(
+      t(loadingsY.cor),
+      col.points = col4K,
+      col.labels = col4K,
+      col.background = NULL,
+      col.axes = "darkorchid4",
+      alpha.axes = 0.5,
+      constraints = list(minx = -1, miny = -1,
+                         maxx = 1 , maxy = 1),
+      title = paste0("Circle of Correlation for ", tab2.name))
+  #  Add some arrows
+  arrows.Y <- addArrows(t(loadingsY.cor), color = col4K)
+
+  # draw the circle
+  cirCorY.plot <- map4Cir.Y$zeMap_background +
+      map4Cir.Y$zeMap_text +
+      addCircleOfCor() +
+      arrows.Y + label4Map2
+
+  ##_________________________________________________
   ### Prepare to save as PPTX ###
   results.stats <- list(
       TExPosition.Data = res$TExPosition.Data,
@@ -229,7 +303,9 @@ coreTTAplot <- function(
       scree.sv = scree.sv,
       lv.plot = lv.plot,
       ctrX.plot = ctrX.plot,
-      ctrY.plot = ctrY.plot
+      ctrY.plot = ctrY.plot,
+      cirCorX.plot = cirCorX.plot,
+      cirCorY.plot = cirCorY.plot
   )
   description.graphs <- list(
       heatmap.rxy = "The XY Correlation Matrix (Heat Map)",
@@ -237,7 +313,9 @@ coreTTAplot <- function(
       scree.sv = "The Singular Values Scree Plot",
       lv.plot = "Latent Variable Map",
       ctrX.plot = "Contributions for X",
-      ctrY.plot = "Contributions for Y"
+      ctrY.plot = "Contributions for Y",
+      cirCorX.plot = "Circle of Correlation for X",
+      cirCorY.plot = "Circle of Correlation for Y"
   )
   ## list stat & graphs ----
   results <- list(results.stats = results.stats,

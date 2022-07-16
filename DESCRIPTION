@@ -3,9 +3,10 @@ Type: Package
 Title: Provides a set of Programs, Vignettes, and Data for the SPISE2022 Workshop
 Version: 0.0.0.9000
 Authors@R: 
-   c( person(given = "Hervé",   family = "Abdi",      email = "herve@utdallas.edu",           role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID")),
-    person(given = "Vincent", family = "Guillemot", email = "vincent.guillemot@pasteur.fr", role = c("ctb"), comment = c(ORCID = "YOUR-ORCID-ID")),
-    person(given = "Ju-Chi",  family = "Yu",        email = "Ju-Chi.Yu@camh.org",           role = c("ctb"), comment = c(ORCID = "YOUR-ORCID-ID")) )
+   c( person(given = "Hervé",   family = "Abdi",      email = "herve@utdallas.edu",           role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9522-1978")),
+    person(given = "Vincent", family = "Guillemot", email = "vincent.guillemot@pasteur.fr", role = c("ctb"), comment = c(ORCID = "0000-0002-7421-0655")),
+    person(given = "Ju-Chi",  family = "Yu",        email = "Ju-Chi.Yu@camh.org",           role = c("ctb"), comment = c(ORCID = "0000-0002-6360-1861")),
+    person(given = "Soudeh",  family = "A. Khoubrouy",        email = "SA.Khoubrouy@utdallas.edu",           role = c("ctb"), comment = c(ORCID = "0000-0002-2656-7756")))
 Description: Provides a set of Programs, Vignettes, and Data for the SPISE2022 Advanced Workshop (Hanoi Vietnam).
 License: GPL-2
 Encoding: UTF-8
@@ -23,13 +24,18 @@ Suggests:
 VignetteBuilder: utils, knitr
 Imports:
     ExPosition,
+    TExPosition,
     corrplot,
     ggplot2,
     officer,
     rvg,
     prettyGraphs,
     PTCA4CATA,
-    data4PCCAR
+    data4PCCAR,
+    dplyr,
+    kableExtra,
+    tibble,
+    tidyr
 Remotes:
     HerveAbdi/data4PCCAR,
     HerveAbdi/PTCA4CATA
