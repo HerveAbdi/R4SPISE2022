@@ -83,10 +83,10 @@ wines_usa %>%
 
 ## Four tables
 
- * Descriptors: origin, color and varietal;
- * Suplementary variables: Price;
- * Chemical data: Acidity, Alcohol, Sugar, and Tannin;
- * Sensory data: fruity, floral, vegetal, spicy, woody, sweet, astringent, and hedonic.
+ * Descriptors: `origin`, `color` and `varietal`;
+ * Suplementary variables: `Price`;
+ * Chemical data: `Acidity`, `Alcohol`, `Sugar`, and `Tannin`;
+ * Sensory data: `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `hedonic.`
 
 ```{r four table, echo = FALSE}
 descr <- winesOf3Colors$winesDescriptors %>% 

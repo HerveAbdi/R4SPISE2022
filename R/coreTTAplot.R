@@ -24,7 +24,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun
+#' \dontrun{
+#'   # An example will be added very soon
+#' }
 #'
 coreTTAplot <- function(
         res,

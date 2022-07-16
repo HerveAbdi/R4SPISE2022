@@ -72,6 +72,8 @@ a list of plots
 Core function to generate two-table analysis plots.
 }
 \examples{
-\dontrun
+\dontrun{
+  # An example will be added very soon
+}
 
 }

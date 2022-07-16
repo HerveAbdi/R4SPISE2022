@@ -7,6 +7,9 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/R4SPISEE2022.html</loc>
   </url>
   <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/WineOfTheWorld.html</loc>
+  </url>
+  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/index.html</loc>
   </url>
   <url>
@@ -19,10 +22,22 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/R4SPISE2022-package.html</loc>
   </url>
   <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/coreTTAplot.html</loc>
+  </url>
+  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/empty.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4epPCA.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4tepCCA.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4tepPLS.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4tepRA.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/index.html</loc>
