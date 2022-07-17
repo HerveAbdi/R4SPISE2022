@@ -1,9 +1,9 @@
 ---
-title: "Wine of The World"
+title: "Beers"
 author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Wine of The World}
+  %\VignetteIndexEntry{Beers}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -27,98 +27,52 @@ library(ggplot2)
 With the following command
 
 ```{r winesOf3Colors}
-data("winesOf3Colors", package = "data4PCCAR")
+data("sixBeers12Descriptors10Judges", package = "data4PCCAR")
 ```
 
 ```{r hidden colors, echo = FALSE}
-wineColors <- winesOf3Colors$winesDescriptors$color
-wineColors <- as.character(recode(wineColors, red = 'indianred4', 
-                white = 'gold', rose = 'lightpink2'))
+beers <- sixBeers12Descriptors10Judges$ratingsIntensity
+beerColors <- sixBeers12Descriptors10Judges$color4Products
+descColors <- sixBeers12Descriptors10Judges$color4Descriptors
 ```
 
+## The Beers {.smaller}
 
-## Argentina {.smaller}
-
-```{r wine argentina, echo = FALSE, results='asis'}
-fontsize <- 9.
-wines_argentina <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "Argentina")
-wines_argentina %>%
+```{r beers, echo = FALSE, results='asis'}
+fontsize <- 8
+beers %>%
     kable("html") %>%
     kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_argentina), 
-    font_size = fontsize) %>%
+    row_spec(1:nrow(beers),
+             font_size = fontsize) %>%
     row_spec(0, angle = 0, align = "right", font_size = fontsize)
 ```
 
-## Canada {.smaller}
 
-```{r wine Canada, echo = FALSE, results='asis'}
-wines_canada <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "Canada")
-wines_canada %>%
-    kable("html") %>%
-    kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_canada), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
-```
-
-## USA {.smaller}
-
-```{r wine USA, echo = FALSE, results='asis'}
-wines_usa <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "USA")
-wines_usa %>%
-    kable("html") %>%
-    kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_usa), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
-```
-
-## Four tables
-
- * Descriptors: `origin`, `color` and `varietal`;
- * Suplementary variables: `Price`;
- * Chemical data: `Acidity`, `Alcohol`, `Sugar`, and `Tannin`;
- * Sensory data: `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `hedonic.`
-
-```{r four table, echo = FALSE}
-descr <- winesOf3Colors$winesDescriptors %>% 
-    select(origin, color, varietal)
-suppl <- winesOf3Colors$winesDescriptors %>% 
-    select(Price)
-chemi <- winesOf3Colors$winesDescriptors %>% 
-    select(Acidity, Alcohol, Sugar, Tannin)
-senso <- winesOf3Colors$winesDescriptors %>% 
-    select(fruity, floral, vegetal, 
-           spicy, woody, sweet, astringent, 
-           hedonic)
-```
-
-## The sensory scores
+## The ratings
 
 
-```{r sensoplot, echo = FALSE, fig.width = 8, fig.height = 5}
-senso_long <- tibble(
-    yids = rownames(winesOf3Colors$winesDescriptors), 
-    as_tibble(scale(senso))) %>%
+```{r ratings, echo = FALSE, fig.width = 8, fig.height = 5}
+beers_long <- tibble(
+    yids = rownames(beers), 
+    as_tibble(beers)) %>%
     tidyr::pivot_longer(
         -yids,
         values_to = "scores",
         names_to = "xids")
 
 
-(suppressWarnings(heatmap.rxy <- senso_long  %>%
+(suppressWarnings(heatmap.rxy <- beers_long  %>%
     ggplot(aes(xids, yids, fill = scores)) +
     geom_tile() +
     # geom_text(aes(label = round(scores, 2))) +
     scale_fill_gradient2() +
     theme_bw() +
     theme(
-        axis.ticks.x = element_line(color = wineColors),
-        axis.text.x = element_text(color = wineColors, size = 7),
+        axis.ticks.x = element_line(color = beerColors),
+        axis.text.x = element_text(color = beerColors, size = 7),
+        axis.ticks.y = element_line(color = descColors),
+        axis.text.y = element_text(color = descColors, size = 7),
     ) +
     labs(x = "", y = ""))) + 
     coord_flip() + 
