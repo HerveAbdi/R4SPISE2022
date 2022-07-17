@@ -9,4 +9,5 @@ J <- 11
 X <- matrix(rnorm(I * J), I, J)
 
 res.epPCA <- epPCA(DATA = X, graph = FALSE)
-graph4epPCA(data = X)
+res.f1 <- graph4epPCA(data = X)
+res.f2 <- OTAplot(res = res.epPCA, data = X)

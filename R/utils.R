@@ -1,16 +1,31 @@
+##### Internal functions #####
 
-
-
+#' Transform angle in rad to deg
+#' @param rad numeric
+#' @noRd
 rad2deg <- function(rad) {(rad * 180) / (pi)}
 
-
+#' Transform angle in deg to rad
+#' @param deg numeric
+#' @noRd
 deg2rad <- function(deg) {(deg * pi) / (180)}
 
-
+#' Computes the arc-cosine in degrees
+#' @param lecos numeric
+#' @noRd
 arcosdeg <- function(lecos){rad2deg(acos(lecos))}
 #
-# An internal function
-# A function ----
+#' Plot contributions
+#'
+#' @param signed.ctr signed contribtions
+#' @param col4 colors
+#' @param nfac number of dimensions
+#' @param print plot the result
+#' @param stem title
+#' @param font.size font size
+#' @param horizontal whether the barplot is horizontal
+#'
+#' @noRd
 plotCtr <- function(signed.ctr, col4, nfac = 1,
                     print = FALSE, stem = "Jset",
                     font.size = 5,
@@ -51,4 +66,6 @@ plotCtr <- function(signed.ctr, col4, nfac = 1,
     }
     return(ctr)
 
-} # eof
+}
+
+
