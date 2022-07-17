@@ -1,5 +1,5 @@
 ---
-title: "PCA on the Beer data"
+title: "PCA on the Beer Data"
 author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
   comment = "#>",
   echo = TRUE, 
   dev = "svg",
-  fig.ext = "svg"
+  fig.ext = "svg", 
+  fig.width = 7, 
+  fig.height = 7
 )
 library(dplyr)
 library(ExPosition)
@@ -26,7 +28,7 @@ library(ggplot2)
 ## Load the data and the packages
 
 
-```{r beers}
+```{r beers, warning=FALSE, message=FALSE}
 library(R4SPISE2022)
 data("sixBeers12Descriptors10Judges", package = "data4PCCAR")
 beers <- sixBeers12Descriptors10Judges$ratingsIntensity
@@ -43,7 +45,7 @@ descColors <- sixBeers12Descriptors10Judges$color4Descriptors
 ```{r epPCA}
 res.pca <- epPCA(beers, 
                  center = TRUE, # Center the data
-                 scale = FALSE, # Do not scale the variables
+                 scale = FALSE, # **Do not** scale the variables
                  graphs = FALSE) 
 ```
 
@@ -60,6 +62,17 @@ res.plot.pca <- OTAplot(
  * `results.graphs`: all the PCA graphs (heatmaps, screeplot, factor map, correlation circles, loading maps etc.) 
  * `description.graphs`: the titles of these graphs, used as titles in the PPTX file.
  
+## Some graphs
 
+```{r scree}
+res.plot.pca$results.graphs$scree
+```
 
+```{r factor scores}
+res.plot.pca$results.graphs$factorScoresI12
+```
+
+```{r correlation circle}
+res.plot.pca$results.graphs$cosineCircleArrowJ12
+```
 
