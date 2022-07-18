@@ -22,9 +22,12 @@
 #' @param score.constraints constraints on the plot (use with care);
 #' @param mean.constraints constraints on the plot (use with care);
 #' @param scale.mean.constraints constraints on the plot (use with care).
+#' @param save2pptx  Default: FALSE
+#' @param title4pptx Title of the PPTX, Default: 'TTA Results'.
 #'
 #' @return a list of plots
 #' @export
+#' @import ggplot2 PTCA4CATA data4PCCAR corrplot
 #'
 #' @examples
 #' \dontrun{
@@ -53,7 +56,9 @@ TTAplot <- function(
         only.ind = FALSE,
         score.constraints = NULL,
         mean.constraints = NULL,
-        scale.mean.constraints = 3) {
+        scale.mean.constraints = 3,
+        save2pptx = FALSE,
+        title4pptx = "TTA Results") {
 
   # res: two lists (lx and ly) each with two obs x var. matrices of factor scores
   # leDim: a vector the component to plot for each table. e.g., c(component of table1, component of table2)
@@ -317,11 +322,23 @@ TTAplot <- function(
       cirCorX.plot = "Circle of Correlation for X",
       cirCorY.plot = "Circle of Correlation for Y"
   )
+
+
   ## list stat & graphs ----
   results <- list(results.stats = results.stats,
                   results.graphs = results.graphs,
                   description.graphs = description.graphs
   )
+
+  if (save2pptx) {
+      saveAllGraphsInList2pptx(
+          list2Save = results.graphs,
+          titles4list2Save = description.graphs,
+          file2Save.pptx = "TTA.pptx",
+          title = title4pptx
+      )
+  }
+
   return(results)
   # EOF ----
 }

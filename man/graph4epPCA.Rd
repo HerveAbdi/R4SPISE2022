@@ -21,6 +21,7 @@ OTAplot(
   biplot = FALSE,
   rotation = FALSE,
   nfactor4rotation = "Kaiser",
+  save2pptx = FALSE,
   title4pptx = "PCA Results"
 )
 
@@ -105,6 +106,9 @@ larger than average (when \code{scaled == 'SS1'}
 this is the familiar rule: "keep only
 the components with eigenvalue larger than 1").}
 
+\item{save2pptx}{Default: ''
+Not yet implemented,}
+
 \item{title4pptx}{PARAM_DESCRIPTION, Default:
 'PCA Results'.
 Not yet implemented,.}
@@ -126,9 +130,6 @@ Passed to
 from \code{InPosition}
 Remains to be done,
 Default is \code{FALSE}.}
-
-\item{save2pptx}{Default: ''
-Not yet implemented,}
 }
 \value{
 A list made of two lists

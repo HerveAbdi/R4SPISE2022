@@ -82,11 +82,9 @@
 #'  from \code{InPosition}
 #'  Remains to be done,
 #'  Default is \code{FALSE}.
-#' @param save2pptx  Default: ''
-#' Not yet implemented,
-#' @param title4pptx PARAM_DESCRIPTION, Default:
+#' @param save2pptx  Default: FALSE
+#' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.
-#' Not yet implemented,.
 #' @return A list made of two lists
 #'
 #' @details Work in Progress
@@ -126,7 +124,9 @@ OTAplot <- function(
         biplot   = FALSE,
         rotation = FALSE,
         nfactor4rotation = 'Kaiser',
-        title4pptx = "PCA Results" ) { # title of pptx
+        save2pptx = FALSE,
+        title4pptx = "PCA Results"
+    ) { # title of pptx
     printTest <- TRUE  # to debug the graphs
     printTest <- FALSE # to debug the graphs
     if (isTRUE(scale)) {
@@ -244,7 +244,7 @@ OTAplot <- function(
                                color = "darkorchid4",
                                size = rel(1.1),
                                # relative to default
-                               family = 'Times',
+                               # family = 'Times',
                                # "Times", "sans", "Courier"
                                face   = "italic" ,
                                # 'plain','italic', 'bold',
@@ -299,7 +299,7 @@ OTAplot <- function(
         )
     # draw the circle
     a01.jolieggMap.I <- jolie.ggplot.I$zeMap +
-        addCircleOfCor()
+        addCircleOfCor(color = "darkorchid4")
     if (printGraphs) {
         print(a01.jolieggMap.I)
     }
@@ -307,7 +307,7 @@ OTAplot <- function(
     a02.jolieggMap.I <-
         jolie.ggplot.I$zeMap_background +
         jolie.ggplot.I$zeMap_text +
-        addCircleOfCor() +
+        addCircleOfCor(color = "darkorchid4") +
         jolie.ggplot.I$zeMap_dots  + label4Map2
     if (printTest) {
         print(a02.jolieggMap.I)
@@ -492,7 +492,7 @@ OTAplot <- function(
         )
     # draw the circle
     b1.jolieggMap.J <- jolie.ggplot.J$zeMap +
-        addCircleOfCor()
+        addCircleOfCor(color = "darkorchid4")
     if (printGraphs) {
         png('J-CircleOfCorr_noArrow.png')
         print(b1.jolieggMap.J)
@@ -503,7 +503,7 @@ OTAplot <- function(
     b2.jolieggMap.J <-
         jolie.ggplot.J$zeMap_background +
         jolie.ggplot.J$zeMap_text +
-        addCircleOfCor() +
+        addCircleOfCor(color = "darkorchid4") +
         arrows + label4Map2
     # print(b2.jolieggMap.J)
     if (printGraphs) {
@@ -605,7 +605,7 @@ OTAplot <- function(
                     color = col4labels,
                     size = rel(1.2),
                     # relative to default
-                    family = 'sans',
+                    # family = 'sans',
                     # "Times", "sans", "Courier"
                     face   = "italic" ,
                     # 'plain','italic', 'bold',
@@ -745,6 +745,16 @@ OTAplot <- function(
         results.graphs = results.graphs,
         description.graphs = description.graphs
     )
+
+    if (save2pptx) {
+        saveAllGraphsInList2pptx(
+            list2Save = results.graphs,
+            titles4list2Save = description.graphs,
+            file2Save.pptx = "OTA.pptx",
+            title = title4pptx
+            )
+    }
+
     return(results)
     # EOF ----
 }

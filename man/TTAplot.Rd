@@ -26,7 +26,9 @@ TTAplot(
   only.ind = FALSE,
   score.constraints = NULL,
   mean.constraints = NULL,
-  scale.mean.constraints = 3
+  scale.mean.constraints = 3,
+  save2pptx = FALSE,
+  title4pptx = "TTA Results"
 )
 }
 \arguments{
@@ -73,6 +75,10 @@ TTAplot(
 \item{mean.constraints}{constraints on the plot (use with care);}
 
 \item{scale.mean.constraints}{constraints on the plot (use with care).}
+
+\item{save2pptx}{Default: FALSE}
+
+\item{title4pptx}{Title of the PPTX, Default: 'TTA Results'.}
 }
 \value{
 a list of plots
