@@ -2,7 +2,7 @@
 
 S3method(print,save2pptx)
 export(OTAplot)
-export(coreTTAplot)
+export(TTAplot)
 export(graph4epPCA)
 export(saveAllGraphsInList2pptx)
 import(PTCA4CATA)
