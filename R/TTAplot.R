@@ -240,7 +240,7 @@ TTAplot <- function(
                      theme(axis.title = element_text(# the new theme
                          color = "darkorchid4",
                          size = rel(1.1),    # relative to default
-                         family = 'Times',   # "Times", "sans", "Courier"
+                         # family = 'Times',   # "Times", "sans", "Courier"
                          face   = "italic" , # 'plain','italic', 'bold',
                          # NB: face does not work with current ggplot2
                      ), # end of element_text
@@ -265,7 +265,7 @@ TTAplot <- function(
   # draw the circle
   cirCorX.plot <- map4Cir.X$zeMap_background +
       map4Cir.X$zeMap_text +
-      addCircleOfCor() +
+      addCircleOfCor(color = "darkorchid4") +
       arrows.X + label4Map2
 
   ### Circle of corr for K-set ----
@@ -287,7 +287,7 @@ TTAplot <- function(
   # draw the circle
   cirCorY.plot <- map4Cir.Y$zeMap_background +
       map4Cir.Y$zeMap_text +
-      addCircleOfCor() +
+      addCircleOfCor(color = "darkorchid4") +
       arrows.Y + label4Map2
 
   ##_________________________________________________
