@@ -93,7 +93,6 @@ res.tesPLS.fig <- coreTTAplot()
 
 ```
 
-
 ### Scree plot
 
 ### Latent variables
