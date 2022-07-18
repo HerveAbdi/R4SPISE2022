@@ -31,7 +31,7 @@
 #'   # An example will be added very soon
 #' }
 #'
-coreTTAplot <- function(
+TTAplot <- function(
         res,
         tab1,
         tab2,
@@ -251,8 +251,8 @@ coreTTAplot <- function(
   loadingsX.cor <- t(cor(tab1, res$TExPosition.Data$lx[, leDim4CirCor]))
   map4Cir.X <- PTCA4CATA::createFactorMap(
       t(loadingsX.cor),
-      col.points = col4J,
-      col.labels = col4J,
+      col.points = color.tab$oc[[1]],
+      col.labels = color.tab$oc[[1]],
       col.background = NULL,
       col.axes = "darkorchid4",
       alpha.axes = 0.5,
@@ -260,7 +260,7 @@ coreTTAplot <- function(
                          maxx = 1 , maxy = 1),
       title = paste0("Circle of Correlation for ", tab1.name))
   #  Add some arrows
-  arrows.X <- addArrows(t(loadingsX.cor), color = col4J)
+  arrows.X <- addArrows(t(loadingsX.cor), color = color.tab$oc[[1]])
 
   # draw the circle
   cirCorX.plot <- map4Cir.X$zeMap_background +
@@ -273,8 +273,8 @@ coreTTAplot <- function(
   loadingsY.cor <- t(cor(tab2, res$TExPosition.Data$ly[, leDim4CirCor]))
   map4Cir.Y <- PTCA4CATA::createFactorMap(
       t(loadingsY.cor),
-      col.points = col4K,
-      col.labels = col4K,
+      col.points = color.tab$oc[[2]],
+      col.labels = color.tab$oc[[2]],
       col.background = NULL,
       col.axes = "darkorchid4",
       alpha.axes = 0.5,
@@ -282,7 +282,7 @@ coreTTAplot <- function(
                          maxx = 1 , maxy = 1),
       title = paste0("Circle of Correlation for ", tab2.name))
   #  Add some arrows
-  arrows.Y <- addArrows(t(loadingsY.cor), color = col4K)
+  arrows.Y <- addArrows(t(loadingsY.cor), color = color.tab$oc[[2]])
 
   # draw the circle
   cirCorY.plot <- map4Cir.Y$zeMap_background +

@@ -1,9 +1,9 @@
 ---
-title: "Wine of The World"
+title: "CCA on Wines"
 author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Wine of The World}
+  %\VignetteIndexEntry{CCA on Wines}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,12 +14,21 @@ knitr::opts_chunk$set(
   comment = "#>",
   echo = TRUE, 
   dev = "svg",
-  fig.ext = "svg"
+  fig.ext = "svg", 
+  fig.width = 7, 
+  fig.height = 7
 )
 library(dplyr)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
+library(TExPosition)
+```
+
+## Load the course library
+
+```{r library, warning = FALSE, message = FALSE}
+library(R4SPISE2022)
 ```
 
 ## Load the data
@@ -36,55 +45,10 @@ wineColors <- as.character(recode(wineColors, red = 'indianred4',
                 white = 'gold', rose = 'lightpink2'))
 ```
 
+## Two tables with descriptors and other supplementary information
 
-## Argentina {.smaller}
 
-```{r wine argentina, echo = FALSE, results='asis'}
-fontsize <- 9.
-wines_argentina <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "Argentina")
-wines_argentina %>%
-    kable("html") %>%
-    kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_argentina), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
-```
-
-## Canada {.smaller}
-
-```{r wine Canada, echo = FALSE, results='asis'}
-wines_canada <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "Canada")
-wines_canada %>%
-    kable("html") %>%
-    kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_canada), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
-```
-
-## USA {.smaller}
-
-```{r wine USA, echo = FALSE, results='asis'}
-wines_usa <- winesOf3Colors$winesDescriptors %>%
-    filter(origin == "USA")
-wines_usa %>%
-    kable("html") %>%
-    kable_styling("striped", full_width = F)  %>%
-    row_spec(1:nrow(wines_usa), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
-```
-
-## Four tables
-
- * Descriptors: `origin`, `color` and `varietal`;
- * Suplementary variables: `Price`;
- * Chemical data: `Acidity`, `Alcohol`, `Sugar`, and `Tannin`;
- * Sensory data: `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `hedonic.`
-
-```{r four table, echo = FALSE}
+```{r four table, echo = TRUE}
 descr <- winesOf3Colors$winesDescriptors %>% 
     select(origin, color, varietal)
 suppl <- winesOf3Colors$winesDescriptors %>% 
@@ -97,32 +61,84 @@ senso <- winesOf3Colors$winesDescriptors %>%
            hedonic)
 ```
 
-## The sensory scores
 
+```{r chemi, eval = FALSE, echo = FALSE, results='asis'}
+### First table: chemical data
 
-```{r sensoplot, echo = FALSE, fig.width = 8, fig.height = 5}
-senso_long <- tibble(
-    yids = rownames(winesOf3Colors$winesDescriptors), 
-    as_tibble(scale(senso))) %>%
-    tidyr::pivot_longer(
-        -yids,
-        values_to = "scores",
-        names_to = "xids")
+# fontsize <- 9.
 
-
-(suppressWarnings(heatmap.rxy <- senso_long  %>%
-    ggplot(aes(xids, yids, fill = scores)) +
-    geom_tile() +
-    # geom_text(aes(label = round(scores, 2))) +
-    scale_fill_gradient2() +
-    theme_bw() +
-    theme(
-        axis.ticks.x = element_line(color = wineColors),
-        axis.text.x = element_text(color = wineColors, size = 7),
-    ) +
-    labs(x = "", y = ""))) + 
-    coord_flip() + 
-    theme(legend.position = "bottom")
+# chemi %>%
+#     kable("html", caption = "Table 1: Chemical data") %>%
+#     kable_styling("striped", position = "float_left", full_width = F)  %>%
+#     row_spec(1:nrow(chemi), 
+#     font_size = fontsize) %>%
+#     row_spec(0, angle = 0, align = "right", font_size = fontsize)
 ```
 
+
+```{r senso, eval = FALSE, echo = FALSE}
+### Second table: sensory data
+# senso %>%
+#     kable("html", caption = "Table 2: Sensory data") %>%
+#     kable_styling("striped", position = "left", full_width = F)  %>%
+#     row_spec(1:nrow(senso), 
+#     font_size = fontsize) %>%
+#     row_spec(0, angle = 0, align = "right", font_size = fontsize)
+```
+
+### Descriptors and supplementary variable
+
+ * First table: chemical data (`chemi`)
+ * Second table: sensory data (`senso`)
+ * Descriptors: `origin`, `color` and `varietal`;
+ * Suplementary variables: `Price`;
+ 
+## Run CCA on the two tables
+
+```{r run}
+res.cca <- tepCCA(chemi, senso, DESIGN = descr$color, graphs = FALSE)
+```
+
+## Generate the figures
+
+```{r TTA plots, fig.show='hide'}
+res.cca.plot <- TTAplot(
+    res = res.cca, # Output of tepCCA
+    tab1 = chemi,  # First data table
+    tab2 = senso)  # Second data table
+# , DESIGN = descr$color
+```
+
+### Correlation between the two tables
+
+```{r hetamap.rxy}
+res.cca.plot$results.graphs$heatmap.rxy
+```
+
+
+### Scree plot
+
+```{r scree}
+res.cca.plot$results.graphs$scree.eig
+```
+
+### Latent variables
+
+```{r LV map}
+res.cca.plot$results.graphs$lv.plot
+```
+
+### Contributions
+
+```{r loadings}
+res.cca.plot$results.graphs$ctrX.plot
+res.cca.plot$results.graphs$ctrT.plot
+```
+
+### Circles of correlations
+
+```{r corcircles}
+res.cca.plot$results.graphs$cirCorX.plot
+res.cca.plot$results.graphs$cirCorY.plot
+```
 

@@ -1,9 +1,9 @@
 ---
-title: "Wine of The World"
+title: "PLSC on Wines"
 author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Wine of The World}
+  %\VignetteIndexEntry{PLSC on Wines}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,13 +14,21 @@ knitr::opts_chunk$set(
   comment = "#>",
   echo = TRUE, 
   dev = "svg",
-  fig.ext = "svg"
+  fig.ext = "svg", 
+  fig.width = 7, 
+  fig.height = 7
 )
 library(dplyr)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
 library(TExPosition)
+```
+
+## Load the course library
+
+```{r library, warning = FALSE, message = FALSE}
+library(R4SPISE2022)
 ```
 
 ## Load the data
@@ -39,9 +47,8 @@ wineColors <- as.character(recode(wineColors, red = 'indianred4',
 
 ## Two tables with descriptors and other supplementary information
 
-### Two data tables {.smaller}
 
-```{r four table, echo = FALSE}
+```{r four table, echo = TRUE}
 descr <- winesOf3Colors$winesDescriptors %>% 
     select(origin, color, varietal)
 suppl <- winesOf3Colors$winesDescriptors %>% 
@@ -54,50 +61,83 @@ senso <- winesOf3Colors$winesDescriptors %>%
            hedonic)
 ```
 
-```{r tab, echo = FALSE, results='asis'}
-fontsize <- 9.
 
-chemi %>%
-    kable("html", caption = "Table 1: Chemical data") %>%
-    kable_styling("striped", position = "float_left", full_width = F)  %>%
-    row_spec(1:nrow(chemi), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
+```{r chemi, eval = FALSE, echo = FALSE, results='asis'}
+### First table: chemical data
 
-senso %>%
-    kable("html", caption = "Table 2: Sensory data") %>%
-    kable_styling("striped", position = "left", full_width = F)  %>%
-    row_spec(1:nrow(senso), 
-    font_size = fontsize) %>%
-    row_spec(0, angle = 0, align = "right", font_size = fontsize)
+# fontsize <- 9.
 
+# chemi %>%
+#     kable("html", caption = "Table 1: Chemical data") %>%
+#     kable_styling("striped", position = "float_left", full_width = F)  %>%
+#     row_spec(1:nrow(chemi), 
+#     font_size = fontsize) %>%
+#     row_spec(0, angle = 0, align = "right", font_size = fontsize)
 ```
 
-### Descriptors and supplementary variable {.smaller}
 
-* Descriptors: `origin`, `color` and `varietal`;
-* Suplementary variables: `Price`;
+```{r senso, eval = FALSE, echo = FALSE}
+### Second table: sensory data
+# senso %>%
+#     kable("html", caption = "Table 2: Sensory data") %>%
+#     kable_styling("striped", position = "left", full_width = F)  %>%
+#     row_spec(1:nrow(senso), 
+#     font_size = fontsize) %>%
+#     row_spec(0, angle = 0, align = "right", font_size = fontsize)
+```
+
+### Descriptors and supplementary variable
+
+ * First table: chemical data (`chemi`)
+ * Second table: sensory data (`senso`)
+ * Descriptors: `origin`, `color` and `varietal`;
+ * Suplementary variables: `Price`;
  
-## Do PLS
+## Run PLS-C on the two tables
 
-```{r}
-res.tesPLS <- tepPLS(chemi, senso, DESIGN = descr$color, graphs = FALSE)
+```{r run}
+res.pls <- tepPLS(chemi, senso, DESIGN = descr$color, graphs = FALSE)
+```
 
-## generate figures
-res.tesPLS.fig <- coreTTAplot()
+## Generate the figures
+
+```{r TTA plots, fig.show='hide'}
+res.pls.plot <- TTAplot(
+    res = res.pls, # Output of tepPLS
+    tab1 = chemi,  # First data table
+    tab2 = senso)  # Second data table
+# , DESIGN = descr$color
 ```
 
 ### Correlation between the two tables
 
-```{r}
-
+```{r hetamap.rxy}
+res.pls.plot$results.graphs$heatmap.rxy
 ```
 
 ### Scree plot
 
+```{r scree}
+res.pls.plot$results.graphs$scree.eig
+```
+
 ### Latent variables
 
-### Loadings
+```{r LV map}
+res.pls.plot$results.graphs$lv.plot
+```
+
+### Contributions
+
+```{r loadings}
+res.pls.plot$results.graphs$ctrX.plot
+res.pls.plot$results.graphs$ctrT.plot
+```
 
 ### Circles of correlations
+
+```{r corcircles}
+res.pls.plot$results.graphs$cirCorX.plot
+res.pls.plot$results.graphs$cirCorY.plot
+```
 
