@@ -145,6 +145,7 @@ TTAplot <- function(
                              col.background = NULL,
                              col.axes = "orchid4",
                              alpha.axes = 0.5,
+                             title = paste0("Latent variables: ", tab1.name, " vs.", tab2.name),
                              col.points = color.obs$oc,
                              col.labels = color.obs$oc,
                              constraints = score.constraints,
@@ -164,6 +165,7 @@ TTAplot <- function(
                                     col.background = NULL,
                                     col.axes = "orchid4",
                                     alpha.axes = 0.5,
+                                    title = paste0("Latent variables: ", tab1.name, " vs.", tab2.name),
                                     col.points = color.obs$gc[rownames(lv2plot.mean),],
                                     col.labels =  color.obs$gc[rownames(lv2plot.mean),],
                                     constraints = mean.constraints,
@@ -217,7 +219,7 @@ TTAplot <- function(
       color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions ", tab1.name, ": LV", leDim[1]),
+      main = paste0("Important Contributions – ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
   ##### Ctr K-set ----
   Fj   <- res$TExPosition.Data$fj
@@ -231,7 +233,7 @@ TTAplot <- function(
       color4bar = color.tab$oc[[2]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions ", tab2.name, ": LV", leDim[2]),
+      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[2]),
       ylab = "Signed Contributions")
 
   ##_________________________________________________
@@ -263,7 +265,7 @@ TTAplot <- function(
       alpha.axes = 0.5,
       constraints = list(minx = -1, miny = -1,
                          maxx = 1 , maxy = 1),
-      title = paste0("Circle of Correlation for ", tab1.name))
+      title = paste0("Circle of Correlation for the ", tab1.name))
   #  Add some arrows
   arrows.X <- addArrows(t(loadingsX.cor), color = color.tab$oc[[1]])
 
@@ -285,7 +287,7 @@ TTAplot <- function(
       alpha.axes = 0.5,
       constraints = list(minx = -1, miny = -1,
                          maxx = 1 , maxy = 1),
-      title = paste0("Circle of Correlation for ", tab2.name))
+      title = paste0("Circle of Correlation for the ", tab2.name))
   #  Add some arrows
   arrows.Y <- addArrows(t(loadingsY.cor), color = color.tab$oc[[2]])
 

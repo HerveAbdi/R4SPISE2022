@@ -1,6 +1,6 @@
 ---
 title: "PCA on the Beer Data"
-author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
+author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{PCA on the Beer Data}
