@@ -75,7 +75,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
 ### Two data tables
 
  * First table: chemical data (`chemi`) that includes `acidity`, `alcohol`, `sugar`, and `tannin`.
- * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `henodic`
+ * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `henodic`.
 
 ```{r chemi, eval = FALSE, echo = FALSE, results='asis'}
 ### First table: chemical data
@@ -143,9 +143,7 @@ res.pls.plot$results.graphs$heatmap.rxy
 
 ### Scree plot
 
-The scree plot shows the eigenvalues of each dimension. 
-
-_Note_: When the variables are centered and scale to have their _standard deviations_ equals 1, the values of these eigenvalues equal the squared correlation ($R^2$) of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the correlation of these pairs of latent variables. 
+The scree plot shows the eigenvalues of each dimension. These eigenvalues give the squared _covariance_ of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the _covariance_ of these pairs of latent variables. The sum of the eigenvalues is equal to the sum of the squared covariance between all variables in both tables.
 
 ```{r scree, fig.height = 4}
 res.pls.plot$results.graphs$scree.eig
