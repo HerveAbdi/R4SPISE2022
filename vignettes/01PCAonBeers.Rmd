@@ -83,7 +83,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 res.plot.pca.inference <- OTAplotInference(
     resPCA = res.pca,
     data = beers
-    )
+    ) %>% suppressMessages()
 ```
 
 

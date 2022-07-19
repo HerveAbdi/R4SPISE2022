@@ -104,7 +104,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
 ### Descriptors and supplementary variable
 
  * Descriptors: `origin`, `color` and `varietal`.
- * Suplementary variables: `Price`.
+ * Supplementary variables: `Price`.
  
 ## Run Partial Least Square Correlation (PLS-C) on the two tables
 

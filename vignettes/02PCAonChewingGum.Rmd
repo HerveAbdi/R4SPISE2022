@@ -56,7 +56,7 @@ res.pca <- epPCA(chgu,
 res.plot.pca <- OTAplot(
     resPCA = res.pca,
     data = chgu
-    )
+    ) %>% suppressMessages()
 ```
 
  * `results.stats`: useful statistics after performing PCA, among which one can find the factor scores, loadings, eigenvalues, and contributions;

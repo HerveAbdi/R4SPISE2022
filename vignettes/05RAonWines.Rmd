@@ -106,7 +106,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
 ### Descriptors and supplementary variable
 
  * Descriptors: `origin`, `color` and `varietal`.
- * Suplementary variables: `Price`.
+ * Supplementary variables: `Price`.
  
 ## Run Redundancy Analysis (RA) on the two tables
 
