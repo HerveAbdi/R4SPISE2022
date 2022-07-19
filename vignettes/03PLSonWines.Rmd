@@ -7,6 +7,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+<style type="text/css">
+body {
+  font-size: 14pt;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
