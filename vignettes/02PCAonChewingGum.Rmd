@@ -52,7 +52,7 @@ res.pca <- epPCA(chgu,
 
 ## Plot the results
 
-```{r plotPCA, fig.show = 'hide'}
+```{r plotPCA, echo = FALSE, fig.show = 'hide'}
 res.plot.pca <- OTAplot(
     resPCA = res.pca,
     data = chgu
