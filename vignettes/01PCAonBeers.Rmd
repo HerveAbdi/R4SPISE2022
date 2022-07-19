@@ -23,6 +23,7 @@ library(ExPosition)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
+library(InPosition)
 ```
 
 ## Load the data and the packages
@@ -74,5 +75,27 @@ res.plot.pca$results.graphs$factorScoresI12
 
 ```{r correlation circle}
 res.plot.pca$results.graphs$cosineCircleArrowJ12
+```
+
+## Inference plots and results
+
+```{r plotPCAinference, fig.show = 'hide'}
+res.plot.pca.inference <- OTAplotInference(
+    resPCA = res.pca,
+    data = beers
+    )
+```
+
+
+```{r scree inference}
+res.plot.pca.inference$results.graphs$scree
+```
+
+```{r bootstrap ratios 1}
+res.plot.pca.inference$results.graphs$BR1
+```
+
+```{r bootstrap ratios 2}
+res.plot.pca.inference$results.graphs$BR2
 ```
 
