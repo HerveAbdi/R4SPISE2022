@@ -79,7 +79,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 
 ## Inference plots and results
 
-```{r plotPCAinference, echo = FALSE, fig.show = 'hide', warning = FALSE, message = FALSE}
+```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
     resPCA = res.pca,
     data = beers

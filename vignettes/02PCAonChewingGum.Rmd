@@ -52,7 +52,7 @@ res.pca <- epPCA(chgu,
 
 ## Plot the results
 
-```{r plotPCA, echo = FALSE, fig.show = 'hide'}
+```{r plotPCA, fig.show = 'hide'}
 res.plot.pca <- OTAplot(
     resPCA = res.pca,
     data = chgu
@@ -79,7 +79,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 
 ## Inference plots and results
 
-```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE}
+```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
     resPCA = res.pca,
     data = chgu
