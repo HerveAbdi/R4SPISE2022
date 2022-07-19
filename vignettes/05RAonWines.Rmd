@@ -105,8 +105,8 @@ senso <- winesOf3Colors$winesDescriptors %>%
 
 ### Descriptors and supplementary variable
 
- * Descriptors: `origin`, `color` and `varietal`;
- * Suplementary variables: `Price`;
+ * Descriptors: `origin`, `color` and `varietal`.
+ * Suplementary variables: `Price`.
  
 ## Run Redundancy Analysis (RA) on the two tables
 
@@ -165,7 +165,7 @@ _Note_: The grouping information are independent from RA and are only use to hel
 res.ra.plot$results.graphs$lv.plot
 ```
 
-The results from Dimension 1 show that the association between the chemical and the sensory data reliably separates the red wines from rose and white wines.
+The results from Dimension 1 show that the chemical data can predict the performance of the sensory data, and such prediction separates the red wines from the rosé and the white wines, but not the rosé and the white.
 
 ### Contributions
 
@@ -182,7 +182,7 @@ res.ra.plot$results.graphs$ctrY.plot
 
 From these two bar plots, the first dimension is characterized by (1) the positive association between `Alcohol` and `Tannin` from the Chemical data and `Woody` and `Astringent` from the Sensory data, and (2) the negative association between these variables and `Hedonic` from the Sensory data.
 
-Together with the latent variable plot, we found that, as compared to the rose and the white wines in the sample, the red wines are less `Hedonic` and stronger in `Alcohol`, `Tannin`, `Woody`, and `Astringent`.
+Together with the latent variable plot, we found that, as compared to the rosé and the white wines in the sample, the red wines are less `Hedonic` and stronger in `Alcohol`, `Tannin`, `Woody`, and `Astringent`.
 
 ### Circles of correlations
 

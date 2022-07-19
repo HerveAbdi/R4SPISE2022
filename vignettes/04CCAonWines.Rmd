@@ -104,8 +104,8 @@ senso <- winesOf3Colors$winesDescriptors %>%
 
 ### Descriptors and supplementary variable
 
- * Descriptors: `origin`, `color` and `varietal`;
- * Suplementary variables: `Price`;
+ * Descriptors: `origin`, `color` and `varietal`.
+ * Suplementary variables: `Price`.
  
 ## Run Canonical Correlation Analysis (CCA) on the two tables
 
