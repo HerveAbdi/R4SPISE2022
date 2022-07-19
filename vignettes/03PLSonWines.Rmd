@@ -106,7 +106,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
  * Descriptors: `origin`, `color` and `varietal`;
  * Suplementary variables: `Price`;
  
-## Run PLS-C on the two tables
+## Run Partial Least Square Correlation (PLS-C) on the two tables
 
 ```{r run}
 res.pls <- tepPLS(chemi, senso, DESIGN = descr$color, graphs = FALSE)
@@ -151,7 +151,7 @@ res.pls.plot$results.graphs$scree.eig
 
 ### Latent variables
 
-Here, we plot the first latent variable of both tables against each other with the observations colored according to their groups. This plot shows how the observations are distributed on the dimension and how the chosen pair of latent variables are related to each other. When plotting the first pair of latent variables, we expect the _observations_ to distribute along the bottom-left-to-top-right diagonal line (which illustrates a perfect correlation), because PLS-C maximizes the _covariance_ of the latent variables.
+Here, we plot the first latent variable of both tables against each other with the observations colored according to their groups. This plot shows how the observations are distributed on the dimension and how the chosen pair of latent variables are related to each other. When plotting the first pair of latent variables, we expect the _observations_ to distribute along the bottom-left-to-top-right diagonal line (which illustrates a perfect association), because PLS-C maximizes the _covariance_ of the latent variables.
 
 To examine the stability of these groups, we plot the group means with their 95% bootstrap confidence intervals (or ellipsoids). If the ellipses do not overlap, the groups are reliably different from each other. However, it's worth noted that the distribution of the _observations_ does not imply how the _groups_ (represented by the group means) are distributed or whether the groups are reliably different from each other. 
 

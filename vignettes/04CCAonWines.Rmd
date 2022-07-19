@@ -107,13 +107,13 @@ senso <- winesOf3Colors$winesDescriptors %>%
  * Descriptors: `origin`, `color` and `varietal`;
  * Suplementary variables: `Price`;
  
-## Run CCA on the two tables
+## Run Canonical Correlation Analysis (CCA) on the two tables
 
 ```{r run}
 res.cca <- tepCCA(chemi, senso, DESIGN = descr$color, graphs = FALSE)
 ```
 
-The default of this function will center (to have means equal 0) and scale (to have the _sums of squares_ equal 1) all variables in both data tables. The argument `DESIGN` indicates the groups of the observations and change how the observations are colored in the figures (when `graphs = TRUE`), but it does not change the results of PLS-C.
+The default of this function will center (to have means equal 0) and scale (to have the _sums of squares_ equal 1) all variables in both data tables. The argument `DESIGN` indicates the groups of the observations and change how the observations are colored in the figures (when `graphs = TRUE`), but it does not change the results of CCA.
 
 ## Generate the figures
 
