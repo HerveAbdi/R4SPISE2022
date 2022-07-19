@@ -19,3 +19,6 @@ PlotScreeWithCI(ev = infres$Fixed.Data$ExPosition.Data$eigs,
                 ci.ev = Boot.eigs,
                 polygon.ci = TRUE) # New parameter
 
+PlotScreeWithCI(ev = infres$Fixed.Data$ExPosition.Data$eigs,
+                ci.ev = Boot.eigs) # New parameter
+
