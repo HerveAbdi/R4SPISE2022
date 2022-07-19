@@ -23,6 +23,7 @@ library(knitr)
 library(kableExtra)
 library(ggplot2)
 library(TExPosition)
+library(data4PCCAR)
 ```
 
 ## Load the course library
