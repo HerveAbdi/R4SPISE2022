@@ -174,7 +174,8 @@ OTAplotInference <- function(
         scale = FALSE,
         design = DESIGN,
         niter = niter.boot,
-        CI.perc = c(0.025, 0.975))
+        CI.perc = c(0.025, 0.975),
+        suppressProgressBar = TRUE)
 
     ## Scree with confidence intervals
     PlotScreeWithCI(

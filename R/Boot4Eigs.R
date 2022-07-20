@@ -24,7 +24,7 @@ Boot4Eigs <- function(data,
   # Resampled within groups
   # Private functions
   GetEigs <- function(input4geteigs, center = TRUE, scale = TRUE)
-  { data4eigs <- expo.scale(DATA = input4geteigs, center = center, scale = scale)
+  { data4eigs <- ExPosition::expo.scale(DATA = input4geteigs, center = center, scale = scale)
     eigs <- eigen(t(data4eigs) %*% data4eigs)$values
     return(eigs = eigs)}
   # ********* A function inspired by Derek *****************

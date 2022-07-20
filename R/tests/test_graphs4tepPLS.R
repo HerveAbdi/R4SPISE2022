@@ -63,6 +63,22 @@ color.tab <- list(oc = list(col4J, col4K))
 
 res.tepPLS <- tepPLS(X, Y, DESIGN = DESIGN, graphs = FALSE)
 
+
+resBoot4PLSC <- data4PCCAR::Boot4PLSC(
+    X, # First Data matrix
+    Y, # Second Data matrix
+    nIter = 1000,# How many iterations
+    Fi = res.tepPLS$TExPosition.Data$fi,
+    Fj = res.tepPLS$TExPosition.Data$fj,
+    nf2keep = 3,
+    critical.value = 2,
+    eig = TRUE,
+    alphaLevel = .05
+)
+
+
+
+
 #---- DESCRIPTIVE PLOTS-----
 res.plot <- coreTTAplot(
     res = res.tepPLS,

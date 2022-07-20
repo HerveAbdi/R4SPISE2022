@@ -79,9 +79,19 @@ TTAplotInference <- function(
       DESIGN <- as.vector(as.matrix(DESIGN))
   }
 
-  lv2plot <- cbind(
-      res$TExPosition.Data$lx[, leDim[1]],
-      res$TExPosition.Data$ly[, leDim[2]])
+
+  # 2. Bootstrap -----
+  resBoot4PLSC <- data4PCCAR::Boot4PLSC(
+      tab1, # First Data matrix
+      tab2, # Second Data matrix
+      nIter = 1000,# How many iterations
+      Fi = res$TExPosition.Data$fi,
+      Fj = res$TExPosition.Data$fj,
+      nf2keep = 3,
+      critical.value = 2,
+      eig = TRUE,
+      alphaLevel = .05
+  )
 
   if (is.null(color.obs)) color.obs <- list(oc = "darkorchid4")
   if (is.null(color.tab)) {
@@ -94,206 +104,33 @@ TTAplotInference <- function(
   if (is.null(tab1.name)) tab1.name <- 1
   if (is.null(tab2.name)) tab2.name <- 2
 
-  colnames(lv2plot) <- paste0(c("Lx ","Ly "), leDim,": ", c(tab1.name,tab2.name))
+  ## Scree with confidence intervals
+  PlotScreeWithCI(
+      ev = res$TExPosition.Data$eigs,
+      ci.ev = resBoot4PLSC$eigenValues)
+  a01.leScree <- recordPlot()
 
-  if (is.null(score.constraints)){
-    get.constraints <- minmaxHelper(lv2plot)
-    min.scale <- min(get.constraints$minx, get.constraints$miny)
-    max.scale <- max(get.constraints$maxx, get.constraints$maxy)
-    score.constraints <- list(minx = min.scale, miny = min.scale, maxx = max.scale, maxy = max.scale)
-  }
-
-  ### 1. Heatmaps
-  rxy_long <- tibble::tibble(
-      yids = rownames(rxy),
-      tibble::as_tibble(rxy)) |>
-      tidyr::pivot_longer(
-          -yids,
-          values_to = "correlation",
-          names_to = "xids")
-  heatmap.rxy <- rxy_long  |>
-      ggplot2::ggplot(ggplot2::aes(xids, yids, fill = correlation)) +
-      ggplot2::geom_tile() +
-      ggplot2::scale_fill_gradient2(limits = c(-1, 1)) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(
-          axis.ticks.y = ggplot2::element_line(color = color.tab$oc[[1]]),
-          axis.ticks.x = ggplot2::element_line(color = color.tab$oc[[2]]),
-          axis.text.y = ggplot2::element_text(color = color.tab$oc[[1]]),
-          axis.text.x = ggplot2::element_text(color = color.tab$oc[[2]])
-      ) +
-    ggplot2::coord_equal() +
-      labs(x = "", y = "")
-
-  ### 2. Scree plots
-  PlotScree(ev = res$TExPosition.Data$eigs,
-            title = 'Eigenvalue Scree Plot',
-            plotKaiser = TRUE,
-            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
-            lwd4Kaiser  = 2)
-  scree.eig <- recordPlot()
-
-  PlotScree(ev = res$TExPosition.Data$eigs^(1/2),
-            title = 'Singular Value Scree Plot',
-            plotKaiser = FALSE,
-            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
-            lwd4Kaiser  = 2)
-  scree.sv <- recordPlot()
-
-  ## 3. Latent variables
-  plot.lv <- createFactorMap(lv2plot,
-                             col.background = NULL,
-                             col.axes = "orchid4",
-                             alpha.axes = 0.5,
-                             col.points = color.obs$oc,
-                             col.labels = color.obs$oc,
-                             constraints = score.constraints,
-                             alpha.points = alpha.points
-  )
-
-
-  lv.plot <- plot.lv$zeMap_background + plot.lv$zeMap_dots
-
-  if (!is.null(DESIGN)) {
-    lv2plot.mean <- getMeans(lv2plot, DESIGN)
-    if (is.null(mean.constraints)) {
-      mean.constraints <- lapply(minmaxHelper(lv2plot.mean), '*', scale.mean.constraints)
-    }
-
-    plot.lv.mean <- createFactorMap(lv2plot.mean,
-                                    col.background = NULL,
-                                    col.axes = "orchid4",
-                                    alpha.axes = 0.5,
-                                    col.points = color.obs$gc[rownames(lv2plot.mean),],
-                                    col.labels =  color.obs$gc[rownames(lv2plot.mean),],
-                                    constraints = mean.constraints,
-                                    cex = mean.cex,
-                                    text.cex = mean.textcex,
-                                    pch = 17,
-                                    alpha.points = 0.8)
-
-    bootCI.res <- Boot4Mean(lv2plot, DESIGN)
-    colnames(bootCI.res$BootCube) <- colnames(lv2plot)
-    col4CI <- as.matrix(color.obs$gc[rownames(lv2plot.mean),])
-    names(col4CI) <- rownames(lv2plot.mean) ## THIS IS STRANGE
-    lv.CI <- MakeCIEllipses(bootCI.res$BootCube,
-                            names.of.factors = colnames(lv2plot),
-                            col = col4CI,
-                            alpha.ellipse = 0.1,
-                            line.size = 0.5, alpha.line = 0.2)
-
-    lv.TI <- MakeToleranceIntervals(lv2plot,
-                                    design = DESIGN,
-                                    axis1 = 1, axis2 = 2,
-                                    col = col4CI,
-                                    line.size = 1,
-                                    alpha.ellipse = 0.05, alpha.line = 0.3,
-                                    p.level = .80)
-    if (!only.ind) {
-      if (TI) {
-          # lv.plot <- lv.plot$background + lv.TI + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
-          lv.plot <- plot.lv$zeMap_background + lv.TI + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
-      } else {
-          lv.plot <- plot.lv$zeMap_background + plot.lv$zeMap_dots + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
-      }
-      if (only.mean) {
-          lv.plot <- plot.lv.mean$zeMap_background + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
-      }
-    }
-
-  }
-
-
-  ##_________________________________________________
-  ##### Ctr J-set ----
-  Fi   <- res$TExPosition.Data$fi
-  ctri <- res$TExPosition.Data$ci
-  signed.ctri <- ctri * sign(Fi)
-  # LV1
-  ctrX.plot <- PrettyBarPlot2(
-      bootratio = round(100*signed.ctri[,leDim[1]]),
-      threshold = 100/ nrow(signed.ctri),
+  # BR K-set ----
+  BR.X <- PrettyBarPlot2(
+      bootratio = res$bootRatios.i[, leDim[1]],
+      threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions ", tab1.name, ": LV", leDim[1]),
-      ylab = "Signed Contributions")
-  ##### Ctr K-set ----
-  Fj   <- res$TExPosition.Data$fj
-  ctrj <- res$TExPosition.Data$cj
-  signed.ctrj <- ctrj * sign(Fj)
-  # LV1
-  ctrY.plot <- PrettyBarPlot2(
-      bootratio = round(100*signed.ctrj[,leDim[2]]),
-      threshold = 100 / nrow(signed.ctrj),
+      main = sprintf('Bootstrap Ratios. J-set: LV%i', leDim[1]),
+      ylab = "Bootstrap Ratios")
+  #_____________________________________________________________________
+  # BR K-set ----
+  BR.Y <- PrettyBarPlot2(
+      bootratio = res$bootRatios.i[, leDim[2]],
+      threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[2]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions ", tab2.name, ": LV", leDim[2]),
-      ylab = "Signed Contributions")
-
-  ##_________________________________________________
-  ### Circle of corr:
-  # Create labels
-  label4Map <- createxyLabels.gen(leDim4CirCor[1],leDim4CirCor[2],
-                                  lambda = res$TExPosition.Data$eigs,
-                                  tau = res$TExPosition.Data$t)
-  label4Map2 <- list(label4Map,
-                     # The standard label from createxyLabels.gen
-                     theme(axis.title = element_text(# the new theme
-                         color = "darkorchid4",
-                         size = rel(1.1),    # relative to default
-                         # family = 'Times',   # "Times", "sans", "Courier"
-                         face   = "italic" , # 'plain','italic', 'bold',
-                         # NB: face does not work with current ggplot2
-                     ), # end of element_text
-                     plot.title = element_text(color = '#5826A3')
-                     ) )
-  ### Circle of corr for J-set ----
-  # Create the map
-  loadingsX.cor <- t(cor(tab1, res$TExPosition.Data$lx[, leDim4CirCor]))
-  map4Cir.X <- PTCA4CATA::createFactorMap(
-      t(loadingsX.cor),
-      col.points = color.tab$oc[[1]],
-      col.labels = color.tab$oc[[1]],
-      col.background = NULL,
-      col.axes = "darkorchid4",
-      alpha.axes = 0.5,
-      constraints = list(minx = -1, miny = -1,
-                         maxx = 1 , maxy = 1),
-      title = paste0("Circle of Correlation for ", tab1.name))
-  #  Add some arrows
-  arrows.X <- addArrows(t(loadingsX.cor), color = color.tab$oc[[1]])
-
-  # draw the circle
-  cirCorX.plot <- map4Cir.X$zeMap_background +
-      map4Cir.X$zeMap_text +
-      addCircleOfCor(color = "darkorchid4") +
-      arrows.X + label4Map2
-
-  ### Circle of corr for K-set ----
-  # Create the map
-  loadingsY.cor <- t(cor(tab2, res$TExPosition.Data$ly[, leDim4CirCor]))
-  map4Cir.Y <- PTCA4CATA::createFactorMap(
-      t(loadingsY.cor),
-      col.points = color.tab$oc[[2]],
-      col.labels = color.tab$oc[[2]],
-      col.background = NULL,
-      col.axes = "darkorchid4",
-      alpha.axes = 0.5,
-      constraints = list(minx = -1, miny = -1,
-                         maxx = 1 , maxy = 1),
-      title = paste0("Circle of Correlation for ", tab2.name))
-  #  Add some arrows
-  arrows.Y <- addArrows(t(loadingsY.cor), color = color.tab$oc[[2]])
-
-  # draw the circle
-  cirCorY.plot <- map4Cir.Y$zeMap_background +
-      map4Cir.Y$zeMap_text +
-      addCircleOfCor(color = "darkorchid4") +
-      arrows.Y + label4Map2
+      main = sprintf('Bootstrap Ratios. K-set: LV%i', leDim[2]),
+      ylab = "Bootstrap Ratios")
 
   ##_________________________________________________
   ### Prepare to save as PPTX ###
@@ -303,26 +140,16 @@ TTAplotInference <- function(
       # loadings.as.correlation = loadingsAsCorr
   )
   results.graphs <- list(
-      heatmap.rxy = heatmap.rxy,
-      scree.eig = scree.eig,
-      scree.sv = scree.sv,
-      lv.plot = lv.plot,
-      ctrX.plot = ctrX.plot,
-      ctrY.plot = ctrY.plot,
-      cirCorX.plot = cirCorX.plot,
-      cirCorY.plot = cirCorY.plot
+      scree. = scre,
+      BR.X = BR.X,
+      BR.Y = BR.Y
   )
   description.graphs <- list(
-      heatmap.rxy = "The XY Correlation Matrix (Heat Map)",
-      scree.eig = "The Eigenvalues Scree Plot",
-      scree.sv = "The Singular Values Scree Plot",
+      scree.eig = "Scree Plot with Confindence Intervals",
       lv.plot = "Latent Variable Map",
-      ctrX.plot = "Contributions for X",
-      ctrY.plot = "Contributions for Y",
-      cirCorX.plot = "Circle of Correlation for X",
-      cirCorY.plot = "Circle of Correlation for Y"
+      BR.X = "Bootstrap Ratios for X",
+      BR.Y = "Bootstrap Ratios for Y"
   )
-
 
   ## list stat & graphs ----
   results <- list(results.stats = results.stats,
