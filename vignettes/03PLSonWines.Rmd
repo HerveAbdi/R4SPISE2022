@@ -75,7 +75,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
 ### Two data tables
 
  * First table: chemical data (`chemi`) that includes `acidity`, `alcohol`, `sugar`, and `tannin`.
- * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `henodic`
+ * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `henodic`.
 
 ```{r chemi, eval = FALSE, echo = FALSE, results='asis'}
 ### First table: chemical data
@@ -103,10 +103,10 @@ senso <- winesOf3Colors$winesDescriptors %>%
 
 ### Descriptors and supplementary variable
 
- * Descriptors: `origin`, `color` and `varietal`;
- * Suplementary variables: `Price`;
+ * Descriptors: `origin`, `color` and `varietal`.
+ * Supplementary variables: `Price`.
  
-## Run PLS-C on the two tables
+## Run Partial Least Square Correlation (PLS-C) on the two tables
 
 ```{r run}
 res.pls <- tepPLS(chemi, senso, DESIGN = descr$color, graphs = FALSE)
@@ -143,9 +143,7 @@ res.pls.plot$results.graphs$heatmap.rxy
 
 ### Scree plot
 
-The scree plot shows the eigenvalues of each dimension. 
-
-_Note_: When the variables are centered and scale to have their _standard deviations_ equals 1, the values of these eigenvalues equal the squared correlation ($R^2$) of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the correlation of these pairs of latent variables. 
+The scree plot shows the eigenvalues of each dimension. These eigenvalues give the squared _covariance_ of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the _covariance_ of these pairs of latent variables. The sum of the eigenvalues is equal to the sum of the squared covariance between all variables in both tables.
 
 ```{r scree, fig.height = 4}
 res.pls.plot$results.graphs$scree.eig
@@ -153,7 +151,7 @@ res.pls.plot$results.graphs$scree.eig
 
 ### Latent variables
 
-Here, we plot the first latent variable of both tables against each other with the observations colored according to their groups. This plot shows how the observations are distributed on the dimension and how the chosen pair of latent variables are related to each other. When plotting the first pair of latent variables, we expect the _observations_ to distribute along the bottom-left-to-top-right diagonal line (which illustrates a perfect correlation), because PLS-C maximizes the _covariance_ of the latent variables.
+Here, we plot the first latent variable of both tables against each other with the observations colored according to their groups. This plot shows how the observations are distributed on the dimension and how the chosen pair of latent variables are related to each other. When plotting the first pair of latent variables, we expect the _observations_ to distribute along the bottom-left-to-top-right diagonal line (which illustrates a perfect association), because PLS-C maximizes the _covariance_ of the latent variables.
 
 To examine the stability of these groups, we plot the group means with their 95% bootstrap confidence intervals (or ellipsoids). If the ellipses do not overlap, the groups are reliably different from each other. However, it's worth noted that the distribution of the _observations_ does not imply how the _groups_ (represented by the group means) are distributed or whether the groups are reliably different from each other. 
 

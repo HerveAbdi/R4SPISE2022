@@ -56,7 +56,7 @@ res.pca <- epPCA(chgu,
 res.plot.pca <- OTAplot(
     resPCA = res.pca,
     data = chgu
-    )
+    ) %>% suppressMessages()
 ```
 
  * `results.stats`: useful statistics after performing PCA, among which one can find the factor scores, loadings, eigenvalues, and contributions;
@@ -79,7 +79,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 
 ## Inference plots and results
 
-```{r plotPCAinference, fig.show = 'hide'}
+```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
     resPCA = res.pca,
     data = chgu
@@ -87,7 +87,7 @@ res.plot.pca.inference <- OTAplotInference(
 ```
 
 
-```{r scree inference}
+```{r scree inference, warning = FALSE, message = FALSE}
 res.plot.pca.inference$results.graphs$scree
 ```
 
