@@ -8,6 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<style type="text/css">
+body {
+  font-size: 14pt;
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -28,6 +34,7 @@ library(InPosition)
 
 ## Load the data and the packages
 
+With the following command
 
 ```{r beers, warning=FALSE, message=FALSE}
 library(R4SPISE2022)
@@ -41,7 +48,7 @@ descColors <- sixBeers12Descriptors10Judges$color4Descriptors
  * `beerColors`: colors for the beers;
  * `descColors`: colors for the descriptors.
 
-## Do the PCA
+## Do the Principal Component Analysis (PCA)
 
 ```{r epPCA}
 res.pca <- epPCA(beers, 
@@ -49,6 +56,8 @@ res.pca <- epPCA(beers,
                  scale = FALSE, # **Do not** scale the variables
                  graphs = FALSE) 
 ```
+
+The default of this function will center (to have means equal 0) and scale (to have the _standard deviations_ equal 1) all variables.
 
 ## Plot the results
 
@@ -63,15 +72,32 @@ res.plot.pca <- OTAplot(
  * `results.graphs`: all the PCA graphs (heatmaps, screeplot, factor map, correlation circles, loading maps etc.) 
  * `description.graphs`: the titles of these graphs, used as titles in the PPTX file.
  
-## Some graphs
+### Correlations of the variables
+
+We can check the data by plotting the correlation matrix between the variables. This correlation matrix is where the components are extracted.
+
+```{r heatmat cor}
+res.plot.pca$results.graphs$correlation
+```
+
+### Scree plot
+
+The scree plot shows the eigenvalues of each component. These eigenvalues give the _variance_ of each component (or called dimension in the figure). In other words, the singular values, which are the square root of the eigenvalues, give the _standard deviations_ of these components. The sum of the eigenvalues is equal to the total inertia of the data.
 
 ```{r scree}
 res.plot.pca$results.graphs$scree
 ```
 
+### Factor scores (rows)
+
+Here, the observation map shows how the observations (i.e., rows) are represented in the component space. If `center = TRUE` when running PCA, the origin should be at the center of all observations. (If it's not, something is off.)
+
 ```{r factor scores}
 res.plot.pca$results.graphs$factorScoresI12
 ```
+
+
+### Circle of correlation
 
 ```{r correlation circle}
 res.plot.pca$results.graphs$cosineCircleArrowJ12
