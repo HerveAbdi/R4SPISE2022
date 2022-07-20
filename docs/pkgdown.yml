@@ -1,0 +1,18 @@
+pandoc: '2.18'
+pkgdown: 2.0.6.9000
+pkgdown_sha: 956f076f661eb2de9413f64ea24a580cf444466d
+articles:
+  00DataBeers: 00DataBeers.html
+  00DataChewingGum: 00DataChewingGum.html
+  00DataWines: 00DataWines.html
+  01PCAonBeers: 01PCAonBeers.html
+  02PCAonChewingGum: 02PCAonChewingGum.html
+  03PLSonWines: 03PLSonWines.html
+  04CCAonWines: 04CCAonWines.html
+  05RAonWines: 05RAonWines.html
+  R4SPISEE2022: R4SPISEE2022.html
+last_built: 2022-07-20T20:06Z
+urls:
+  reference: https://herveabdi.github.io/R4SPISE2022/reference
+  article: https://herveabdi.github.io/R4SPISE2022/articles
+
