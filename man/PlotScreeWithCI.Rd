@@ -12,7 +12,7 @@ PlotScreeWithCI(
   p.ev = NULL,
   max.ev = NULL,
   ci.ev = NULL,
-  polygon.ci = FALSE,
+  polygon.ci = "tau",
   alpha = 0.05,
   col.ns = "#006D2C",
   col.sig = "#54278F",
@@ -43,6 +43,11 @@ all eigenvalues.}
 
 \item{ci.ev, }{confidence intervals for the eigenvalues,
 computed with Boot4Eigs. Default to \code{NULL}.}
+
+\item{polygon.ci, }{the confidence intervals to plot.
+\code{'tau'} will plot the bootstrap confidence intervals of taus;
+\code{'ev'} will plot the bootstrap confidence intervals of eigenvalues;
+\code{NULL} will not plot the polygon. Default to \code{'tau'}.}
 
 \item{alpha}{threshold for significance
 \code{Default = .05}).}

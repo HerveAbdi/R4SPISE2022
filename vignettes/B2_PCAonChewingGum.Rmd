@@ -110,7 +110,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 
 ## Inference plots and results
 
-The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap and permutation tests of the eigenvalues and the bootstrap tests of the column factor scores $\mathbf{G}$ (i.e., the right singular vectors scaled to have the variance of each dimension equals the corresponding singular value; $\mathbf{G} = \mathbf{Q}\boldsymbol{\Delta}$ with $\mathbf{X = P}\boldsymbol{\Delta}\mathbf{Q}^\top$). These column factor scores are stored as `fj` in the output of `epPCA`.
+The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, and the bootstrap tests of the column factor scores $\mathbf{G}$ (i.e., the right singular vectors scaled to have the variance of each dimension equals the corresponding singular value; $\mathbf{G} = \mathbf{Q}\boldsymbol{\Delta}$ with $\mathbf{X = P}\boldsymbol{\Delta}\mathbf{Q}^\top$). These column factor scores are stored as `fj` in the output of `epPCA`.
 
 ```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
@@ -121,13 +121,13 @@ res.plot.pca.inference <- OTAplotInference(
 
 ### Bootstrap and permutation tests on the eigenvalues
 
-The inference scree plot illustrates the 95\% bootstrap confidence intervals of each eigenvalue. If an interval includes 0, the eigenvalue is not reliably different larger than 0.
+The inference scree plot illustrates the 95\% bootstrap confidence intervals of the percentage of variance explained by each eigenvalue. If an interval includes 0, the component explains reliably larger than 0\% of the variance.
 
 ```{r scree inference, warning = FALSE, message = FALSE}
 res.plot.pca.inference$results.graphs$scree
 ```
 
-The bootstrap test identifies three significant dimensions that have eigenvalues reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
+The bootstrap test identifies three significant dimensions that explains the variance reliably larger than 0\%. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
 
 ### Bootstrap test on the column factor scores
 
