@@ -83,7 +83,7 @@ PlotScreeWithCI <- function(ev,
   # percentage of inertia for the CIs
   val.tau.ci = (100*ci.ev$BootMatEigsCI/sum(ev))
   #---------------------------------------
-  Top.y = ceiling(max(val.tau) * .1) * 10
+  Top.y = ceiling(max(val.tau.ci) * .1) * 10
   # if ev is already a percentage convert it back
   if (!is.null(max.ev)){ev = ev * (max.ev / ev[1])}
   #
