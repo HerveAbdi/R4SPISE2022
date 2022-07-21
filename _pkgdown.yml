@@ -2,9 +2,6 @@ url: https://herveabdi.github.io/R4SPISE2022/
 template:
   bootstrap: 5
 
-development:
-  mode: auto
-
 home:
   links:
   - text: External data sets
