@@ -8,6 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<style type="text/css">
+body {
+  font-size: 14pt;
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -28,6 +34,7 @@ library(InPosition)
 
 ## Load the data and the packages
 
+With the following command
 
 ```{r chgu, warning=FALSE, message=FALSE}
 library(R4SPISE2022)
@@ -50,6 +57,8 @@ res.pca <- epPCA(chgu,
                  graphs = FALSE) 
 ```
 
+The default of this function will center (to have means equal 0) and scale (to have the _standard deviations_ equal 1) all variables.
+
 ## Plot the results
 
 ```{r plotPCA, fig.show = 'hide'}
@@ -63,21 +72,45 @@ res.plot.pca <- OTAplot(
  * `results.graphs`: all the PCA graphs (heatmaps, screeplot, factor map, correlation circles, loading maps etc.) 
  * `description.graphs`: the titles of these graphs, used as titles in the PPTX file.
  
-## Some graphs
+### Correlations of the variables
+
+We can check the data by plotting the correlation matrix between the variables. This correlation matrix is where the components are extracted.
+
+```{r heatmat cor}
+res.plot.pca$results.graphs$correlation
+```
+
+### Scree plot
+
+The scree plot shows the eigenvalues of each component. These eigenvalues give the _variance_ of each component (or called dimension in the figure). In other words, the singular values, which are the square root of the eigenvalues, give the _standard deviations_ of these components. The sum of the eigenvalues is equal to the total inertia of the data.
 
 ```{r scree}
 res.plot.pca$results.graphs$scree
 ```
 
+According to an elbow test, there are 4 dimensions in this data; but, according to the Kaiser test (eigenvalue > 1), there is only 1 dimension.
+
+### Factor scores (rows)
+
+Here, the observation map shows how the observations (i.e., rows) are represented in the component space. If `center = TRUE` when running PCA, the origin should be at the center of all observations. (If it's not, something is off.)
+
 ```{r factor scores}
 res.plot.pca$results.graphs$factorScoresI12
 ```
+
+### Circle of correlation
+
+The circle of correlations illustrate how the variables are correlated with each other and with the dimensions. From this figure, the length of an arrow indicates how much this variable is explained by the two given dimensions. The cosine between any two arrows gives their correlation. The cosine between a variable and an axis gives the correlation between that variable and the corresponding dimension. 
+
+In this figure, an angle closer to 0° indicates a correlation close to 1; an angle closer to 180° indicates a correlation close to -1; and an 90° angle indicates 0 correlation. However, it's worth noted that this implication of correlation might only be true within the given dimensions. When a variable is far away from the circle, it is not fully explained by the dimensions, and other dimensions might be characterized by other pattern of relationship between this and other variables.
 
 ```{r correlation circle}
 res.plot.pca$results.graphs$cosineCircleArrowJ12
 ```
 
 ## Inference plots and results
+
+The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap and permutation tests of the eigenvalues and the bootstrap tests of the column factor scores (i.e., the right singular vectors scaled to have the variance of each dimension equals the corresponding singular value; $\mathbf{Q}\boldsymbol{\Delta}$ with $\mathbf{X = P}\boldsymbol{\Delta}\mathbf{Q}^\top$).
 
 ```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
@@ -86,15 +119,26 @@ res.plot.pca.inference <- OTAplotInference(
     )
 ```
 
+### Bootstrap and permutation tests on the eigenvalues
+
+The inference scree plot illustrates the 95\% bootstrap confidence intervals of each eigenvalue. If an interval includes 0, the eigenvalue is not reliably different larger than 0.
 
 ```{r scree inference, warning = FALSE, message = FALSE}
 res.plot.pca.inference$results.graphs$scree
 ```
 
+The bootstrap test identifies three significant dimensions that have eigenvalues reliably different from 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
+
+### Bootstrap test on the column factor scores
+
+The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{f_j}{\sqrt{SD_{f_{j}boot}}},$$ where $f_j$ is the column factor scores of the *j*th variable and $SD_{boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio approximates the _t_-statistics of the column factor score with the $\mathrm{H}_0: f_j = 0$. The threshold is set to 2 to approximate the _t_-value if 1.96 at $\alpha$ = 0.05 (1.96).
+
 ```{r bootstrap ratios 1}
 res.plot.pca.inference$results.graphs$BR1
 ```
 
-```{r bootstrap ratios 2}
+```{r bootstrap ratios 2, warning=FALSE, message=FALSE}
 res.plot.pca.inference$results.graphs$BR2
 ```
+
+The results show no significant factor scores for both dimensions that is reliably different from 0.
