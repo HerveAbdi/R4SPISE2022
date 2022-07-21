@@ -57,7 +57,7 @@ res.pca <- epPCA(chgu,
                  graphs = FALSE) 
 ```
 
-The default of this function will center (to have means equal 0) and scale (to have the _standard deviations_ equal 1) all variables.
+The default of this function will center (to have means equal 0) and scale (to have the _standard deviations_ equal 1; i.e., `scale = TRUE`) all variables. When we set `scale = "ss1"`, the varaibles are scaled to have their sums of squares equal 1.
 
 ## Plot the results
 
