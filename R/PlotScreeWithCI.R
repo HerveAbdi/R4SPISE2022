@@ -95,7 +95,7 @@ PlotScreeWithCI <- function(ev,
        main = title,
        type = 'l', col = col.ns, lwd = 1,
        xlim = c(1, length(val.tau)),
-       ylim = c(0,Top.y) # This was the orinigal line
+       ylim = c(0,Top.y) # This was the original line
   )
   # ADDED - JY ------------------------------------------------------
   if(!is.null(ci.ev)){ # plot the confidence intervals if ci.ev exist
