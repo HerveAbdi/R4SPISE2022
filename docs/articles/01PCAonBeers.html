@@ -50,6 +50,7 @@
     <a class="dropdown-item" href="../articles/04CCAonWines.html">CCA on Wines</a>
     <a class="dropdown-item" href="../articles/05RAonWines.html">RA on Wines</a>
     <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
+    <a class="dropdown-item" href="../articles/other/other.html">This is a test</a>
   </div>
 </li>
       </ul>
@@ -165,6 +166,7 @@ to the total inertia of the data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/scree-1.svg" width="672"></p>
+<p>According to an elbow test, there are 4 dimensions in this data.</p>
 </div>
 <div class="section level3">
 <h3 id="factor-scores-rows">Factor scores (rows)<a class="anchor" aria-label="anchor" href="#factor-scores-rows"></a>
@@ -176,35 +178,90 @@ it’s not, something is off.)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">factorScoresI12</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/factor%20scores-1.svg" width="672"></p>
+<p>The result in this plot showed that the first dimension separates
+<code>BlueMoon</code> from <code>Hofbrau</code>, and the second
+dimension separates <code>BlueMoon</code> and <code>Hofbrau</code> from
+<code>FranzDunkel</code> and <code>FranzNatur</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="circle-of-correlation">Circle of correlation<a class="anchor" aria-label="anchor" href="#circle-of-correlation"></a>
 </h3>
+<p>The circle of correlations illustrate how the variables are
+correlated with each other and with the dimensions. From this figure,
+the length of an arrow indicates how much this variable is explained by
+the two given dimensions. The cosine between any two arrows gives their
+correlation. The cosine between a variable and an axis gives the
+correlation between that variable and the corresponding dimension.</p>
+<p>In this figure, an angle closer to 0° indicates a correlation close
+to 1; an angle closer to 180° indicates a correlation close to -1; and
+an 90° angle indicates 0 correlation. However, it’s worth noted that
+this implication of correlation might only be true within the given
+dimensions. When a variable is far away from the circle, it is not fully
+explained by the dimensions, and other dimensions might be characterized
+by other pattern of relationship between this and other variables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cosineCircleArrowJ12</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/correlation%20circle-1.svg" width="672"></p>
+<p>This circle of correlation plot illustrates that Dimension 1 is
+<code>Sweet</code> and <code>Alcoholic</code> versus <code>Yeast</code>,
+<code>Hay</code>, <code>Bitter</code>, <code>Cereal</code>, and
+<code>Toasted</code>; Dimension 2 is <code>Acid</code> and
+<code>Fermented</code> versus <code>Cereal</code> and
+<code>Toasted</code>. Interestingly, <code>Acid</code> and
+<code>Fermented</code> are orthogonal to <code>Sweet</code> and
+<code>Hay</code> (which are anti-correlated from each other) on the
+first two dimension. On these two dimensions, <code>Cereal</code> and
+<code>Toasted</code> are negatively correlated with <code>Malt</code>
+and <code>Hop</code>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="inference-plots-and-results">Inference plots and results<a class="anchor" aria-label="anchor" href="#inference-plots-and-results"></a>
 </h2>
+<p>The inference analysis of PCA (performed by
+<code>OTAplotInference</code>) includes bootstrap and permutation tests
+of the eigenvalues and the bootstrap tests of the column factor scores
+(i.e., the right singular vectors scaled to have the variance of each
+dimension equals the corresponding singular value; <span class="math inline">\(\mathbf{Q}\boldsymbol{\Delta}\)</span> with <span class="math inline">\(\mathbf{X =
+P}\boldsymbol{\Delta}\mathbf{Q}^\top\)</span>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplotInference</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
 <span>    data <span class="op">=</span> <span class="va">beers</span></span>
-<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "It is estimated that your iterations will take 0 minutes."</span></span>
-<span><span class="co">#&gt; [1] "R is not in interactive() mode. Resample-based tests will be conducted. Please take note of the progress bar."</span></span>
-<span><span class="co">#&gt; ================================================================================</span></span></code></pre></div>
+<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="bootstrap-and-permutation-tests-on-the-eigenvalues">Bootstrap and permutation tests on the eigenvalues<a class="anchor" aria-label="anchor" href="#bootstrap-and-permutation-tests-on-the-eigenvalues"></a>
+</h3>
+<p>The inference scree plot illustrates the 95% bootstrap confidence
+intervals of each eigenvalue. If an interval includes 0, the eigenvalue
+is not reliably different larger than 0.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/scree%20inference-1.svg" width="672"></p>
+<p>The bootstrap test identifies one significant dimension to have an
+eigenvalue reliably different from 0. The permutation test identifies
+one significant dimension with an eigenvalue significantly larger than
+0.</p>
+</div>
+<div class="section level3">
+<h3 id="bootstrap-test-on-the-column-factor-scores">Bootstrap test on the column factor scores<a class="anchor" aria-label="anchor" href="#bootstrap-test-on-the-column-factor-scores"></a>
+</h3>
+<p>The bar plot illustrates the <em>bootstrap ratios</em> which equals
+<span class="math display">\[\frac{f_j}{\sqrt{SD_{f_{j}boot}}},\]</span>
+where <span class="math inline">\(f_j\)</span> is the column factor
+scores of the <em>j</em>th variable and <span class="math inline">\(SD_{boot}\)</span> is the bootstrapped standard
+deviation of the factor score. A bootstrap ratio approximates the
+<em>t</em>-statistics of the column factor score with the <span class="math inline">\(\mathrm{H}_0: f_j = 0\)</span>. The threshold is
+set to 2 to approximate the <em>t</em>-value if 1.96 at <span class="math inline">\(\alpha\)</span> = 0.05 (1.96).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR1</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR2</span></span></code></pre></div>
 <p><img src="01PCAonBeers_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
+<p>The results show no significant factor scores for both dimensions
+that is reliably different from 0.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

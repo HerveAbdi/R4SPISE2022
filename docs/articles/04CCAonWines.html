@@ -50,6 +50,7 @@
     <a class="dropdown-item" href="../articles/04CCAonWines.html">CCA on Wines</a>
     <a class="dropdown-item" href="../articles/05RAonWines.html">RA on Wines</a>
     <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
+    <a class="dropdown-item" href="../articles/other/other.html">This is a test</a>
   </div>
 </li>
       </ul>
@@ -277,7 +278,11 @@ correlation. The cosine between a variable and an axis gives the
 correlation between that variable and the corresponding dimension.</p>
 <p>In this figure, an angle closer to 0° indicates a correlation close
 to 1; an angle closer to 180° indicates a correlation close to -1; and
-an 90° angle indicates 0 correlation.</p>
+an 90° angle indicates 0 correlation. However, it’s worth noted that
+this implication of correlation might only be true within the given
+dimensions. When a variable is far away from the circle, it is not fully
+explained by the dimensions, and other dimensions might be characterized
+by other pattern of relationship between this and other variables.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorX.plot</span></span></code></pre></div>
 <p><img src="04CCAonWines_files/figure-html/corcircles-1.svg" width="672"></p>
