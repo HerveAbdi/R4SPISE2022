@@ -107,7 +107,9 @@ TTAplotInference <- function(
   ## Scree with confidence intervals
   PlotScreeWithCI(
       ev = res$TExPosition.Data$eigs,
-      ci.ev = resBoot4PLSC$eigenValues)
+      ci.ev = resBoot4PLSC$eigenValues,
+      polygon.ci = 'ev'
+      )
   a01.leScree <- recordPlot()
 
   # BR K-set ----

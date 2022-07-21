@@ -180,7 +180,8 @@ OTAplotInference <- function(
     ## Scree with confidence intervals
     PlotScreeWithCI(
         ev = bootstapped.Eigenvalues$FixedEigs,
-        ci.ev = bootstapped.Eigenvalues,
+        ci.ev = bootstapped.Eigenvalues$BootMatEigsCI,
+        ci.tau = bootstapped.Eigenvalues$BootMatTausCI,
         p.ev = infres$Inference.Data$components$p.vals)
     a01.leScree <- recordPlot()
     ## Boostrap ratios

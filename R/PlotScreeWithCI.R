@@ -38,6 +38,8 @@
 #'        all eigenvalues.
 #' @param ci.ev, confidence intervals for the eigenvalues,
 #'        computed with Boot4Eigs. Default to \code{NULL}.
+#' @param ci.tau, confidence intervals for the taus,
+#'        computed with Boot4Eigs. Default to \code{NULL}.
 #' @param polygon.ci, the confidence intervals to plot.
 #' \code{'tau'} will plot the bootstrap confidence intervals of taus;
 #' \code{'ev'} will plot the bootstrap confidence intervals of eigenvalues;
@@ -73,6 +75,7 @@ PlotScreeWithCI <- function(ev,
                             p.ev = NULL,
                             max.ev = NULL,
                             ci.ev = NULL, # ADDED - JY ---- # results from Boot4Eigs
+                            ci.tau = NULL,
                             polygon.ci = 'tau', # ADDED - JY ---- # TRUE/FALSE statement
                             alpha = .05,
                             col.ns = '#006D2C', col.sig = '#54278F',
@@ -85,9 +88,9 @@ PlotScreeWithCI <- function(ev,
   val.tau = (100*ev / sum(ev))
   # ADDED - JY ---------------------------
   if (polygon.ci == 'ev'){
-      val.tau.ci = (100*ci.ev$BootMatEigsCI / sum(ev))
+      val.tau.ci = (100*ci.ev / sum(ev))
   }else if (polygon.ci == 'tau'){
-      val.tau.ci = 100*ci.ev$BootMatTausCI
+      val.tau.ci = 100*ci.tau
   }
 
   # percentage of inertia for the CIs
