@@ -110,7 +110,7 @@ res.plot.pca$results.graphs$cosineCircleArrowJ12
 
 ## Inference plots and results
 
-The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap and permutation tests of the eigenvalues and the bootstrap tests of the column factor scores (i.e., the right singular vectors scaled to have the variance of each dimension equals the corresponding singular value; $\mathbf{Q}\boldsymbol{\Delta}$ with $\mathbf{X = P}\boldsymbol{\Delta}\mathbf{Q}^\top$).
+The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap and permutation tests of the eigenvalues and the bootstrap tests of the column factor scores $\mathbf{G}$ (i.e., the right singular vectors scaled to have the variance of each dimension equals the corresponding singular value; $\mathbf{G} = \mathbf{Q}\boldsymbol{\Delta}$ with $\mathbf{X = P}\boldsymbol{\Delta}\mathbf{Q}^\top$). These column factor scores are stored as `fj` in the output of `epPCA`.
 
 ```{r plotPCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.pca.inference <- OTAplotInference(
@@ -127,11 +127,11 @@ The inference scree plot illustrates the 95\% bootstrap confidence intervals of 
 res.plot.pca.inference$results.graphs$scree
 ```
 
-The bootstrap test identifies three significant dimensions that have eigenvalues reliably different from 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
+The bootstrap test identifies three significant dimensions that have eigenvalues reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
 
 ### Bootstrap test on the column factor scores
 
-The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{f_j}{\sqrt{SD_{f_{j}boot}}},$$ where $f_j$ is the column factor scores of the *j*th variable and $SD_{boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio approximates the _t_-statistics of the column factor score with the $\mathrm{H}_0: f_j = 0$. The threshold is set to 2 to approximate the _t_-value if 1.96 at $\alpha$ = 0.05 (1.96).
+The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{g_{j}boot}}{SD_{g_{j}boot}},$$ where $M_{g_{j}boot}$ is the mean of the bootstrapped sample of the *j*th column factor score and $SD_{g_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.
 
 ```{r bootstrap ratios 1}
 res.plot.pca.inference$results.graphs$BR1
