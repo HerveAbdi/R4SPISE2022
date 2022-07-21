@@ -31,8 +31,6 @@
 #' @param data A data frame or a matrix with
 #' numerical data suitable for a PCA. Passed to
 #' \code{ExPosition::epPCA}.
-#' @param center Default: center
-#' @param scale Default: SS1
 #' @param DESIGN  Default: NULL.
 #' A design vector (could be factor or character)
 #' or (Boolean) matrix used to assigne oobservations
@@ -116,8 +114,6 @@
 OTAplotInference <- function(
     resPCA,
     data,
-    center = TRUE,
-    scale = "SS1",
         DESIGN = NULL,
         make_design_nominal = TRUE,
         k = 0,
@@ -137,8 +133,8 @@ OTAplotInference <- function(
     printTest <- FALSE # to debug the graphs
     data <- ExPosition::expo.scale(
         data,
-        center = center,
-        scale = scale)
+        center = res.pca$ExPosition.Data$center,
+        scale = res.pca$ExPosition.Data$scale)
     # NB use namenameExpositionResults() to have
     # Dimensions named
     if (is.null(col4I)) {
@@ -166,16 +162,16 @@ OTAplotInference <- function(
     # use PTCA4CATA::PlotScree
     ##### Inference and bootstrap
     infres <- epPCA.inference.battery(
-        DATA = data,
-        center = center,
-        scale = scale,
+        DATA = data, # data is preprocessed already
+        center = FALSE,
+        scale = FALSE,
         DESIGN = DESIGN,
         test.iters = niter.perm,
         graphs = FALSE)
     bootstapped.Eigenvalues <- Boot4Eigs(
-        data = data,
-        center = center,
-        scale = scale,
+        data = data, # data is preprocessed already
+        center = FALSE,
+        scale = FALSE,
         design = DESIGN,
         niter = niter.boot,
         CI.perc = c(0.025, 0.975),
