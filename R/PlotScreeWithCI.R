@@ -112,14 +112,14 @@ PlotScreeWithCI <- function(ev,
   points(x = seq(1,length(val.tau)),y = val.tau,
          pch = 16,  cex = 1, col = col.ns, lwd = 2.5
   )
-  if (!is.null(p.ev)){# plot the significant vp if exist
-    # Plot the significant factors
-    signi.vp = which(p.ev < alpha)
-    # These are the lines Ju-Chi changed ####
-    lines(x = seq(1, max(signi.vp)), y = val.tau[1:max(signi.vp)],
-          type = "l", col = col.sig, lwd = 1.5)
-    points(x = signi.vp, y = val.tau[signi.vp],
-           pch = 16, cex = 1.5, col = col.sig, lwd = 3.5)
+  if (!is.null(p.ev) & sum(p.ev < alpha) > 0){# plot the significant vp if exist
+          # Plot the significant factors
+          signi.vp = which(p.ev < alpha)
+          # These are the lines Ju-Chi changed ####
+          lines(x = seq(1, max(signi.vp)), y = val.tau[1:max(signi.vp)],
+                type = "l", col = col.sig, lwd = 1.5)
+          points(x = signi.vp, y = val.tau[signi.vp],
+                 pch = 16, cex = 1.5, col = col.sig, lwd = 3.5)
     #______________________________________________
   } # end of plot significant vp
   par(new = TRUE)
