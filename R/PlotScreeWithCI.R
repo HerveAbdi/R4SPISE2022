@@ -38,6 +38,10 @@
 #'        all eigenvalues.
 #' @param ci.ev, confidence intervals for the eigenvalues,
 #'        computed with Boot4Eigs. Default to \code{NULL}.
+#' @param polygon.ci, the confidence intervals to plot.
+#' \code{'tau'} will plot the bootstrap confidence intervals of taus;
+#' \code{'ev'} will plot the bootstrap confidence intervals of eigenvalues;
+#' \code{NULL} will not plot the polygon. Default to \code{'tau'}.
 #' @param alpha
 #' threshold for significance
 #'   \code{Default = .05}).
@@ -69,7 +73,7 @@ PlotScreeWithCI <- function(ev,
                             p.ev = NULL,
                             max.ev = NULL,
                             ci.ev = NULL, # ADDED - JY ---- # results from Boot4Eigs
-                            polygon.ci = FALSE, # ADDED - JY ---- # TRUE/FALSE statement
+                            polygon.ci = 'tau', # ADDED - JY ---- # TRUE/FALSE statement
                             alpha = .05,
                             col.ns = '#006D2C', col.sig = '#54278F',
                             title = "Explained Variance per Dimension",
@@ -80,8 +84,13 @@ PlotScreeWithCI <- function(ev,
   # percentage of inertia
   val.tau = (100*ev / sum(ev))
   # ADDED - JY ---------------------------
+  if (polygon.ci == 'ev'){
+      val.tau.ci = (100*ci.ev$BootMatEigsCI / sum(ev))
+  }else if (polygon.ci == 'tau'){
+      val.tau.ci = 100*ci.ev$BootMatTausCI
+  }
+
   # percentage of inertia for the CIs
-  val.tau.ci = (100*ci.ev$BootMatEigsCI/sum(ev))
   #---------------------------------------
   Top.y = ceiling(max(val.tau.ci) * .1) * 10
   # if ev is already a percentage convert it back
