@@ -1,11 +1,8 @@
 ---
-title: "This is a test"
+title: "Additionnal references"
 output: html_document
 ---
 
-# Test section title
+ * Principal Component Analysis [paper](articles/other/abdi-awPCA2010.pdf).
+ * Partial Least Methods: A review [paper](articles/other/abdi-PLSC_and_PLSR2012.pdf).
 
-Bla bla bla?
-
- * Yes!
- * No!

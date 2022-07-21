@@ -30,6 +30,8 @@ OTAplot(
 OTAplotInference(
   resPCA,
   data,
+  center = TRUE,
+  scale = "SS1",
   DESIGN = NULL,
   make_design_nominal = TRUE,
   k = 0,
@@ -134,16 +136,16 @@ Not yet implemented,}
 'PCA Results'.
 Not yet implemented,.}
 
+\item{center}{Default: TRUE.
+do we center the columns of \code{data}
+Passed to
+\code{ExPosition::epPCA}.}
+
 \item{scale}{scale (i.e., normalize) the
 columns of \code{data}.
 Default: \code{TRUE}. Values could
 be \code{TRUE, FALSE, 'Z', 'SS1'}. \code{TRUE}
 defaults to \code{SS1}.
-Passed to
-\code{ExPosition::epPCA}.}
-
-\item{center}{Default: TRUE.
-do we center the columns of \code{data}
 Passed to
 \code{ExPosition::epPCA}.}
 
