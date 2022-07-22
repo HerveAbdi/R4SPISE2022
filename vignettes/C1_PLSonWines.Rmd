@@ -57,6 +57,10 @@ varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 8))
     
 ```
 
+
+More information on the dataset is available on the corresponding vignette: `vignette("A3_DataWines")`.
+
+
 ## Two tables with descriptors and other supplementary information
 
 ```{r four table, echo = TRUE}

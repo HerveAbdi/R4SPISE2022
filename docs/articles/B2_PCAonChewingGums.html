@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="R4SPISE2022">
-<title>PCA on Beers • R4SPISE2022</title>
+<title>PCA on Chewing-gums • R4SPISE2022</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="PCA on Beers">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="PCA on Chewing-gums">
 <meta property="og:description" content="R4SPISE2022">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -79,13 +79,13 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>PCA on Beers</h1>
+      <img src="" class="logo" alt=""><h1>PCA on Chewing-gums</h1>
                         <h4 data-toc-skip class="author">Vincent
 Guillemot, Hervé Abdi, Ju-Chi Yu &amp; Soudeh Ardestani Khoubrouy</h4>
             
       
-      <small class="dont-index">Source: <a href="http://github.com/HerveAbdi/R4SPISE2022/blob/HEAD/vignettes/B1_PCAonBeers.Rmd" class="external-link"><code>vignettes/B1_PCAonBeers.Rmd</code></a></small>
-      <div class="d-none name"><code>B1_PCAonBeers.Rmd</code></div>
+      <small class="dont-index">Source: <a href="http://github.com/HerveAbdi/R4SPISE2022/blob/HEAD/vignettes/B2_PCAonChewingGums.Rmd" class="external-link"><code>vignettes/B2_PCAonChewingGums.Rmd</code></a></small>
+      <div class="d-none name"><code>B2_PCAonChewingGums.Rmd</code></div>
     </div>
 
     
@@ -101,32 +101,34 @@ body {
 <p>With the following command</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/HerveAbdi/R4SPISE2022" class="external-link">R4SPISE2022</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sixBeers12Descriptors10Judges"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span>
-<span><span class="va">beers</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">ratingsIntensity</span></span>
-<span><span class="va">beerColors</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">color4Products</span></span>
-<span><span class="va">descColors</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">color4Descriptors</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sixteenGums4Descriptors"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span>
+<span><span class="va">chgu</span> <span class="op">&lt;-</span> <span class="va">sixteenGums4Descriptors</span><span class="op">$</span><span class="va">ratingsIntensity</span></span>
+<span><span class="va">chguColors</span> <span class="op">&lt;-</span> <span class="va">sixteenGums4Descriptors</span><span class="op">$</span><span class="va">color4Products</span></span>
+<span><span class="va">descColors</span> <span class="op">&lt;-</span> <span class="va">sixteenGums4Descriptors</span><span class="op">$</span><span class="va">color4Descriptors</span></span></code></pre></div>
 <ul>
 <li>
-<code>beers</code>: the ratings;</li>
+<code>chgu</code>: the intensities;</li>
 <li>
-<code>beerColors</code>: colors for the beers;</li>
+<code>chguColors</code>: colors for the chewing-gums;</li>
 <li>
 <code>descColors</code>: colors for the descriptors.</li>
 </ul>
 <p>More information on the dataset is available on the corresponding
-vignette: <code><a href="../articles/A1_DataBeers.html">vignette("A1_DataBeers")</a></code>.</p>
+vignette: <code><a href="../articles/A2_DataChewingGums.html">vignette("A2_DataChewingGums")</a></code>.</p>
 </div>
 <div class="section level2">
-<h2 id="do-the-principal-component-analysis-pca">Do the Principal Component Analysis (PCA)<a class="anchor" aria-label="anchor" href="#do-the-principal-component-analysis-pca"></a>
+<h2 id="do-the-pca">Do the PCA<a class="anchor" aria-label="anchor" href="#do-the-pca"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">beers</span>, </span>
+<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">chgu</span>, </span>
 <span>                 center <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Center the data</span></span>
-<span>                 scale <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># **Do not** scale the variables</span></span>
+<span>                 scale <span class="op">=</span> <span class="st">"ss1"</span>, <span class="co"># Scale the variables</span></span>
 <span>                 graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
 <p>The default of this function will center (to have means equal 0) and
-scale (to have the <em>standard deviations</em> equal 1) all
-variables.</p>
+scale (to have the <em>standard deviations</em> equal 1; i.e.,
+<code>scale = TRUE</code>) all variables. When we set
+<code>scale = "ss1"</code>, the varaibles are scaled to have their sums
+of squares equal 1.</p>
 </div>
 <div class="section level2">
 <h2 id="plot-the-results">Plot the results<a class="anchor" aria-label="anchor" href="#plot-the-results"></a>
@@ -134,8 +136,8 @@ variables.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplot</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
-<span>    data <span class="op">=</span> <span class="va">beers</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
+<span>    data <span class="op">=</span> <span class="va">chgu</span></span>
+<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <code>results.stats</code>: useful statistics after performing PCA,
@@ -156,7 +158,7 @@ variables. This correlation matrix is where the components are
 extracted.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">correlation</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/heatmat%20cor-1.svg" width="672"></p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/heatmat%20cor-1.svg" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="scree-plot">Scree plot<a class="anchor" aria-label="anchor" href="#scree-plot"></a>
@@ -169,8 +171,10 @@ deviations</em> of these components. The sum of the eigenvalues is equal
 to the total inertia of the data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/scree-1.svg" width="672"></p>
-<p>According to an elbow test, there are 4 dimensions in this data.</p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/scree-1.svg" width="672"></p>
+<p>According to an elbow test, there are 4 dimensions in this data; but,
+according to the Kaiser test (eigenvalue &gt; 1), there is only 1
+dimension.</p>
 </div>
 <div class="section level3">
 <h3 id="factor-scores-rows">Factor scores (rows)<a class="anchor" aria-label="anchor" href="#factor-scores-rows"></a>
@@ -181,11 +185,7 @@ running PCA, the origin should be at the center of all observations. (If
 it’s not, something is off.)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">factorScoresI12</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/factor%20scores-1.svg" width="672"></p>
-<p>The result in this plot showed that the first dimension separates
-<code>BlueMoon</code> from <code>Hofbrau</code>, and the second
-dimension separates <code>BlueMoon</code> and <code>Hofbrau</code> from
-<code>FranzDunkel</code> and <code>FranzNatur</code>.</p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/factor%20scores-1.svg" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="circle-of-correlation">Circle of correlation<a class="anchor" aria-label="anchor" href="#circle-of-correlation"></a>
@@ -205,18 +205,7 @@ explained by the dimensions, and other dimensions might be characterized
 by other pattern of relationship between this and other variables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cosineCircleArrowJ12</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/correlation%20circle-1.svg" width="672"></p>
-<p>This circle of correlation plot illustrates that Dimension 1 is
-<code>Sweet</code> and <code>Alcoholic</code> versus <code>Yeast</code>,
-<code>Hay</code>, <code>Bitter</code>, <code>Cereal</code>, and
-<code>Toasted</code>; Dimension 2 is <code>Acid</code> and
-<code>Fermented</code> versus <code>Cereal</code> and
-<code>Toasted</code>. Interestingly, <code>Acid</code> and
-<code>Fermented</code> are orthogonal to <code>Sweet</code> and
-<code>Hay</code> (which are anti-correlated from each other) on the
-first two dimension. On these two dimensions, <code>Cereal</code> and
-<code>Toasted</code> are negatively correlated with <code>Malt</code>
-and <code>Hop</code>.</p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/correlation%20circle-1.svg" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -224,7 +213,7 @@ and <code>Hop</code>.</p>
 </h2>
 <p>The inference analysis of PCA (performed by
 <code>OTAplotInference</code>) includes bootstrap test of the proportion
-of variance explained, permutation tests of the eigenvalues, the
+of variance explained, permutation tests of the eigenvalues, and the
 bootstrap tests of the column factor scores <span class="math inline">\(\mathbf{G}\)</span> (i.e., the right singular
 vectors scaled to have the variance of each dimension equals the
 corresponding singular value; <span class="math inline">\(\mathbf{G} =
@@ -235,8 +224,8 @@ scores are stored as <code>fj</code> in the output of
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplotInference</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
-<span>    data <span class="op">=</span> <span class="va">beers</span></span>
-<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    data <span class="op">=</span> <span class="va">chgu</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="bootstrap-and-permutation-tests-on-the-eigenvalues">Bootstrap and permutation tests on the eigenvalues<a class="anchor" aria-label="anchor" href="#bootstrap-and-permutation-tests-on-the-eigenvalues"></a>
 </h3>
@@ -246,11 +235,11 @@ an interval includes 0, the component explains reliably larger than 0%
 of the variance.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/scree%20inference-1.svg" width="672"></p>
-<p>The bootstrap test identifies one significant dimension explains the
-variance reliably larger than 0%. The permutation test identifies one
-significant dimension with an eigenvalue significantly larger than
-0.</p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/scree%20inference-1.svg" width="672"></p>
+<p>The bootstrap test identifies three significant dimensions that
+explains the variance reliably larger than 0%. The permutation test
+identifies one significant dimension with an eigenvalue significantly
+larger than 0.</p>
 </div>
 <div class="section level3">
 <h3 id="bootstrap-test-on-the-column-factor-scores">Bootstrap test on the column factor scores<a class="anchor" aria-label="anchor" href="#bootstrap-test-on-the-column-factor-scores"></a>
@@ -265,10 +254,10 @@ to a <em>t</em>-statistics for the column factor score with the <span class="mat
 set to 2 to approximate the critical <em>t</em>-value of 1.96 at <span class="math inline">\(\alpha\)</span> = .05.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR1</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR2</span></span></code></pre></div>
-<p><img src="B1_PCAonBeers_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
+<p><img src="B2_PCAonChewingGums_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
 <p>The results show no significant factor scores for both dimensions
 that is reliably different from 0.</p>
 </div>

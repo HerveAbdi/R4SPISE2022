@@ -1,5 +1,5 @@
 ---
-title: "PCA on the Beer Data"
+title: "PCA on Beers"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
@@ -48,6 +48,9 @@ descColors <- sixBeers12Descriptors10Judges$color4Descriptors
  * `beers`: the ratings;
  * `beerColors`: colors for the beers;
  * `descColors`: colors for the descriptors.
+
+More information on the dataset is available on the corresponding vignette: `vignette("A1_DataBeers")`.
+
 
 ## Do the Principal Component Analysis (PCA)
 

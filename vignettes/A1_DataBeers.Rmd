@@ -1,5 +1,5 @@
 ---
-title: "Beers"
+title: "A Sensory Data Set on Beers"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >

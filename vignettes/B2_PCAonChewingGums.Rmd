@@ -1,5 +1,5 @@
 ---
-title: "PCA on the Chewing-gum Data"
+title: "PCA on Chewing-gums"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
@@ -47,6 +47,8 @@ descColors <- sixteenGums4Descriptors$color4Descriptors
  * `chgu`: the intensities;
  * `chguColors`: colors for the chewing-gums;
  * `descColors`: colors for the descriptors.
+
+More information on the dataset is available on the corresponding vignette: `vignette("A2_DataChewingGums")`.
 
 ## Do the PCA
 

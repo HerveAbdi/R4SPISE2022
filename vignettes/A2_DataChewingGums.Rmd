@@ -1,5 +1,5 @@
 ---
-title: "Chewing-gums"
+title: "A Sensory Data Set on Chewing-gums"
 author: "Vincent Guillemot & Hervé Abdi & Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >

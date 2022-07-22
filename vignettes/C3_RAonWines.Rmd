@@ -1,5 +1,5 @@
 ---
-title: "RA on Wines"
+title: "Redundancy Analysis on Wines"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
@@ -58,6 +58,8 @@ varColors$oc[[1]] <- as.matrix(rep("darkorange1", 4))
 varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 8))
     
 ```
+
+More information on the dataset is available on the corresponding vignette: `vignette("A3_DataWines")`.
 
 ## Two tables with descriptors and other supplementary information
 
