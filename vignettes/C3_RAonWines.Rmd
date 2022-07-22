@@ -3,7 +3,7 @@ title: "Redundancy Analysis on Wines"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{RA on Wines}
+  %\VignetteIndexEntry{Redundancy Analysis on Wines}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

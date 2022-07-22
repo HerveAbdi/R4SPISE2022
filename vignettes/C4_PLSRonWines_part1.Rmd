@@ -3,7 +3,7 @@ title: "PLSR on Wines (Part 1)"
 author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PLSR on Wines}
+  %\VignetteIndexEntry{PLSR on Wines (Part 1)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
