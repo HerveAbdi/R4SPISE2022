@@ -119,26 +119,42 @@ PLSRplot <- function(
       labs(x = "", y = "")
 
   ### 2. Scree plots
-  PlotScree(ev = res$TExPosition.Data$eigs,
-            title = 'Eigenvalue Scree Plot',
+  PlotScree(ev = res$R2x,
+            title = 'Eigenvalue Scree Plot for RX2',
             plotKaiser = TRUE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
-  scree.eig <- recordPlot()
+  scree.eig.R2X <- recordPlot()
 
-  PlotScree(ev = res$TExPosition.Data$eigs^(1/2),
-            title = 'Singular Value Scree Plot',
+  PlotScree(ev = res$R2x^(1/2),
+            title = 'Singular Value Scree Plot for RX2',
             plotKaiser = FALSE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
-  scree.sv <- recordPlot()
+  scree.sv.R2X <- recordPlot()
+
+  PlotScree(ev = res$R2y,
+            title = 'Eigenvalue Scree Plot for RY2',
+            plotKaiser = TRUE,
+            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
+            lwd4Kaiser  = 2)
+  scree.eig.R2Y <- recordPlot()
+
+  PlotScree(ev = res$R2y^(1/2),
+            title = 'Singular Value Scree Plot for RY2',
+            plotKaiser = FALSE,
+            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
+            lwd4Kaiser  = 2)
+  scree.sv.R2Y <- recordPlot()
 
   ## 3. Latent variables
-  plot.lv <- createFactorMap(lv2plot,
+  plot.lv <- createFactorMap(res$T,
+                             axis1 = leDim[1],
+                             axis2 = leDim[2],
                              col.background = NULL,
                              col.axes = "orchid4",
                              alpha.axes = 0.5,
-                             title = paste0("Latent variables: ", tab1.name, " vs.", tab2.name),
+                             title = paste0("Latent variables: ", tab2.name, " predicted by ", tab1.name),
                              col.points = color.obs$oc,
                              col.labels = color.obs$oc,
                              constraints = score.constraints,
@@ -149,16 +165,18 @@ PLSRplot <- function(
   lv.plot <- plot.lv$zeMap_background + plot.lv$zeMap_dots
 
   if (!is.null(DESIGN)) {
-    lv2plot.mean <- getMeans(lv2plot, DESIGN)
+    lv2plot.mean <- getMeans(res$T, DESIGN)
     if (is.null(mean.constraints)) {
       mean.constraints <- lapply(minmaxHelper(lv2plot.mean), '*', scale.mean.constraints)
     }
 
     plot.lv.mean <- createFactorMap(lv2plot.mean,
+                                    axis1 = leDim[1],
+                                    axis2 = leDim[2],
                                     col.background = NULL,
                                     col.axes = "orchid4",
                                     alpha.axes = 0.5,
-                                    title = paste0("Latent variables: ", tab1.name, " vs.", tab2.name),
+                                    title = paste0("Latent variables: ", tab1.name, " predicted by ", tab2.name),
                                     col.points = color.obs$gc[rownames(lv2plot.mean),],
                                     col.labels =  color.obs$gc[rownames(lv2plot.mean),],
                                     constraints = mean.constraints,
@@ -167,17 +185,17 @@ PLSRplot <- function(
                                     pch = 17,
                                     alpha.points = 0.8)
 
-    bootCI.res <- Boot4Mean(lv2plot, DESIGN)
-    colnames(bootCI.res$BootCube) <- colnames(lv2plot)
+    bootCI.res <- Boot4Mean(res$T, DESIGN)
+    colnames(bootCI.res$BootCube) <- colnames(res$T)
     col4CI <- as.matrix(color.obs$gc[rownames(lv2plot.mean),])
     names(col4CI) <- rownames(lv2plot.mean) ## THIS IS STRANGE
-    lv.CI <- MakeCIEllipses(bootCI.res$BootCube,
-                            names.of.factors = colnames(lv2plot),
+    lv.CI <- MakeCIEllipses(bootCI.res$BootCube[,leDim,],
+                            names.of.factors = colnames(res$T)[leDim],
                             col = col4CI,
                             alpha.ellipse = 0.1,
                             line.size = 0.5, alpha.line = 0.2)
 
-    lv.TI <- MakeToleranceIntervals(lv2plot,
+    lv.TI <- MakeToleranceIntervals(res$T[,leDim],
                                     design = DESIGN,
                                     axis1 = 1, axis2 = 2,
                                     col = col4CI,
@@ -201,11 +219,11 @@ PLSRplot <- function(
 
   ##_________________________________________________
   ##### Ctr J-set ----
-  Fi   <- res$TExPosition.Data$fi
-  ctri <- res$TExPosition.Data$ci
+  Fi   <- res$W
+  ctri <- res$W^2
   signed.ctri <- ctri * sign(Fi)
   # LV1
-  ctrX.plot <- PrettyBarPlot2(
+  ctrW1.plot <- PrettyBarPlot2(
       bootratio = round(100*signed.ctri[,leDim[1]]),
       threshold = 100/ nrow(signed.ctri),
       ylim = NULL,
@@ -214,20 +232,42 @@ PLSRplot <- function(
       plotnames = TRUE,
       main = paste0("Important Contributions – ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
-  ##### Ctr K-set ----
-  Fj   <- res$TExPosition.Data$fj
-  ctrj <- res$TExPosition.Data$cj
-  signed.ctrj <- ctrj * sign(Fj)
-  # LV1
-  ctrY.plot <- PrettyBarPlot2(
-      bootratio = round(100*signed.ctrj[,leDim[2]]),
-      threshold = 100 / nrow(signed.ctrj),
+
+  # LV2
+  ctrW2.plot <- PrettyBarPlot2(
+      bootratio = round(100*signed.ctri[,leDim[2]]),
+      threshold = 100/ nrow(signed.ctri),
       ylim = NULL,
-      color4bar = color.tab$oc[[2]],
+      color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[2]),
+      main = paste0("Important Contributions – ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
+
+  ## map
+  W.Imap <- PTCA4CATA::createFactorMap(
+      Fi,
+      axis1 = leDim[1],
+      axis2 = leDim[2],
+      col.points = color.tab$oc[[1]],
+      col.labels = color.tab$oc[[1]],
+      alpha.points = .5
+  )
+  # arrows
+  zeArrows4J <- addArrows(res$W,
+                          axis1 = leDim[1],
+                          axis2 = leDim[2],
+                          color = color.tab$oc[[1]])
+  # make labels
+  label4Tx <- labs(x = paste0('T',leDim[1],'. R2X = ',
+                              round(res$R2x[leDim[1]],2) ))
+  label4Ty <- labs(y = paste0('T',leDim[2],'. R2X = ',
+                              round(res$R2x[leDim[2]],2) ))
+
+  # The map
+  LoadingsMap.X <- W.Imap$zeMap + zeArrows4J +
+      label4Tx + label4Ty
+
 
   ##_________________________________________________
   ### Circle of corr:
