@@ -192,3 +192,35 @@ res.pls.plot$results.graphs$cirCorY.plot
 ```
 
 These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringent`, and `Hedonic` are strongly correlated to Dimension 1 with `Henodic` inversely correlated with all other variables. These variables are mostly explained by the first dimension and have close-to-zero correlation with the second dimension (which is not included and discussed in the previous sections).
+
+## Inference plots and results
+
+The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, the bootstrap tests of the loadings (i.e., the left and the right singular vectors).
+
+```{r plotPLSinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
+
+```
+
+### Bootstrap and permutation tests on the eigenvalues
+
+The inference scree plot illustrates the 95\% bootstrap confidence intervals of the eigenvalues. If an interval includes 0, the eigenvalue is reliably larger than 0.
+
+```{r scree inference, warning = FALSE, message = FALSE}
+res.plot.pca.inference$results.graphs$scree
+```
+
+The bootstrap test identifies one significant dimension having eigenvalue reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
+
+### Bootstrap test on the loadings
+
+The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.
+
+```{r bootstrap ratios 1}
+res.plot.pca.inference$results.graphs$BR1
+```
+
+```{r bootstrap ratios 2}
+res.plot.pca.inference$results.graphs$BR2
+```
+
+The results show no significant factor scores for both dimensions that is reliably different from 0.
