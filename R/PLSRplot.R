@@ -4,7 +4,6 @@
 #' @param tab1 the result of a two-table analysis;
 #' @param tab2 the result of a two-table analysis;
 #' @param leDim vector containning the dimensions to be plotted;
-#' @param leDim4CirCor vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;
 #' @param color.obs list containing the colors for the observations;
 #' @param color.tab list containing the colors for the two-tables;
 #' @param title.plot plot of the title;
@@ -38,8 +37,7 @@ PLSRplot <- function(
         res,
         tab1,
         tab2,
-        leDim = c(1, 1),
-        leDim4CirCor = c(1, 2),
+        leDim = c(1, 2),
         color.obs = NULL,
         color.tab = NULL,
         title.plot = "Results",
@@ -69,7 +67,7 @@ PLSRplot <- function(
   # tab1.name: name for table 1
   # tab2.name: name for table 2
   # bar.font.size: a vector with font sizes for labels in barplots for respectively x and y
-  rxy <- res$R2y
+  rxy <- cor(tab1,tab2)
   I <- nrow(rxy)
   J <- ncol(rxy)
 
@@ -79,10 +77,7 @@ PLSRplot <- function(
       DESIGN <- as.vector(as.matrix(DESIGN))
   }
 
-  lv2plot <- cbind(
-      res$TExPosition.Data$lx[, leDim[1]],
-      res$TExPosition.Data$ly[, leDim[2]])
-
+  ## color for the two sets of variables
   if (is.null(color.obs)) color.obs <- list(oc = "darkorchid4")
   if (is.null(color.tab)) {
       color.tab <- list(
@@ -94,10 +89,8 @@ PLSRplot <- function(
   if (is.null(tab1.name)) tab1.name <- 1
   if (is.null(tab2.name)) tab2.name <- 2
 
-  colnames(lv2plot) <- paste0(c("Lx ","Ly "), leDim,": ", c(tab1.name,tab2.name))
-
   if (is.null(score.constraints)){
-    get.constraints <- minmaxHelper(lv2plot)
+    get.constraints <- minmaxHelper(resPLSR$T, axis1 = leDim[1], axis2 = leDim[2])
     min.scale <- min(get.constraints$minx, get.constraints$miny)
     max.scale <- max(get.constraints$maxx, get.constraints$maxy)
     score.constraints <- list(minx = min.scale, miny = min.scale, maxx = max.scale, maxy = max.scale)
