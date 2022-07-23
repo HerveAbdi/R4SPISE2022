@@ -6,6 +6,7 @@
 \usage{
 TTAplotInference(
   res,
+  method = "PLSC",
   tab1,
   tab2,
   leDim = c(1, 1),
@@ -33,6 +34,8 @@ TTAplotInference(
 }
 \arguments{
 \item{res}{the result of a two-table analysis;}
+
+\item{method}{the method used; 'PLSC' or 'CCA' (default to 'PLSC');}
 
 \item{tab1}{the result of a two-table analysis;}
 
