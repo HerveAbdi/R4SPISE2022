@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="R4SPISE2022">
-<title>Canonical Correlation Analysis on Wines • R4SPISE2022</title>
+<title>PLSR on Wines (Part 1) • R4SPISE2022</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Canonical Correlation Analysis on Wines">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="PLSR on Wines (Part 1)">
 <meta property="og:description" content="R4SPISE2022">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -79,13 +79,13 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Canonical Correlation Analysis on Wines</h1>
+      <img src="" class="logo" alt=""><h1>PLSR on Wines (Part 1)</h1>
                         <h4 data-toc-skip class="author">Vincent
 Guillemot, Hervé Abdi, Ju-Chi Yu &amp; Soudeh Ardestani Khoubrouy</h4>
             
       
-      <small class="dont-index">Source: <a href="http://github.com/HerveAbdi/R4SPISE2022/blob/HEAD/vignettes/C2_CCAonWines.Rmd" class="external-link"><code>vignettes/C2_CCAonWines.Rmd</code></a></small>
-      <div class="d-none name"><code>C2_CCAonWines.Rmd</code></div>
+      <small class="dont-index">Source: <a href="http://github.com/HerveAbdi/R4SPISE2022/blob/HEAD/vignettes/C4_PLSRonWines_part1.Rmd" class="external-link"><code>vignettes/C4_PLSRonWines_part1.Rmd</code></a></small>
+      <div class="d-none name"><code>C4_PLSRonWines_part1.Rmd</code></div>
     </div>
 
     
@@ -122,19 +122,21 @@ vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")
 <span>    <span class="fu">select</span><span class="op">(</span><span class="va">Acidity</span>, <span class="va">Alcohol</span>, <span class="va">Sugar</span>, <span class="va">Tannin</span><span class="op">)</span></span>
 <span><span class="va">senso</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
 <span>    <span class="fu">select</span><span class="op">(</span><span class="va">fruity</span>, <span class="va">floral</span>, <span class="va">vegetal</span>, </span>
-<span>           <span class="va">spicy</span>, <span class="va">woody</span>, <span class="va">sweet</span>, <span class="va">astringent</span>, </span>
-<span>           <span class="va">hedonic</span><span class="op">)</span></span></code></pre></div>
+<span>           <span class="va">spicy</span>, <span class="va">woody</span>, <span class="va">sweet</span>, <span class="va">astringent</span><span class="op">)</span></span>
+<span><span class="va">chemisenso</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
+<span>    <span class="fu">select</span><span class="op">(</span><span class="va">Acidity</span>, <span class="va">Alcohol</span>, <span class="va">Sugar</span>, <span class="va">Tannin</span>, <span class="va">fruity</span>, <span class="va">floral</span>, <span class="va">vegetal</span>,</span>
+<span>           <span class="va">spicy</span>, <span class="va">woody</span>, <span class="va">sweet</span>, <span class="va">astringent</span><span class="op">)</span></span>
+<span><span class="va">hedo</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
+<span>    <span class="fu">select</span><span class="op">(</span><span class="va">hedonic</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="two-data-tables">Two data tables<a class="anchor" aria-label="anchor" href="#two-data-tables"></a>
+<h3 id="pls-r-part-1-predicting-one-variable-with-a-data-table">PLS-R Part 1: Predicting one variable with a data table<a class="anchor" aria-label="anchor" href="#pls-r-part-1-predicting-one-variable-with-a-data-table"></a>
 </h3>
 <ul>
-<li>First table: chemical data (<code>chemi</code>) that includes
-<code>acidity</code>, <code>alcohol</code>, <code>sugar</code>, and
-<code>tannin</code>.</li>
-<li>Second table: sensory data (<code>senso</code>) that includes
-<code>fruity</code>, <code>floral</code>, <code>vegetal</code>,
-<code>spicy</code>, <code>woody</code>, <code>sweet</code>,
-<code>astringent</code>, and <code>henodic</code>.</li>
+<li>The predictors (<strong>X</strong>): chemical data
+(<code>chemi</code>) that includes <code>acidity</code>,
+<code>alcohol</code>, <code>sugar</code>, and <code>tannin</code>.</li>
+<li>The predicted (<strong>Y</strong>): hedonic
+(<code>hedo</code>).</li>
 </ul>
 </div>
 <div class="section level3">
@@ -148,16 +150,19 @@ vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")
 </div>
 </div>
 <div class="section level2">
-<h2 id="run-canonical-correlation-analysis-cca-on-the-two-tables">Run Canonical Correlation Analysis (CCA) on the two tables<a class="anchor" aria-label="anchor" href="#run-canonical-correlation-analysis-cca-on-the-two-tables"></a>
+<h2 id="run-partial-least-square-regression-pls-r-on-the-two-tables">Run Partial Least Square Regression (PLS-R) on the two tables<a class="anchor" aria-label="anchor" href="#run-partial-least-square-regression-pls-r-on-the-two-tables"></a>
 </h2>
+<p>The <code><a href="https://rdrr.io/pkg/data4PCCAR/man/PLSR_SVD.html" class="external-link">data4PCCAR::PLSR_SVD</a></code> function takes two entries of
+data tables. The first entry will be the predictor table
+(<strong>X</strong>) and the second entry will be the predicted table
+(<strong>Y</strong>) as in a regression equation: <span class="math inline">\(\mathbf{Y = \beta X + E}\)</span>. In RA, the
+dimensions maximize <span class="math inline">\(\beta\)</span> of each
+pair of latent variables.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca</span> <span class="op">&lt;-</span> <span class="fu">tepCCA</span><span class="op">(</span><span class="va">chemi</span>, <span class="va">senso</span>, DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span>, graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>The default of this function will center (to have means equal 0) and
-scale (to have the <em>sums of squares</em> equal 1) all variables in
-both data tables. The argument <code>DESIGN</code> indicates the groups
-of the observations and change how the observations are colored in the
-figures (when <code>graphs = TRUE</code>), but it does not change the
-results of CCA.</p>
+<code class="sourceCode R"><span><span class="va">res.plsr</span> <span class="op">&lt;-</span> <span class="fu">data4PCCAR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data4PCCAR/man/PLSR_SVD.html" class="external-link">PLSR_SVD</a></span><span class="op">(</span><span class="va">chemi</span>, <span class="va">hedo</span>, <span class="fl">3</span>, inference <span class="op">=</span> <span class="cn">TRUE</span>, displayJack <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>The function will center (to have means equal 0) and scale (to have
+the <em>standard deviation</em> equal 1) all variables in both data
+tables.</p>
 </div>
 <div class="section level2">
 <h2 id="generate-the-figures">Generate the figures<a class="anchor" aria-label="anchor" href="#generate-the-figures"></a>
@@ -166,8 +171,8 @@ results of CCA.</p>
 <code class="sourceCode R"><span><span class="co">## You might need to load these packages if the error is saying that it couldn't find some functions</span></span>
 <span><span class="co"># library(PTCA4CATA) </span></span>
 <span><span class="co"># library(data4PCCAR)</span></span>
-<span><span class="va">res.cca.plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TTAplot.html">TTAplot</a></span><span class="op">(</span></span>
-<span>    res <span class="op">=</span> <span class="va">res.cca</span>, <span class="co"># Output of tepPLS</span></span>
+<span><span class="va">res.plsr.plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PLSRplot.html">PLSRplot</a></span><span class="op">(</span></span>
+<span>    res <span class="op">=</span> <span class="va">res.plsr</span>, <span class="co"># Output of tepPLS</span></span>
 <span>    color.obs <span class="op">=</span> <span class="va">wineColors</span>, <span class="co"># &lt;optional&gt; colors of wines</span></span>
 <span>    color.tab <span class="op">=</span> <span class="va">varColors</span>, <span class="co"># &lt;optional&gt; colors of the two tables</span></span>
 <span>    tab1.name <span class="op">=</span> <span class="st">"Chemical data"</span>, <span class="co"># &lt;optional&gt; Name of Table 1 (for printing)</span></span>
@@ -175,7 +180,7 @@ results of CCA.</p>
 <span>    DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span>, <span class="co"># design for the wines</span></span>
 <span>    tab1 <span class="op">=</span> <span class="va">chemi</span>,  <span class="co"># First data table</span></span>
 <span>    tab2 <span class="op">=</span> <span class="va">senso</span><span class="op">)</span>  <span class="co"># Second data table</span></span></code></pre></div>
-<p>In this <code>TTAplot</code> function, if <code>DESIGN</code> is
+<p>In this <code>PLSRplot</code> function, if <code>DESIGN</code> is
 specified. The latent variables will be colored according to the groups
 of the observations with the group means and their 95% bootstrap
 confidence intervals.</p>
@@ -186,21 +191,25 @@ confidence intervals.</p>
 between the two data sets. This correlation matrix is where the
 dimensions are extracted.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">heatmap.rxy</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/hetamap.rxy-1.svg" width="672"></p>
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">heatmap.rxy</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/hetamap.rxy-1.svg" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="scree-plot">Scree plot<a class="anchor" aria-label="anchor" href="#scree-plot"></a>
 </h3>
 <p>The scree plot shows the eigenvalues of each dimension. These
-eigenvalues give the squared <em>correlation</em> (<span class="math inline">\(R^2\)</span> = 0.9497911) of each pair of latent
+eigenvalues give the squared <em>coefficient of regression</em> (<span class="math inline">\(\beta^2\)</span> = NA) of each pair of latent
 variables. In other words, the singular values, which are the square
-root of the eigenvalues, give the <em>correlation</em> (<span class="math inline">\(r\)</span> = 0.9745723) of these pairs of latent
-variables. The sum of the eigenvalues is equal to the sum of the squared
-correlation between all variables in both tables.</p>
+root of the eigenvalues, give the <em>coefficient of regression</em>
+(<span class="math inline">\(\beta\)</span> = NA) of these pairs of
+latent variables. The sum of the eigenvalues is equal to the sum of the
+squared correlation between all variables in both tables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.eig</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/scree-1.svg" width="672"></p>
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.eig.R2X</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/scree-1.svg" width="672"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.eig.R2Y</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/scree-2.svg" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="latent-variables">Latent variables<a class="anchor" aria-label="anchor" href="#latent-variables"></a>
@@ -211,8 +220,8 @@ shows how the observations are distributed on the dimension and how the
 chosen pair of latent variables are related to each other. When plotting
 the first pair of latent variables, we expect the <em>observations</em>
 to distribute along the bottom-left-to-top-right diagonal line (which
-illustrates a perfect correlation), because CCA maximizes the
-<em>correlation</em> of the latent variables.</p>
+illustrates a perfect association), because RA maximizes the
+<em>coefficient of regression</em> of the latent variables.</p>
 <p>To examine the stability of these groups, we plot the group means
 with their 95% bootstrap confidence intervals (or ellipsoids). If the
 ellipses do not overlap, the groups are reliably different from each
@@ -220,15 +229,16 @@ other. However, it’s worth noted that the distribution of the
 <em>observations</em> does not imply how the <em>groups</em>
 (represented by the group means) are distributed or whether the groups
 are reliably different from each other.</p>
-<p><em>Note</em>: The grouping information are independent from CCA and
+<p><em>Note</em>: The grouping information are independent from RA and
 are only use to help provide a summary description of the
 observations.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">lv.plot</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/LV%20map-1.svg" width="672"></p>
-<p>The results from Dimension 1 show that the association between the
-chemical and the sensory data reliably separates the red wines from rose
-and white wines.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">lv.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/LV%20map-1.svg" width="672"></p>
+<p>The results from Dimension 1 show that the chemical data can predict
+the performance of the sensory data, and such prediction separates the
+red wines from the rosé and the white wines, but not the rosé and the
+white.</p>
 </div>
 <div class="section level3">
 <h3 id="contributions">Contributions<a class="anchor" aria-label="anchor" href="#contributions"></a>
@@ -251,25 +261,23 @@ When the variables are centered and scaled to have their <em>sums of
 squares equals 1</em>, each variable contributes one unit of variance;
 therefore, the average contribution is 1/(# of variables of the
 table).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrX.plot</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/loadings-1.svg" width="672"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrY.plot</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/loadings-2.svg" width="672"></p>
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrW1.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-1.svg" width="672"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrW2.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-2.svg" width="672"></p>
 <p>From these two bar plots, the first dimension is characterized by (1)
 the positive association between <code>Alcohol</code> and
-<code>Tannin</code> from the Chemical data and <code>Astringent</code>
-and <code>Hedonic</code> from the Sensory data, and (2) the negative
-association between these variables and <code>Floral</code>,
-<code>Vegetal</code>, <code>Spicy</code>, and <code>Sweet</code> from
-the Sensory data.</p>
+<code>Tannin</code> from the Chemical data and <code>Woody</code> and
+<code>Astringent</code> from the Sensory data, and (2) the negative
+association between these variables and <code>Hedonic</code> from the
+Sensory data.</p>
 <p>Together with the latent variable plot, we found that, as compared to
-the rose and the white wines in the sample, the red wines are less
-<code>Hedonic</code> and <code>Astringent</code> but stronger in
-<code>Alcohol</code> and <code>Tannin</code> and taste more
-<code>Floral</code>, <code>Vegetal</code>, <code>Spicy</code>,
-<code>Woody</code>, and <code>Sweet</code>.</p>
+the rosé and the white wines in the sample, the red wines are less
+<code>Hedonic</code> and stronger in <code>Alcohol</code>,
+<code>Tannin</code>, <code>Woody</code>, and
+<code>Astringent</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="circles-of-correlations">Circles of correlations<a class="anchor" aria-label="anchor" href="#circles-of-correlations"></a>
@@ -287,12 +295,12 @@ this implication of correlation might only be true within the given
 dimensions. When a variable is far away from the circle, it is not fully
 explained by the dimensions, and other dimensions might be characterized
 by other pattern of relationship between this and other variables.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorX.plot</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/corcircles-1.svg" width="672"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.cca.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorY.plot</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/corcircles-2.svg" width="672"></p>
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorX.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/corcircles-1.svg" width="672"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorY.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/corcircles-2.svg" width="672"></p>
 <p>These circles of correlations show that <code>Alcohol</code>,
 <code>Tannin</code>, <code>Woody</code>, <code>Astringent</code>, and
 <code>Hedonic</code> are strongly correlated to Dimension 1 with
@@ -300,55 +308,6 @@ by other pattern of relationship between this and other variables.</p>
 These variables are mostly explained by the first dimension and have
 close-to-zero correlation with the second dimension (which is not
 included and discussed in the previous sections).</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="inference-plots-and-results">Inference plots and results<a class="anchor" aria-label="anchor" href="#inference-plots-and-results"></a>
-</h2>
-<p>The inference analysis of CCA (performed by
-<code>TTAplotInference</code>) includes bootstrap test of the proportion
-of variance explained, permutation tests of the eigenvalues, the
-bootstrap tests of the loadings (i.e., the left and the right singular
-vectors).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TTAplotInference.html">TTAplotInference</a></span><span class="op">(</span></span>
-<span>    res <span class="op">=</span> <span class="va">res.cca</span>,</span>
-<span>    tab1 <span class="op">=</span> <span class="va">chemi</span>, </span>
-<span>    tab2 <span class="op">=</span> <span class="va">senso</span>, </span>
-<span>    DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="bootstrap-and-permutation-tests-on-the-eigenvalues">Bootstrap and permutation tests on the eigenvalues<a class="anchor" aria-label="anchor" href="#bootstrap-and-permutation-tests-on-the-eigenvalues"></a>
-</h3>
-<p>The inference scree plot illustrates the 95% bootstrap confidence
-intervals of the eigenvalues. If an interval includes 0, the eigenvalue
-is reliably larger than 0.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/scree%20inference-1.svg" width="672"></p>
-<p>The bootstrap test identifies one significant dimension having
-eigenvalue reliably larger than 0. The permutation test identifies one
-significant dimension with an eigenvalue significantly larger than
-0.</p>
-</div>
-<div class="section level3">
-<h3 id="bootstrap-test-on-the-loadings">Bootstrap test on the loadings<a class="anchor" aria-label="anchor" href="#bootstrap-test-on-the-loadings"></a>
-</h3>
-<p>The bar plot illustrates the <em>bootstrap ratios</em> which equals
-<span class="math display">\[\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},\]</span>
-where <span class="math inline">\(M_{p_{j}boot}\)</span> is the mean of
-the bootstrapped sample of the <em>j</em>th loading and <span class="math inline">\(SD_{p_{j}boot}\)</span> is the bootstrapped
-standard deviation of the factor score. A bootstrap ratio is equivalent
-to a <em>t</em>-statistics for the column factor score with the <span class="math inline">\(\mathrm{H}_0: g_j = 0\)</span>. The threshold is
-set to 2 to approximate the critical <em>t</em>-value of 1.96 at <span class="math inline">\(\alpha\)</span> = .05.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.X</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.Y</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
-<p>The results show no significant factor scores for both dimensions
-that is reliably different from 0.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

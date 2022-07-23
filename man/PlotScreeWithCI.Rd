@@ -12,6 +12,7 @@ PlotScreeWithCI(
   p.ev = NULL,
   max.ev = NULL,
   ci.ev = NULL,
+  ci.tau = NULL,
   polygon.ci = "tau",
   alpha = 0.05,
   col.ns = "#006D2C",
@@ -42,6 +43,9 @@ it is used to recompute
 all eigenvalues.}
 
 \item{ci.ev, }{confidence intervals for the eigenvalues,
+computed with Boot4Eigs. Default to \code{NULL}.}
+
+\item{ci.tau, }{confidence intervals for the taus,
 computed with Boot4Eigs. Default to \code{NULL}.}
 
 \item{polygon.ci, }{the confidence intervals to plot.

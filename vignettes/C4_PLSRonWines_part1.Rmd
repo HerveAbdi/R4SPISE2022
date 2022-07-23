@@ -55,7 +55,7 @@ wineColors$gc <- as.matrix(c(red = 'indianred4',
 
 varColors <- list()
 varColors$oc[[1]] <- as.matrix(rep("darkorange1", 4))
-varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 8))
+varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 7))
     
 ```
 
@@ -149,15 +149,16 @@ In this `PLSRplot` function, if `DESIGN` is specified. The latent variables will
 We can check the data by plotting first the correlation matrix between the two data sets. This correlation matrix is where the dimensions are extracted.
 
 ```{r hetamap.rxy}
-res.ra.plot$results.graphs$heatmap.rxy
+res.plsr.plot$results.graphs$heatmap.rxy
 ```
 
 ### Scree plot
 
-The scree plot shows the eigenvalues of each dimension. These eigenvalues give the squared _coefficient of regression_ ($\beta^2$ = `r res.ra$TExPosition.Data$eigs[1]`) of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the _coefficient of regression_ ($\beta$ = `r res.ra$TExPosition.Data$pdq$Dv[1]`) of these pairs of latent variables. The sum of the eigenvalues is equal to the sum of the squared correlation between all variables in both tables.
+The scree plot shows the eigenvalues of each dimension. These eigenvalues give the squared _coefficient of regression_ ($\beta^2$ = `r NA`) of each pair of latent variables. In other words, the singular values, which are the square root of the eigenvalues, give the _coefficient of regression_ ($\beta$ = `r NA`) of these pairs of latent variables. The sum of the eigenvalues is equal to the sum of the squared correlation between all variables in both tables.
 
 ```{r scree, fig.height = 4}
-res.ra.plot$results.graphs$scree.eig
+res.plsr.plot$results.graphs$scree.eig.R2X
+res.plsr.plot$results.graphs$scree.eig.R2Y
 ```
 
 ### Latent variables
@@ -169,7 +170,7 @@ To examine the stability of these groups, we plot the group means with their 95%
 _Note_: The grouping information are independent from RA and are only use to help provide a summary description of the observations.
 
 ```{r LV map}
-res.ra.plot$results.graphs$lv.plot
+res.plsr.plot$results.graphs$lv.plot
 ```
 
 The results from Dimension 1 show that the chemical data can predict the performance of the sensory data, and such prediction separates the red wines from the rosé and the white wines, but not the rosé and the white.
@@ -183,8 +184,8 @@ The direction of the signed contribution is the direction of the loadings, and i
 The magnitude of the contributions are computed as squared loadings, and they quantify the amount of variance contributed by each variable. Therefore, contribution is similar to the idea of an _effect size_. To identify the important variables, we find the variables that contribute more than average (i.e., with a big enough effect size). When the variables are centered and scaled to have their _sums of squares equals 1_, each variable contributes one unit of variance; therefore, the average contribution is 1/(# of variables of the table).
 
 ```{r loadings, fig.height = 4}
-res.ra.plot$results.graphs$ctrX.plot
-res.ra.plot$results.graphs$ctrY.plot
+res.plsr.plot$results.graphs$ctrW1.plot
+res.plsr.plot$results.graphs$ctrW2.plot
 ```
 
 From these two bar plots, the first dimension is characterized by (1) the positive association between `Alcohol` and `Tannin` from the Chemical data and `Woody` and `Astringent` from the Sensory data, and (2) the negative association between these variables and `Hedonic` from the Sensory data.
@@ -198,8 +199,8 @@ The circle of correlations illustrate how the variables are correlated with each
 In this figure, an angle closer to 0° indicates a correlation close to 1; an angle closer to 180° indicates a correlation close to -1; and an 90° angle indicates 0 correlation. However, it's worth noted that this implication of correlation might only be true within the given dimensions. When a variable is far away from the circle, it is not fully explained by the dimensions, and other dimensions might be characterized by other pattern of relationship between this and other variables.
 
 ```{r corcircles}
-res.ra.plot$results.graphs$cirCorX.plot
-res.ra.plot$results.graphs$cirCorY.plot
+res.plsr.plot$results.graphs$cirCorX.plot
+res.plsr.plot$results.graphs$cirCorY.plot
 ```
 
 These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringent`, and `Hedonic` are strongly correlated to Dimension 1 with `Henodic` inversely correlated with all other variables. These variables are mostly explained by the first dimension and have close-to-zero correlation with the second dimension (which is not included and discussed in the previous sections).

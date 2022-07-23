@@ -107,14 +107,14 @@ TTAplotInference <- function(
   ## Scree with confidence intervals
   PlotScreeWithCI(
       ev = res$TExPosition.Data$eigs,
-      ci.ev = resBoot4PLSC$eigenValues,
+      ci.ev = t(resBoot4PLSC$eigenCI),
       polygon.ci = 'ev'
       )
-  a01.leScree <- recordPlot()
+  scree <- recordPlot()
 
   # BR K-set ----
   BR.X <- PrettyBarPlot2(
-      bootratio = res$bootRatios.i[, leDim[1]],
+      bootratio = resBoot4PLSC$bootRatios.i[, leDim[1]],
       threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[1]],
@@ -125,7 +125,7 @@ TTAplotInference <- function(
   #_____________________________________________________________________
   # BR K-set ----
   BR.Y <- PrettyBarPlot2(
-      bootratio = res$bootRatios.i[, leDim[2]],
+      bootratio = resBoot4PLSC$bootRatios.j[, leDim[2]],
       threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[2]],
@@ -142,7 +142,7 @@ TTAplotInference <- function(
       # loadings.as.correlation = loadingsAsCorr
   )
   results.graphs <- list(
-      scree. = scre,
+      scree = scree,
       BR.X = BR.X,
       BR.Y = BR.Y
   )

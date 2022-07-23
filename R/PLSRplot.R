@@ -90,7 +90,7 @@ PLSRplot <- function(
   if (is.null(tab2.name)) tab2.name <- 2
 
   if (is.null(score.constraints)){
-    get.constraints <- minmaxHelper(resPLSR$T, axis1 = leDim[1], axis2 = leDim[2])
+    get.constraints <- minmaxHelper(res$T, axis1 = leDim[1], axis2 = leDim[2])
     min.scale <- min(get.constraints$minx, get.constraints$miny)
     max.scale <- max(get.constraints$maxx, get.constraints$maxy)
     score.constraints <- list(minx = min.scale, miny = min.scale, maxx = max.scale, maxy = max.scale)
@@ -272,9 +272,12 @@ PLSRplot <- function(
   ##_________________________________________________
   ### Circle of corr:
   # Create labels
-  label4Map <- createxyLabels.gen(leDim4CirCor[1],leDim4CirCor[2],
-                                  lambda = res$TExPosition.Data$eigs,
-                                  tau = res$TExPosition.Data$t)
+  leDim4CirCor <- leDim
+  # label4Map <- createxyLabels.gen(leDim4CirCor[1], leDim4CirCor[2],
+  #                                 lambda = res$TExPosition.Data$eigs,
+  #                                 tau = res$TExPosition.Data$t)
+  label4Map <- labs(x = sprintf("Dimension %i", leDim[1]),
+                    y = sprintf("Dimension %i", leDim[2]))
   label4Map2 <- list(label4Map,
                      # The standard label from createxyLabels.gen
                      theme(axis.title = element_text(# the new theme
@@ -339,21 +342,25 @@ PLSRplot <- function(
   )
   results.graphs <- list(
       heatmap.rxy = heatmap.rxy,
-      scree.eig = scree.eig,
-      scree.sv = scree.sv,
+      scree.eig.R2X = scree.eig.R2X,
+      scree.eig.R2Y = scree.eig.R2Y,
+      scree.sv.R2X = scree.sv.R2X,
+      scree.sv.R2Y = scree.sv.R2Y,
       lv.plot = lv.plot,
-      ctrX.plot = ctrX.plot,
-      ctrY.plot = ctrY.plot,
+      ctrW1.plot = ctrW1.plot,
+      ctrW2.plot = ctrW2.plot,
       cirCorX.plot = cirCorX.plot,
       cirCorY.plot = cirCorY.plot
   )
   description.graphs <- list(
       heatmap.rxy = "The XY Correlation Matrix (Heat Map)",
-      scree.eig = "The Eigenvalues Scree Plot",
-      scree.sv = "The Singular Values Scree Plot",
+      scree.eig.R2X = "The Eigenvalues Scree Plot for X",
+      scree.eig.R2Y = "The Eigenvalues Scree Plot for Y",
+      scree.sv.R2X = "The Singular Values Scree Plot for X",
+      scree.sv.R2Y = "The Singular Values Scree Plot for Y",
       lv.plot = "Latent Variable Map",
-      ctrX.plot = "Contributions for X",
-      ctrY.plot = "Contributions for Y",
+      ctrW1.plot = "Contributions for W1",
+      ctrW2.plot = "Contributions for W2",
       cirCorX.plot = "Circle of Correlation for X",
       cirCorY.plot = "Circle of Correlation for Y"
   )

@@ -28,6 +28,8 @@ library(knitr)
 library(kableExtra)
 library(ggplot2)
 library(TExPosition)
+library(PTCA4CATA)
+library(data4PCCAR)
 ```
 
 ## Load the course library
@@ -122,8 +124,7 @@ The default of this function will center (to have means equal 0) and scale (to h
 
 ```{r TTA plots, fig.show='hide', message = FALSE, warning = FALSE}
 ## You might need to load these packages if the error is saying that it couldn't find some functions
-# library(PTCA4CATA) 
-# library(data4PCCAR)
+
 res.pls.plot <- TTAplot(
     res = res.pls, # Output of tepPLS
     color.obs = wineColors, # <optional> colors of wines
@@ -202,7 +203,12 @@ These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringen
 The inference analysis of PCA (performed by `OTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, the bootstrap tests of the loadings (i.e., the left and the right singular vectors).
 
 ```{r plotPLSinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
-
+res.plot.plsc.inference <- TTAplotInference(
+    res = res.pls,
+    tab1 = chemi, 
+    tab2 = senso, 
+    DESIGN = descr$color
+    )
 ```
 
 ### Bootstrap and permutation tests on the eigenvalues
@@ -210,7 +216,7 @@ The inference analysis of PCA (performed by `OTAplotInference`) includes bootstr
 The inference scree plot illustrates the 95\% bootstrap confidence intervals of the eigenvalues. If an interval includes 0, the eigenvalue is reliably larger than 0.
 
 ```{r scree inference, warning = FALSE, message = FALSE}
-res.plot.pca.inference$results.graphs$scree
+res.plot.plsc.inference$results.graphs$scree
 ```
 
 The bootstrap test identifies one significant dimension having eigenvalue reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
@@ -220,11 +226,11 @@ The bootstrap test identifies one significant dimension having eigenvalue reliab
 The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.
 
 ```{r bootstrap ratios 1}
-res.plot.pca.inference$results.graphs$BR1
+res.plot.plsc.inference$results.graphs$BR.X
 ```
 
 ```{r bootstrap ratios 2}
-res.plot.pca.inference$results.graphs$BR2
+res.plot.plsc.inference$results.graphs$BR.Y
 ```
 
 The results show no significant factor scores for both dimensions that is reliably different from 0.
