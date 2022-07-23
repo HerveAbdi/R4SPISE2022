@@ -199,38 +199,40 @@ These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringen
 
 ## Inference plots and results
 
-The inference analysis of CCA (performed by `TTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, the bootstrap tests of the loadings (i.e., the left and the right singular vectors).
+The inference analysis of CCA is still under development.
 
-```{r plotCCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
-res.plot.cca.inference <- TTAplotInference(
-    res = res.cca,
-    method = "CCA",
-    tab1 = chemi, 
-    tab2 = senso, 
-    DESIGN = descr$color
-    )
+<!--- (performed by `TTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, the bootstrap tests of the loadings (i.e., the left and the right singular vectors). --->
+
+```{r plotCCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE, echo = FALSE, include = FALSE}
+# res.plot.cca.inference <- TTAplotInference(
+#     res = res.cca,
+#     method = "CCA",
+#     tab1 = chemi, 
+#     tab2 = senso, 
+#     DESIGN = descr$color
+#     )
 ```
 
-### Bootstrap and permutation tests on the eigenvalues
+<!--- ### Bootstrap and permutation tests on the eigenvalues
 
-The inference scree plot illustrates the 95\% bootstrap confidence intervals of the eigenvalues. If an interval includes 0, the eigenvalue is reliably larger than 0.
+The inference scree plot illustrates the 95\% bootstrap confidence intervals of the eigenvalues. If an interval includes 0, the eigenvalue is reliably larger than 0.--->
 
-```{r scree inference, warning = FALSE, message = FALSE}
-res.plot.cca.inference$results.graphs$scree
+```{r scree inference, warning = FALSE, message = FALSE, echo = FALSE, include = FALSE}
+# res.plot.cca.inference$results.graphs$scree
 ```
 
-The bootstrap test identifies one significant dimension having eigenvalue reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.
+ <!-- The bootstrap test identifies one significant dimension having eigenvalue reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.  -->
 
-### Bootstrap test on the loadings
+<!-- ### Bootstrap test on the loadings -->
 
-The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.
+<!-- The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.  -->
 
-```{r bootstrap ratios 1}
-res.plot.cca.inference$results.graphs$BR.X
+```{r bootstrap ratios 1, echo = FALSE, include = FALSE}
+# res.plot.cca.inference$results.graphs$BR.X
 ```
 
-```{r bootstrap ratios 2}
-res.plot.cca.inference$results.graphs$BR.Y
+```{r bootstrap ratios 2, echo = FALSE, include = FALSE}
+# res.plot.cca.inference$results.graphs$BR.Y
 ```
 
-The results show no significant factor scores for both dimensions that is reliably different from 0.
+<!-- The results show no significant factor scores for both dimensions that is reliably different from 0. -->

@@ -117,7 +117,7 @@ hedo <- winesOf3Colors$winesDescriptors %>%
 The `data4PCCAR::PLSR_SVD` function takes two entries of data tables. The first entry will be the predictor table (**X**) and the second entry will be the predicted table (**Y**) as in a regression equation: $\mathbf{Y = \beta X + E}$. In RA, the dimensions maximize $\beta$ of each pair of latent variables.
 
 ```{r run, results = FALSE}
-res.plsr <- data4PCCAR::PLSR_SVD(chemi, senso, 3, inference = TRUE, displayJack = FALSE)
+res.plsr <- data4PCCAR::PLSR_SVD(chemi, senso, 3, inference = TRUE, displayJack = TRUE)
 ```
 
 The function will center (to have means equal 0) and scale (to have the _standard deviation_ equal 1) all variables in both data tables.
@@ -130,6 +130,7 @@ The function will center (to have means equal 0) and scale (to have the _standar
 # library(data4PCCAR)
 res.plsr.plot <- PLSRplot(
     res = res.plsr, # Output of tepPLS
+    displayJack = TRUE,
     color.obs = wineColors, # <optional> colors of wines
     color.tab = varColors, # <optional> colors of the two tables
     tab1.name = "Chemical data", # <optional> Name of Table 1 (for printing)
@@ -158,6 +159,7 @@ res.plsr.plot$results.graphs$scree.eig.R2X
 res.plsr.plot$results.graphs$scree.eig.R2Y
 res.plsr.plot$results.graphs$scree.sv.R2X
 res.plsr.plot$results.graphs$scree.sv.R2Y
+res.plsr.plot$results.graphs$Y.RESS.plot
 ```
 
 ### Latent variables
@@ -207,3 +209,11 @@ res.plsr.plot$results.graphs$cirCorY.plot
 ```
 
 These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringent`, and `Hedonic` are strongly correlated to Dimension 1 with `Henodic` inversely correlated with all other variables. These variables are mostly explained by the first dimension and have close-to-zero correlation with the second dimension (which is not included and discussed in the previous sections).
+
+## Inference plots and results
+
+### The predicted residuals estimated sum of squares (PRESS) of Y (random effect)
+
+```{r}
+res.plsr.plot$results.graphs$Y.PRESS.plot
+```

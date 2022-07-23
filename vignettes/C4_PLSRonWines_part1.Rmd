@@ -133,6 +133,7 @@ The function will center (to have means equal 0) and scale (to have the _standar
 # library(data4PCCAR)
 res.plsr.plot <- PLSRplot(
     res = res.plsr, # Output of tepPLS
+    displayJack = TRUE,
     color.obs = wineColors, # <optional> colors of wines
     color.tab = varColors, # <optional> colors of the two tables
     tab1.name = "Chemical data", # <optional> Name of Table 1 (for printing)
@@ -161,7 +162,15 @@ res.plsr.plot$results.graphs$scree.eig.R2X
 res.plsr.plot$results.graphs$scree.eig.R2Y
 res.plsr.plot$results.graphs$scree.sv.R2X
 res.plsr.plot$results.graphs$scree.sv.R2Y
+res.plsr.plot$results.graphs$Y.RESS.plot
 ```
+
+### The prediction (fixed effect)
+
+```{r}
+res.plsr.plot$results.graphs$YYhat.plot
+```
+
 
 ### Latent variables
 
@@ -210,3 +219,20 @@ res.plsr.plot$results.graphs$cirCorY.plot
 ```
 
 These circles of correlations show that `Alcohol`, `Tannin`, `Woody`, `Astringent`, and `Hedonic` are strongly correlated to Dimension 1 with `Henodic` inversely correlated with all other variables. These variables are mostly explained by the first dimension and have close-to-zero correlation with the second dimension (which is not included and discussed in the previous sections).
+
+## Inference plots and results
+
+### The prediction (random effect)
+
+```{r}
+res.plsr.plot$results.graphs$YYjack.plot
+```
+
+### The predicted residuals estimated sum of squares (PRESS) of Y (random effect)
+
+```{r}
+res.plsr.plot$results.graphs$Y.PRESS.plot
+```
+
+
+
