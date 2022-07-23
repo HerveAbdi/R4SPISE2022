@@ -55,7 +55,7 @@ wineColors$gc <- as.matrix(c(red = 'indianred4',
 
 varColors <- list()
 varColors$oc[[1]] <- as.matrix(rep("darkorange1", 4))
-varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 7))
+varColors$oc[[2]] <- as.matrix(rep("olivedrab3", 1))
     
 ```
 
@@ -120,7 +120,7 @@ hedo <- winesOf3Colors$winesDescriptors %>%
 The `data4PCCAR::PLSR_SVD` function takes two entries of data tables. The first entry will be the predictor table (**X**) and the second entry will be the predicted table (**Y**) as in a regression equation: $\mathbf{Y = \beta X + E}$. In RA, the dimensions maximize $\beta$ of each pair of latent variables.
 
 ```{r run, results = FALSE}
-res.plsr <- data4PCCAR::PLSR_SVD(chemi, hedo, 3, inference = TRUE, displayJack = FALSE)
+res.plsr <- data4PCCAR::PLSR_SVD(chemi, hedo, 3, inference = TRUE, displayJack = TRUE)
 ```
 
 The function will center (to have means equal 0) and scale (to have the _standard deviation_ equal 1) all variables in both data tables.
@@ -136,10 +136,10 @@ res.plsr.plot <- PLSRplot(
     color.obs = wineColors, # <optional> colors of wines
     color.tab = varColors, # <optional> colors of the two tables
     tab1.name = "Chemical data", # <optional> Name of Table 1 (for printing)
-    tab2.name = "Sensory data", # <optional> Name of Table 2 (for printing)
+    tab2.name = "Hedonic", # <optional> Name of Table 2 (for printing)
     DESIGN = descr$color, # design for the wines
     tab1 = chemi,  # First data table
-    tab2 = senso)  # Second data table
+    tab2 = hedo)  # Second data table
 ```
 
 In this `PLSRplot` function, if `DESIGN` is specified. The latent variables will be colored according to the groups of the observations with the group means and their 95% bootstrap confidence intervals.
@@ -159,6 +159,8 @@ The scree plot shows the eigenvalues of each dimension. These eigenvalues give t
 ```{r scree, fig.height = 4}
 res.plsr.plot$results.graphs$scree.eig.R2X
 res.plsr.plot$results.graphs$scree.eig.R2Y
+res.plsr.plot$results.graphs$scree.sv.R2X
+res.plsr.plot$results.graphs$scree.sv.R2Y
 ```
 
 ### Latent variables
@@ -186,6 +188,10 @@ The magnitude of the contributions are computed as squared loadings, and they qu
 ```{r loadings, fig.height = 4}
 res.plsr.plot$results.graphs$ctrW1.plot
 res.plsr.plot$results.graphs$ctrW2.plot
+res.plsr.plot$results.graphs$LoadingsMap.X
+res.plsr.plot$results.graphs$ctrC1.plot
+res.plsr.plot$results.graphs$ctrC2.plot
+res.plsr.plot$results.graphs$LoadingsMap.Y
 ```
 
 From these two bar plots, the first dimension is characterized by (1) the positive association between `Alcohol` and `Tannin` from the Chemical data and `Woody` and `Astringent` from the Sensory data, and (2) the negative association between these variables and `Hedonic` from the Sensory data.
@@ -199,7 +205,7 @@ The circle of correlations illustrate how the variables are correlated with each
 In this figure, an angle closer to 0° indicates a correlation close to 1; an angle closer to 180° indicates a correlation close to -1; and an 90° angle indicates 0 correlation. However, it's worth noted that this implication of correlation might only be true within the given dimensions. When a variable is far away from the circle, it is not fully explained by the dimensions, and other dimensions might be characterized by other pattern of relationship between this and other variables.
 
 ```{r corcircles}
-res.plsr.plot$results.graphs$cirCorX.plot
+res.plsr.plot$results.graphs$heatmap.rty
 res.plsr.plot$results.graphs$cirCorY.plot
 ```
 

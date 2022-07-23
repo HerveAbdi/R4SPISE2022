@@ -204,6 +204,7 @@ The inference analysis of CCA (performed by `TTAplotInference`) includes bootstr
 ```{r plotCCAinference, fig.show = 'hide', warning = FALSE, message = FALSE, results = FALSE}
 res.plot.cca.inference <- TTAplotInference(
     res = res.cca,
+    method = "CCA",
     tab1 = chemi, 
     tab2 = senso, 
     DESIGN = descr$color
