@@ -46,13 +46,13 @@
     <a class="dropdown-item" href="articles/A3_DataWines.html">A Sensory Data Set on Wines of The World</a>
     <a class="dropdown-item" href="articles/B1_PCAonBeers.html">PCA on Beers</a>
     <a class="dropdown-item" href="articles/B2_PCAonChewingGums.html">PCA on Chewing-gums</a>
-    <a class="dropdown-item" href="articles/C1_PLSonWines.html">PLSC on Wines</a>
+    <a class="dropdown-item" href="articles/C1_PLSConWines.html">PLSC on Wines</a>
     <a class="dropdown-item" href="articles/C2_CCAonWines.html">Canonical Correlation Analysis on Wines</a>
     <a class="dropdown-item" href="articles/C3_RAonWines.html">Redundancy Analysis on Wines</a>
     <a class="dropdown-item" href="articles/C4_PLSRonWines_part1.html">PLSR on Wines (Part 1)</a>
     <a class="dropdown-item" href="articles/C5_PLSRonWines_part2.html">PLSR on Wines (Part 2)</a>
-    <a class="dropdown-item" href="articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
     <a class="dropdown-item" href="articles/other/other.html">Additionnal references</a>
+    <a class="dropdown-item" href="articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
   </div>
 </li>
       </ul>
@@ -100,17 +100,45 @@
 <p>This is a basic example which shows how to solve a common problem:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/HerveAbdi/R4SPISE2022" class="external-link">R4SPISE2022</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span>
-<span><span class="fu">empty</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>More to come soon</p>
+<span></span>
+<span><span class="co">## load data</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sixBeers12Descriptors10Judges"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span>
+<span><span class="va">beers</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">ratingsIntensity</span></span>
+<span></span>
+<span><span class="co">## run PCA</span></span>
+<span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">beers</span>, </span>
+<span>                 center <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Center the data</span></span>
+<span>                 scale <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># **Do not** scale the variables</span></span>
+<span>                 graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co">## generate plots for descriptive results       </span></span>
+<span><span class="va">res.plot.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph4epPCA.html">OTAplot</a></span><span class="op">(</span>resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
+<span>                        data <span class="op">=</span> <span class="va">beers</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## generate plots for inference results</span></span>
+<span><span class="va">res.plot.pca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph4epPCA.html">OTAplotInference</a></span><span class="op">(</span>resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
+<span>                                           data <span class="op">=</span> <span class="va">beers</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="list-of-functions">List of functions<a class="anchor" aria-label="anchor" href="#list-of-functions"></a>
+<h2 id="list-of-main-functions">List of main functions<a class="anchor" aria-label="anchor" href="#list-of-main-functions"></a>
 </h2>
+<ul>
+<li><p><code><a href="reference/graph4epPCA.html">OTAplot()</a></code>: Core function to generate figures for descriptive results from one table analysis (i.e., principal component analysis; PCA)</p></li>
+<li><p><code><a href="reference/graph4epPCA.html">OTAplotInference()</a></code>: Core function to generate figures for inference results from one table analysis (i.e., PCA)</p></li>
+<li><p><code><a href="reference/TTAplot.html">TTAplot()</a></code>: Core function to generate figures for descriptive results from two table analyses (i.e., PLSC, CCA, and RA)</p></li>
+<li><p><code>TTAplotInferenct()</code>: Core function to generate figures for inference results from two table analyses (only PLSC for now)</p></li>
+<li><p><code><a href="reference/PLSRplot.html">PLSRplot()</a></code>: Core function to generate figures for descriptive and inference results from partial least square regression (PLSR)</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="list-of-data-sets">List of data sets<a class="anchor" aria-label="anchor" href="#list-of-data-sets"></a>
 </h2>
+<ul>
+<li><p><a href="articles/A1_DataBeers.html"><code>sixBeers12Descriptors10Judges</code></a></p></li>
+<li><p><a href="articles/A2_DataChewingGums.html"><code>sixteenGums4Descriptors</code></a></p></li>
+<li><p><a href="articles/A3_DataWines.html"><code>winesOf3Colors</code></a></p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="other-material">Other material<a class="anchor" aria-label="anchor" href="#other-material"></a>
@@ -118,6 +146,8 @@
 <ul>
 <li>Principal Component Analysis <a href="articles/other/abdi-awPCA2010.pdf">paper</a>.</li>
 <li>Partial Least Square Methods: A review <a href="articles/other/abdi-PLSC_and_PLSR2012.pdf">paper</a>.</li>
+<li>Canonical Correlation Analysis <a href="articles/other/abdi-CCA2018.pdf">paper</a>
+</li>
 </ul>
 </div>
 </div>
@@ -166,7 +196,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

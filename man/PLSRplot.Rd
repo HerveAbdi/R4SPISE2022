@@ -2,7 +2,7 @@
 % Please edit documentation in R/PLSRplot.R
 \name{PLSRplot}
 \alias{PLSRplot}
-\title{Core function to generate two-table analysis plots.}
+\title{Core function to generate PLSR plots.}
 \usage{
 PLSRplot(
   res,
@@ -84,7 +84,7 @@ PLSRplot(
 a list of plots
 }
 \description{
-Core function to generate two-table analysis plots.
+Core function to generate PLSR plots.
 }
 \examples{
 \dontrun{

@@ -51,8 +51,8 @@
     <a class="dropdown-item" href="../articles/C3_RAonWines.html">Redundancy Analysis on Wines</a>
     <a class="dropdown-item" href="../articles/C4_PLSRonWines_part1.html">PLSR on Wines (Part 1)</a>
     <a class="dropdown-item" href="../articles/C5_PLSRonWines_part2.html">PLSR on Wines (Part 2)</a>
-    <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
     <a class="dropdown-item" href="../articles/other/other.html">Additionnal references</a>
+    <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
   </div>
 </li>
       </ul>
@@ -134,7 +134,7 @@ vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")
 <li>Second table: sensory data (<code>senso</code>) that includes
 <code>fruity</code>, <code>floral</code>, <code>vegetal</code>,
 <code>spicy</code>, <code>woody</code>, <code>sweet</code>,
-<code>astringent</code>, and <code>henodic</code>.</li>
+<code>astringent</code>, and <code>hedonic</code>.</li>
 </ul>
 </div>
 <div class="section level3">
@@ -305,51 +305,15 @@ included and discussed in the previous sections).</p>
 <div class="section level2">
 <h2 id="inference-plots-and-results">Inference plots and results<a class="anchor" aria-label="anchor" href="#inference-plots-and-results"></a>
 </h2>
-<p>The inference analysis of CCA (performed by
-<code>TTAplotInference</code>) includes bootstrap test of the proportion
-of variance explained, permutation tests of the eigenvalues, the
-bootstrap tests of the loadings (i.e., the left and the right singular
-vectors).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TTAplotInference.html">TTAplotInference</a></span><span class="op">(</span></span>
-<span>    res <span class="op">=</span> <span class="va">res.cca</span>,</span>
-<span>    tab1 <span class="op">=</span> <span class="va">chemi</span>, </span>
-<span>    tab2 <span class="op">=</span> <span class="va">senso</span>, </span>
-<span>    DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="bootstrap-and-permutation-tests-on-the-eigenvalues">Bootstrap and permutation tests on the eigenvalues<a class="anchor" aria-label="anchor" href="#bootstrap-and-permutation-tests-on-the-eigenvalues"></a>
-</h3>
-<p>The inference scree plot illustrates the 95% bootstrap confidence
-intervals of the eigenvalues. If an interval includes 0, the eigenvalue
-is reliably larger than 0.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/scree%20inference-1.svg" width="672"></p>
-<p>The bootstrap test identifies one significant dimension having
-eigenvalue reliably larger than 0. The permutation test identifies one
-significant dimension with an eigenvalue significantly larger than
-0.</p>
-</div>
-<div class="section level3">
-<h3 id="bootstrap-test-on-the-loadings">Bootstrap test on the loadings<a class="anchor" aria-label="anchor" href="#bootstrap-test-on-the-loadings"></a>
-</h3>
-<p>The bar plot illustrates the <em>bootstrap ratios</em> which equals
-<span class="math display">\[\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},\]</span>
-where <span class="math inline">\(M_{p_{j}boot}\)</span> is the mean of
-the bootstrapped sample of the <em>j</em>th loading and <span class="math inline">\(SD_{p_{j}boot}\)</span> is the bootstrapped
-standard deviation of the factor score. A bootstrap ratio is equivalent
-to a <em>t</em>-statistics for the column factor score with the <span class="math inline">\(\mathrm{H}_0: g_j = 0\)</span>. The threshold is
-set to 2 to approximate the critical <em>t</em>-value of 1.96 at <span class="math inline">\(\alpha\)</span> = .05.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.X</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plot.cca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.Y</span></span></code></pre></div>
-<p><img src="C2_CCAonWines_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
-<p>The results show no significant factor scores for both dimensions
-that is reliably different from 0.</p>
-</div>
+<p>The inference analysis of CCA is still under development.</p>
+<!--- (performed by `TTAplotInference`) includes bootstrap test of the proportion of variance explained, permutation tests of the eigenvalues, the bootstrap tests of the loadings (i.e., the left and the right singular vectors). --->
+<!--- ### Bootstrap and permutation tests on the eigenvalues
+
+The inference scree plot illustrates the 95\% bootstrap confidence intervals of the eigenvalues. If an interval includes 0, the eigenvalue is reliably larger than 0.--->
+<p><!-- The bootstrap test identifies one significant dimension having eigenvalue reliably larger than 0. The permutation test identifies one significant dimension with an eigenvalue significantly larger than 0.  --></p>
+<!-- ### Bootstrap test on the loadings -->
+<!-- The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.  -->
+<!-- The results show no significant factor scores for both dimensions that is reliably different from 0. -->
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -364,7 +328,7 @@ that is reliably different from 0.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

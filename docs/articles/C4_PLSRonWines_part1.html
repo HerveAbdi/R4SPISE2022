@@ -51,8 +51,8 @@
     <a class="dropdown-item" href="../articles/C3_RAonWines.html">Redundancy Analysis on Wines</a>
     <a class="dropdown-item" href="../articles/C4_PLSRonWines_part1.html">PLSR on Wines (Part 1)</a>
     <a class="dropdown-item" href="../articles/C5_PLSRonWines_part2.html">PLSR on Wines (Part 2)</a>
-    <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
     <a class="dropdown-item" href="../articles/other/other.html">Additionnal references</a>
+    <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
   </div>
 </li>
       </ul>
@@ -159,7 +159,7 @@ data tables. The first entry will be the predictor table
 dimensions maximize <span class="math inline">\(\beta\)</span> of each
 pair of latent variables.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plsr</span> <span class="op">&lt;-</span> <span class="fu">data4PCCAR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data4PCCAR/man/PLSR_SVD.html" class="external-link">PLSR_SVD</a></span><span class="op">(</span><span class="va">chemi</span>, <span class="va">hedo</span>, <span class="fl">3</span>, inference <span class="op">=</span> <span class="cn">TRUE</span>, displayJack <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res.plsr</span> <span class="op">&lt;-</span> <span class="fu">data4PCCAR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data4PCCAR/man/PLSR_SVD.html" class="external-link">PLSR_SVD</a></span><span class="op">(</span><span class="va">chemi</span>, <span class="va">hedo</span>, <span class="fl">3</span>, inference <span class="op">=</span> <span class="cn">TRUE</span>, displayJack <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The function will center (to have means equal 0) and scale (to have
 the <em>standard deviation</em> equal 1) all variables in both data
 tables.</p>
@@ -173,13 +173,14 @@ tables.</p>
 <span><span class="co"># library(data4PCCAR)</span></span>
 <span><span class="va">res.plsr.plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PLSRplot.html">PLSRplot</a></span><span class="op">(</span></span>
 <span>    res <span class="op">=</span> <span class="va">res.plsr</span>, <span class="co"># Output of tepPLS</span></span>
+<span>    displayJack <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    color.obs <span class="op">=</span> <span class="va">wineColors</span>, <span class="co"># &lt;optional&gt; colors of wines</span></span>
 <span>    color.tab <span class="op">=</span> <span class="va">varColors</span>, <span class="co"># &lt;optional&gt; colors of the two tables</span></span>
 <span>    tab1.name <span class="op">=</span> <span class="st">"Chemical data"</span>, <span class="co"># &lt;optional&gt; Name of Table 1 (for printing)</span></span>
-<span>    tab2.name <span class="op">=</span> <span class="st">"Sensory data"</span>, <span class="co"># &lt;optional&gt; Name of Table 2 (for printing)</span></span>
+<span>    tab2.name <span class="op">=</span> <span class="st">"Hedonic"</span>, <span class="co"># &lt;optional&gt; Name of Table 2 (for printing)</span></span>
 <span>    DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span>, <span class="co"># design for the wines</span></span>
 <span>    tab1 <span class="op">=</span> <span class="va">chemi</span>,  <span class="co"># First data table</span></span>
-<span>    tab2 <span class="op">=</span> <span class="va">senso</span><span class="op">)</span>  <span class="co"># Second data table</span></span></code></pre></div>
+<span>    tab2 <span class="op">=</span> <span class="va">hedo</span><span class="op">)</span>  <span class="co"># Second data table</span></span></code></pre></div>
 <p>In this <code>PLSRplot</code> function, if <code>DESIGN</code> is
 specified. The latent variables will be colored according to the groups
 of the observations with the group means and their 95% bootstrap
@@ -210,6 +211,20 @@ squared correlation between all variables in both tables.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.eig.R2Y</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/scree-2.svg" width="672"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.sv.R2X</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.sv.R2Y</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">Y.RESS.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/scree-3.svg" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="the-prediction-fixed-effect">The prediction (fixed effect)<a class="anchor" aria-label="anchor" href="#the-prediction-fixed-effect"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">YYhat.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/unnamed-chunk-1-1.svg" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="latent-variables">Latent variables<a class="anchor" aria-label="anchor" href="#latent-variables"></a>
@@ -232,7 +247,7 @@ are reliably different from each other.</p>
 <p><em>Note</em>: The grouping information are independent from RA and
 are only use to help provide a summary description of the
 observations.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">lv.plot</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/LV%20map-1.svg" width="672"></p>
 <p>The results from Dimension 1 show that the chemical data can predict
@@ -261,12 +276,24 @@ When the variables are centered and scaled to have their <em>sums of
 squares equals 1</em>, each variable contributes one unit of variance;
 therefore, the average contribution is 1/(# of variables of the
 table).</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrW1.plot</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-1.svg" width="672"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrW2.plot</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-2.svg" width="672"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">LoadingsMap.X</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-3.svg" width="672"></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrC1.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-4.svg" width="672"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrC2.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-5.svg" width="672"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">LoadingsMap.Y</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/loadings-6.svg" width="672"></p>
 <p>From these two bar plots, the first dimension is characterized by (1)
 the positive association between <code>Alcohol</code> and
 <code>Tannin</code> from the Chemical data and <code>Woody</code> and
@@ -295,10 +322,10 @@ this implication of correlation might only be true within the given
 dimensions. When a variable is far away from the circle, it is not fully
 explained by the dimensions, and other dimensions might be characterized
 by other pattern of relationship between this and other variables.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorX.plot</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">heatmap.rty</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/corcircles-1.svg" width="672"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorY.plot</span></span></code></pre></div>
 <p><img src="C4_PLSRonWines_part1_files/figure-html/corcircles-2.svg" width="672"></p>
 <p>These circles of correlations show that <code>Alcohol</code>,
@@ -308,6 +335,25 @@ by other pattern of relationship between this and other variables.</p>
 These variables are mostly explained by the first dimension and have
 close-to-zero correlation with the second dimension (which is not
 included and discussed in the previous sections).</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="inference-plots-and-results">Inference plots and results<a class="anchor" aria-label="anchor" href="#inference-plots-and-results"></a>
+</h2>
+<div class="section level3">
+<h3 id="the-prediction-random-effect">The prediction (random effect)<a class="anchor" aria-label="anchor" href="#the-prediction-random-effect"></a>
+</h3>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">YYjack.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/unnamed-chunk-2-1.svg" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="the-predicted-residuals-estimated-sum-of-squares-press-of-y-random-effect">The predicted residuals estimated sum of squares (PRESS) of Y
+(random effect)<a class="anchor" aria-label="anchor" href="#the-predicted-residuals-estimated-sum-of-squares-press-of-y-random-effect"></a>
+</h3>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.plsr.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">Y.PRESS.plot</span></span></code></pre></div>
+<p><img src="C4_PLSRonWines_part1_files/figure-html/unnamed-chunk-3-1.svg" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -323,7 +369,7 @@ included and discussed in the previous sections).</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
