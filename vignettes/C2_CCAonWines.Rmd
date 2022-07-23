@@ -79,7 +79,7 @@ senso <- winesOf3Colors$winesDescriptors %>%
 ### Two data tables
 
  * First table: chemical data (`chemi`) that includes `acidity`, `alcohol`, `sugar`, and `tannin`.
- * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `henodic`.
+ * Second table: sensory data (`senso`) that includes `fruity`, `floral`, `vegetal`, `spicy`, `woody`, `sweet`, `astringent`, and `hedonic`.
 
 ```{r chemi, eval = FALSE, echo = FALSE, results='asis'}
 ### First table: chemical data
@@ -227,11 +227,11 @@ The inference scree plot illustrates the 95\% bootstrap confidence intervals of 
 
 <!-- The bar plot illustrates the _bootstrap ratios_ which equals $$\frac{M_{p_{j}boot}}{SD_{p_{j}boot}},$$ where $M_{p_{j}boot}$ is the mean of the bootstrapped sample of the *j*th loading and $SD_{p_{j}boot}$ is the bootstrapped standard deviation of the factor score. A bootstrap ratio is equivalent to a _t_-statistics for the column factor score with the $\mathrm{H}_0: g_j = 0$. The threshold is set to 2 to approximate the critical _t_-value of 1.96 at $\alpha$ = .05.  -->
 
-```{r bootstrap ratios 1, echo = FALSE, include = FALSE}
+```{r bootstrap ratios 1, fig.height = 4, echo = FALSE, include = FALSE}
 # res.plot.cca.inference$results.graphs$BR.X
 ```
 
-```{r bootstrap ratios 2, echo = FALSE, include = FALSE}
+```{r bootstrap ratios 2, fig.height = 4, echo = FALSE, include = FALSE}
 # res.plot.cca.inference$results.graphs$BR.Y
 ```
 
