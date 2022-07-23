@@ -1,4 +1,4 @@
-#' Core function to generate two-table analysis plots.
+#' Core function to generate PLSR plots.
 #'
 #' @param res the result of a two-table analysis;
 #' @param displayJack whether to plot the jacknife results;
