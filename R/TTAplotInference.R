@@ -103,25 +103,26 @@ TTAplotInference <- function(
           alphaLevel = .05
       )
   }else if(method == "CCA"){
-      # 1. Permutation ----
-      resPerm <- data4PCCAR::perm4CCA(
-          tab1, # First Data matrix
-          tab2, # Second Data matrix
-          nIter = 1000,# How many iterations
-          permType = 'byColumns'
-      )
-      # 2. Bootstrap -----
-      resBoot <- data4PCCAR::Boot4CCA(
-          tab1, # First Data matrix
-          tab2, # Second Data matrix
-          nIter = 1000,# How many iterations
-          Fi = res$TExPosition.Data$fi,
-          Fj = res$TExPosition.Data$fj,
-          nf2keep = 3,
-          critical.value = 2,
-          eig = TRUE,
-          alphaLevel = .05
-      )
+      stop("Inference analysis for CCA is still under development.")
+      # # 1. Permutation ----
+      # resPerm <- data4PCCAR::perm4CCA(
+      #     tab1, # First Data matrix
+      #     tab2, # Second Data matrix
+      #     nIter = 1000,# How many iterations
+      #     permType = 'byColumns'
+      # )
+      # # 2. Bootstrap -----
+      # resBoot <- data4PCCAR::Boot4CCA(
+      #     tab1, # First Data matrix
+      #     tab2, # Second Data matrix
+      #     nIter = 1000,# How many iterations
+      #     Fi = res$TExPosition.Data$fi,
+      #     Fj = res$TExPosition.Data$fj,
+      #     nf2keep = 3,
+      #     critical.value = 2,
+      #     eig = TRUE,
+      #     alphaLevel = .05
+      # )
   }
 
   if (is.null(color.obs)) color.obs <- list(oc = "darkorchid4")
