@@ -25,6 +25,7 @@ VignetteBuilder: utils, knitr
 Imports:
     ExPosition,
     TExPosition,
+    InPosition,
     corrplot,
     ggplot2,
     officer,
