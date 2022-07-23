@@ -128,7 +128,7 @@ PLSRplot <- function(
 
   PlotScree(ev = res$R2x^(1/2),
             title = 'Singular Value Scree Plot for RX2',
-            plotKaiser = FALSE,
+            plotKaiser = TRUE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
   scree.sv.R2X <- recordPlot()
@@ -142,7 +142,7 @@ PLSRplot <- function(
 
   PlotScree(ev = res$R2y^(1/2),
             title = 'Singular Value Scree Plot for RY2',
-            plotKaiser = FALSE,
+            plotKaiser = TRUE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
   scree.sv.R2Y <- recordPlot()
@@ -218,7 +218,7 @@ PLSRplot <- function(
 
 
   ##_________________________________________________
-  ##### Ctr J-set ----
+  ##### Ctr and loadings J-set ----
   Fi   <- res$W
   ctri <- res$W^2
   signed.ctri <- ctri * sign(Fi)
@@ -245,7 +245,7 @@ PLSRplot <- function(
       ylab = "Signed Contributions")
 
   ## map
-  W.Imap <- PTCA4CATA::createFactorMap(
+  W.map <- PTCA4CATA::createFactorMap(
       Fi,
       axis1 = leDim[1],
       axis2 = leDim[2],
@@ -265,17 +265,63 @@ PLSRplot <- function(
                               round(res$R2x[leDim[2]],2) ))
 
   # The map
-  LoadingsMap.X <- W.Imap$zeMap + zeArrows4J +
+  LoadingsMap.X <- W.map$zeMap + zeArrows4J +
       label4Tx + label4Ty
+
+  ##### Ctr and loadings K-set ----
+  Fj   <- as.matrix(res$C)
+  ctrj <- as.matrix(res$C^2)
+  signed.ctrj <- ctrj * sign(Fj)
+  # LV1
+  ctrC1.plot <- PrettyBarPlot2(
+      bootratio = round(100*signed.ctrj[,leDim[1]]),
+      threshold = 100/ nrow(signed.ctrj),
+      ylim = NULL,
+      color4bar = color.tab$oc[[2]],
+      color4ns = "gray75",
+      plotnames = TRUE,
+      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[1]),
+      ylab = "Signed Contributions")
+
+  # LV2
+  ctrC2.plot <- PrettyBarPlot2(
+      bootratio = round(100*signed.ctrj[,leDim[2]]),
+      threshold = 100/ nrow(signed.ctrj),
+      ylim = NULL,
+      color4bar = color.tab$oc[[2]],
+      color4ns = "gray75",
+      plotnames = TRUE,
+      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[1]),
+      ylab = "Signed Contributions")
+
+  ## map
+  C.map <- PTCA4CATA::createFactorMap(
+      Fj,
+      axis1 = leDim[1],
+      axis2 = leDim[2],
+      col.points = color.tab$oc[[2]],
+      col.labels = color.tab$oc[[2]],
+      alpha.points = .5
+  )
+  # arrows
+  zeArrows4K <- addArrows(res$C,
+                          axis1 = leDim[1],
+                          axis2 = leDim[2],
+                          color = color.tab$oc[[2]])
+  # make labels
+  label4Yx <- labs(x = paste0('T',leDim[1],'. R2Y = ',
+                              round(res$R2y[leDim[1]],2) ))
+  label4Yy <- labs(y = paste0('T',leDim[2],'. R2Y = ',
+                              round(res$R2y[leDim[2]],2) ))
+
+  # The map
+  LoadingsMap.Y <- C.map$zeMap + zeArrows4K +
+      label4Yx + label4Yy
 
 
   ##_________________________________________________
-  ### Circle of corr:
+  ### Circle of corr for Y-set:
   # Create labels
-  leDim4CirCor <- leDim
-  # label4Map <- createxyLabels.gen(leDim4CirCor[1], leDim4CirCor[2],
-  #                                 lambda = res$TExPosition.Data$eigs,
-  #                                 tau = res$TExPosition.Data$t)
   label4Map <- labs(x = sprintf("Dimension %i", leDim[1]),
                     y = sprintf("Dimension %i", leDim[2]))
   label4Map2 <- list(label4Map,
@@ -289,31 +335,31 @@ PLSRplot <- function(
                      ), # end of element_text
                      plot.title = element_text(color = '#5826A3')
                      ) )
-  ### Circle of corr for J-set ----
-  # Create the map
-  loadingsX.cor <- t(cor(tab1, res$TExPosition.Data$lx[, leDim4CirCor]))
-  map4Cir.X <- PTCA4CATA::createFactorMap(
-      t(loadingsX.cor),
-      col.points = color.tab$oc[[1]],
-      col.labels = color.tab$oc[[1]],
-      col.background = NULL,
-      col.axes = "darkorchid4",
-      alpha.axes = 0.5,
-      constraints = list(minx = -1, miny = -1,
-                         maxx = 1 , maxy = 1),
-      title = paste0("Circle of Correlation for the ", tab1.name))
-  #  Add some arrows
-  arrows.X <- addArrows(t(loadingsX.cor), color = color.tab$oc[[1]])
 
-  # draw the circle
-  cirCorX.plot <- map4Cir.X$zeMap_background +
-      map4Cir.X$zeMap_text +
-      addCircleOfCor(color = "darkorchid4") +
-      arrows.X + label4Map2
+  ### correlation matrix
+  cor.TY <- t(cor(tab2, res$T))
+  rty_long <- tibble::tibble(
+      yids = rownames(cor.TY),
+      tibble::as_tibble(cor.TY)) |>
+      tidyr::pivot_longer(
+          -yids,
+          values_to = "correlation",
+          names_to = "xids")
+  heatmap.rty <- rty_long  |>
+      ggplot2::ggplot(ggplot2::aes(xids, yids, fill = correlation)) +
+      ggplot2::geom_tile() +
+      ggplot2::scale_fill_gradient2(limits = c(-1, 1)) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(
+          axis.ticks.x = ggplot2::element_line(color = color.tab$oc[[2]]),
+          axis.text.x = ggplot2::element_text(color = color.tab$oc[[2]])
+      ) +
+      ggplot2::coord_equal() +
+      labs(x = "", y = "")
 
   ### Circle of corr for K-set ----
   # Create the map
-  loadingsY.cor <- t(cor(tab2, res$TExPosition.Data$ly[, leDim4CirCor]))
+  loadingsY.cor <- cor.TY
   map4Cir.Y <- PTCA4CATA::createFactorMap(
       t(loadingsY.cor),
       col.points = color.tab$oc[[2]],
@@ -331,13 +377,12 @@ PLSRplot <- function(
   cirCorY.plot <- map4Cir.Y$zeMap_background +
       map4Cir.Y$zeMap_text +
       addCircleOfCor(color = "darkorchid4") +
-      arrows.Y + label4Map2
+      arrows.Y + label4Yx + label4Yy
 
   ##_________________________________________________
   ### Prepare to save as PPTX ###
   results.stats <- list(
-      TExPosition.Data = res$TExPosition.Data,
-      Plotting.Data = res$Plotting.Data#,
+      TExPosition.Data = res
       # loadings.as.correlation = loadingsAsCorr
   )
   results.graphs <- list(
@@ -349,7 +394,11 @@ PLSRplot <- function(
       lv.plot = lv.plot,
       ctrW1.plot = ctrW1.plot,
       ctrW2.plot = ctrW2.plot,
-      cirCorX.plot = cirCorX.plot,
+      LoadingsMap.X = LoadingsMap.X,
+      ctrC1.plot = ctrC1.plot,
+      ctrC2.plot = ctrC2.plot,
+      LoadingsMap.Y = LoadingsMap.Y,
+      heatmap.rty = heatmap.rty,
       cirCorY.plot = cirCorY.plot
   )
   description.graphs <- list(
@@ -359,9 +408,13 @@ PLSRplot <- function(
       scree.sv.R2X = "The Singular Values Scree Plot for X",
       scree.sv.R2Y = "The Singular Values Scree Plot for Y",
       lv.plot = "Latent Variable Map",
-      ctrW1.plot = "Contributions for W1",
-      ctrW2.plot = "Contributions for W2",
-      cirCorX.plot = "Circle of Correlation for X",
+      ctrW1.plot = "Contributions for W1 (X weights)",
+      ctrW2.plot = "Contributions for W2 (X weights)",
+      LoadingsMap.X = "Loadings map for X",
+      ctrC1.plot = "Contribution of C1 (Y loadings)",
+      ctrC2.plot = "Contribution of C2 (Y loadings)",
+      LoadingsMap.Y = "Loadings map for Y",
+      heatmap.rty = "The TY Correlation Matrix (Heat Map)",
       cirCorY.plot = "Circle of Correlation for Y"
   )
 
