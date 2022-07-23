@@ -1,6 +1,7 @@
 #' Core function to generate two-table analysis plots.
 #'
 #' @param res the result of a two-table analysis;
+#' @param displayJack whether to plot the jacknife results;
 #' @param tab1 the result of a two-table analysis;
 #' @param tab2 the result of a two-table analysis;
 #' @param leDim vector containning the dimensions to be plotted;
@@ -35,6 +36,7 @@
 #'
 PLSRplot <- function(
         res,
+        displayJack = TRUE,
         tab1,
         tab2,
         leDim = c(1, 2),
@@ -67,6 +69,7 @@ PLSRplot <- function(
   # tab1.name: name for table 1
   # tab2.name: name for table 2
   # bar.font.size: a vector with font sizes for labels in barplots for respectively x and y
+  options(ggrepel.max.overlaps = Inf)
   rxy <- cor(tab1,tab2)
   I <- nrow(rxy)
   J <- ncol(rxy)
@@ -120,32 +123,18 @@ PLSRplot <- function(
 
   ### 2. Scree plots
   PlotScree(ev = res$R2x,
-            title = 'Eigenvalue Scree Plot for RX2',
+            title = 'Scree Plot for R2X',
             plotKaiser = TRUE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
   scree.eig.R2X <- recordPlot()
 
-  PlotScree(ev = res$R2x^(1/2),
-            title = 'Singular Value Scree Plot for RX2',
-            plotKaiser = TRUE,
-            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
-            lwd4Kaiser  = 2)
-  scree.sv.R2X <- recordPlot()
-
   PlotScree(ev = res$R2y,
-            title = 'Eigenvalue Scree Plot for RY2',
+            title = 'Scree Plot for R2Y',
             plotKaiser = TRUE,
             color4Kaiser = ggplot2::alpha('darkorchid4', .5),
             lwd4Kaiser  = 2)
   scree.eig.R2Y <- recordPlot()
-
-  PlotScree(ev = res$R2y^(1/2),
-            title = 'Singular Value Scree Plot for RY2',
-            plotKaiser = TRUE,
-            color4Kaiser = ggplot2::alpha('darkorchid4', .5),
-            lwd4Kaiser  = 2)
-  scree.sv.R2Y <- recordPlot()
 
   ## 3. Latent variables
   plot.lv <- createFactorMap(res$T,
@@ -380,17 +369,92 @@ PLSRplot <- function(
       arrows.Y + label4Yx + label4Yy
 
   ##_________________________________________________
+  ### Scree plot for RESS:
+  ss.y <- sum(tab2^2)
+  RESS2plot <- data.frame(Factor = c(1:length(res$RESSy)), RESSy = res$RESSy[1,])
+  Y.RESS.plot <- ggplot(RESS2plot, aes(x = Factor, y = RESSy)) +
+      geom_line(color = "darkolivegreen") +
+      geom_point(size = 2, color = "darkolivegreen4") +
+      scale_x_continuous(breaks=c(1:max(RESS2plot$Factor))) +
+      ggtitle("Y Residual Estimated Sum of Squares (fixed effect)") +
+      # ylim(0, ss.y) +
+      xlab("Components") +
+      ylab("Residual Estimated Sum of Squares (RESS)") +
+      theme(text = element_text(size = 10, color = "orchid4"),
+            legend.position = "none",
+            plot.title = element_text(face = "bold", size = 10),
+            axis.text.y.left = element_text(angle = 90, hjust = 0.5, color = "orchid4"),
+            axis.text.x = element_text(color = "orchid4"),
+            panel.background = element_rect(fill = "transparent"),
+            panel.border = element_rect(color = "orchid4", fill = "transparent"))
+
+  ##_________________________________________________
+  ### Y-Yhat plot:
+  if (ncol(tab2) == 1){
+      YYhat2plot <- cbind(tab2[,1], res$Yhat)
+      colnames(YYhat2plot) <- c(tab2.name, paste0("Predicted ", tab2.name))
+      YYhat.mat <- PTCA4CATA::createFactorMap(
+          YYhat2plot,
+          col.points = color.obs$oc,
+          col.labels = color.obs$oc,
+          col.background = NULL,
+          col.axes = "darkorchid4",
+          alpha.axes = 0.5,
+          title = paste0(tab2.name, " vs. predicted ", tab2.name, " (fixed effect)"))
+
+      YYhat.plot <- YYhat.mat$zeMap
+
+  }
+
+  ##______________Inference results from Jacknife_________
+  if (displayJack){
+      ### Scree plot for RESS:
+      PRESS2plot <- data.frame(Factor = c(1:length(res$PRESSy)), PRESSy = res$PRESSy[1,])
+      Y.PRESS.plot <- ggplot(PRESS2plot, aes(x = Factor, y = PRESSy)) +
+          geom_line(color = "darkolivegreen") +
+          geom_point(size = 2, color = "darkolivegreen4") +
+          scale_x_continuous(breaks=c(1:max(PRESS2plot$Factor))) +
+          ggtitle("Y Predicted Residual Estimated Sum of Squares (random effect)") +
+          # ylim(0,ss.y) +
+          xlab("Components") +
+          ylab("Predicted Residual Estimated Sum of Squares (PRESS)") +
+          theme(text = element_text(size = 10, color = "orchid4"),
+                legend.position = "none",
+                plot.title = element_text(face = "bold", size = 10),
+                axis.text.y.left = element_text(angle = 90, hjust = 0.5, color = "orchid4"),
+                axis.text.x = element_text(color = "orchid4"),
+                panel.background = element_rect(fill = "transparent"),
+                panel.border = element_rect(color = "orchid4", fill = "transparent"))
+
+      ### Y-Yjack plot:
+      if (ncol(tab2) == 1){
+          YYjack2plot <- cbind(tab2[,1], res$Yjack)
+          colnames(YYjack2plot) <- c(tab2.name, paste0("Predicted ", tab2.name))
+          YYjack.mat <- PTCA4CATA::createFactorMap(
+              YYjack2plot,
+              col.points = color.obs$oc,
+              col.labels = color.obs$oc,
+              col.background = NULL,
+              col.axes = "darkorchid4",
+              alpha.axes = 0.5,
+              title = paste0(tab2.name, " vs. predicted ", tab2.name, " (random effect)"))
+
+          YYjack.plot <- YYjack.mat$zeMap
+
+      }
+
+  }
+
+  ##_________________________________________________
   ### Prepare to save as PPTX ###
   results.stats <- list(
-      TExPosition.Data = res
+      PLSR.Data = res
       # loadings.as.correlation = loadingsAsCorr
   )
   results.graphs <- list(
       heatmap.rxy = heatmap.rxy,
       scree.eig.R2X = scree.eig.R2X,
       scree.eig.R2Y = scree.eig.R2Y,
-      scree.sv.R2X = scree.sv.R2X,
-      scree.sv.R2Y = scree.sv.R2Y,
       lv.plot = lv.plot,
       ctrW1.plot = ctrW1.plot,
       ctrW2.plot = ctrW2.plot,
@@ -399,14 +463,13 @@ PLSRplot <- function(
       ctrC2.plot = ctrC2.plot,
       LoadingsMap.Y = LoadingsMap.Y,
       heatmap.rty = heatmap.rty,
-      cirCorY.plot = cirCorY.plot
+      cirCorY.plot = cirCorY.plot,
+      Y.RESS.plot = Y.RESS.plot
   )
   description.graphs <- list(
       heatmap.rxy = "The XY Correlation Matrix (Heat Map)",
-      scree.eig.R2X = "The Eigenvalues Scree Plot for X",
-      scree.eig.R2Y = "The Eigenvalues Scree Plot for Y",
-      scree.sv.R2X = "The Singular Values Scree Plot for X",
-      scree.sv.R2Y = "The Singular Values Scree Plot for Y",
+      scree.eig.R2X = "The Scree Plot for Variance Explained in X",
+      scree.eig.R2Y = "The Scree Plot for Variance Explained in Y",
       lv.plot = "Latent Variable Map",
       ctrW1.plot = "Contributions for W1 (X weights)",
       ctrW2.plot = "Contributions for W2 (X weights)",
@@ -415,8 +478,23 @@ PLSRplot <- function(
       ctrC2.plot = "Contribution of C2 (Y loadings)",
       LoadingsMap.Y = "Loadings map for Y",
       heatmap.rty = "The TY Correlation Matrix (Heat Map)",
-      cirCorY.plot = "Circle of Correlation for Y"
+      cirCorY.plot = "Circle of Correlation for Y",
+      Y.RESS.plot = "Y RESS (fixed effect)"
   )
+
+  if (ncol(tab2) == 1){
+      results.graphs$YYhat.plot <- YYhat.plot
+      description.graphs$YYhat.plot = "Y vs. predicted Y (fixed effect)"
+  }
+
+  if (displayJack){
+      results.graphs$Y.PRESS.plot <- Y.PRESS.plot
+      description.graphs$Y.PRESS.plot = "Y PRESS (random effect)"
+      if (ncol(tab2) == 1){
+          results.graphs$YYjack.plot <- YYjack.plot
+          description.graphs$YYjack.plot = "Y vs. predicted Y (random effect)"
+      }
+  }
 
 
   ## list stat & graphs ----
@@ -429,7 +507,7 @@ PLSRplot <- function(
       saveAllGraphsInList2pptx(
           list2Save = results.graphs,
           titles4list2Save = description.graphs,
-          file2Save.pptx = "TTA.pptx",
+          file2Save.pptx = "PLSR.pptx",
           title = title4pptx
       )
   }
