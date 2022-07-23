@@ -6,6 +6,7 @@
 \usage{
 PLSRplot(
   res,
+  displayJack = TRUE,
   tab1,
   tab2,
   leDim = c(1, 2),
@@ -32,6 +33,8 @@ PLSRplot(
 }
 \arguments{
 \item{res}{the result of a two-table analysis;}
+
+\item{displayJack}{whether to plot the jacknife results;}
 
 \item{tab1}{the result of a two-table analysis;}
 
