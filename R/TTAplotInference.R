@@ -1,6 +1,7 @@
 #' Core function to generate two-table analysis plots.
 #'
 #' @param res the result of a two-table analysis;
+#' @param method the method used; 'PLSC' or 'CCA' (default to 'PLSC');
 #' @param tab1 the result of a two-table analysis;
 #' @param tab2 the result of a two-table analysis;
 #' @param leDim vector containning the dimensions to be plotted;
@@ -36,6 +37,7 @@
 #'
 TTAplotInference <- function(
         res,
+        method = 'PLSC',
         tab1,
         tab2,
         leDim = c(1, 1),
@@ -79,19 +81,48 @@ TTAplotInference <- function(
       DESIGN <- as.vector(as.matrix(DESIGN))
   }
 
-
-  # 2. Bootstrap -----
-  resBoot4PLSC <- data4PCCAR::Boot4PLSC(
-      tab1, # First Data matrix
-      tab2, # Second Data matrix
-      nIter = 1000,# How many iterations
-      Fi = res$TExPosition.Data$fi,
-      Fj = res$TExPosition.Data$fj,
-      nf2keep = 3,
-      critical.value = 2,
-      eig = TRUE,
-      alphaLevel = .05
-  )
+  ## PLSC inference
+  if (method == "PLSC"){
+      # 1. Permutation ----
+      resPerm <- data4PCCAR::perm4PLSC(
+          tab1, # First Data matrix
+          tab2, # Second Data matrix
+          nIter = 1000,# How many iterations
+          permType = 'byColumns'
+      )
+      # 2. Bootstrap -----
+      resBoot <- data4PCCAR::Boot4PLSC(
+          tab1, # First Data matrix
+          tab2, # Second Data matrix
+          nIter = 1000,# How many iterations
+          Fi = res$TExPosition.Data$fi,
+          Fj = res$TExPosition.Data$fj,
+          nf2keep = 3,
+          critical.value = 2,
+          eig = TRUE,
+          alphaLevel = .05
+      )
+  }else if(method == "CCA"){
+      # 1. Permutation ----
+      resPerm <- data4PCCAR::perm4CCA(
+          tab1, # First Data matrix
+          tab2, # Second Data matrix
+          nIter = 1000,# How many iterations
+          permType = 'byColumns'
+      )
+      # 2. Bootstrap -----
+      resBoot <- data4PCCAR::Boot4CCA(
+          tab1, # First Data matrix
+          tab2, # Second Data matrix
+          nIter = 1000,# How many iterations
+          Fi = res$TExPosition.Data$fi,
+          Fj = res$TExPosition.Data$fj,
+          nf2keep = 3,
+          critical.value = 2,
+          eig = TRUE,
+          alphaLevel = .05
+      )
+  }
 
   if (is.null(color.obs)) color.obs <- list(oc = "darkorchid4")
   if (is.null(color.tab)) {
@@ -108,13 +139,14 @@ TTAplotInference <- function(
   PlotScreeWithCI(
       ev = res$TExPosition.Data$eigs,
       ci.ev = t(resBoot4PLSC$eigenCI),
-      polygon.ci = 'ev'
+      polygon.ci = 'ev',
+      p.ev = resPerm$pEigenvalues
       )
   scree <- recordPlot()
 
   # BR K-set ----
   BR.X <- PrettyBarPlot2(
-      bootratio = resBoot4PLSC$bootRatios.i[, leDim[1]],
+      bootratio = resBoot$bootRatios.i[, leDim[1]],
       threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[1]],
@@ -125,7 +157,7 @@ TTAplotInference <- function(
   #_____________________________________________________________________
   # BR K-set ----
   BR.Y <- PrettyBarPlot2(
-      bootratio = resBoot4PLSC$bootRatios.j[, leDim[2]],
+      bootratio = resBoot$bootRatios.j[, leDim[2]],
       threshold = 2,
       ylim = NULL,
       color4bar = color.tab$oc[[2]],
