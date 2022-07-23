@@ -138,7 +138,7 @@ TTAplotInference <- function(
   ## Scree with confidence intervals
   PlotScreeWithCI(
       ev = res$TExPosition.Data$eigs,
-      ci.ev = t(resBoot4PLSC$eigenCI),
+      ci.ev = t(resBoot$eigenCI),
       polygon.ci = 'ev',
       p.ev = resPerm$pEigenvalues
       )
