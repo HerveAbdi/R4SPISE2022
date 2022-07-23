@@ -99,14 +99,14 @@
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[ExPosition]{epPCA}}
+#'  \code{\link[ExPosition]{epPCA}}, \code{\link[InPosition]{epPCA.inference.battery}}
 #'  \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 #' @rdname graph4epPCA
 #' @export
 #' @import prettyGraphs
 #' @import ggplot2 PTCA4CATA data4PCCAR corrplot
 #' @importFrom ExPosition epPCA
-##  @importFrom
+#' @importFrom InPosition epPCA.inference.battery
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #'
 #' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot

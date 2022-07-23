@@ -233,7 +233,7 @@ if(interactive()){
 \code{\link[ExPosition]{epPCA}}
 \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 
-\code{\link[ExPosition]{epPCA}}
+\code{\link[ExPosition]{epPCA}}, \code{\link[InPosition]{epPCA.inference.battery}}
 \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 
 \code{\link[ExPosition]{epPCA}}
