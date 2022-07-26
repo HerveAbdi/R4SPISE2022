@@ -1,0 +1,306 @@
+---
+title: "PLSC Template"
+author: "Ju-Chi Yu"
+date: "October 26th, 2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, echo=TRUE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# devtools::install_github("herveabdi/PTCA4CATA", INSTALL_opts="--no-multiarch") # you only need this line of code if you haven't downloaded the package
+# install.packages("gridExtra")
+# install.packages("ggplotify")
+# install.packages("grid")
+library(devtools)
+library(TInPosition)
+library(ggplot2)
+library(corrplot)
+library(PTCA4CATA)
+library(data4PCCAR)
+
+# The following three functions allow you to arrange your plots in Rmarkdown
+library(gridExtra)
+library(ggplotify)
+library(grid)
+
+```
+
+Here, I show the results you need to include for your CA. Please remember to add notes to this report yourself. (I have showed some results and the plotting step by step to show you how to do it. You might want to combine some of them.)
+
+
+```{r data_set}
+data(beer.tasting.notes)
+data1 <- beer.tasting.notes$data[,1:8]
+data2 <- beer.tasting.notes$data[,9:16]
+
+data.design <- beer.tasting.notes$region.design
+
+# make the design into a vector
+data.design.vec <- colSums(t(data.design)*c(1:ncol(data.design)))
+group.key <- as.vector(colnames(data.design))
+names(group.key) <- c(1:ncol(data.design))
+data.design.vec<- as.matrix(as.factor(dplyr::recode(data.design.vec, !!!group.key)))
+rownames(data.design.vec) <- rownames(data1)
+```
+
+## The data pattern
+In PLSC, we analyze the correlation (cross-product) of the two quantitative table. As a result, let's try to plot this correlation matrix.
+
+```{r corplot}
+# Compute the correlation matrix
+XY.cor <- cor(data1,data2)
+# Plot it with corrplot
+corrplot(XY.cor, method = "color") 
+
+a0.residuals <- recordPlot()
+```
+
+## Analysis
+
+You might want to set `graphs = TRUE` at first to take a look at the factor scores maps and check out what plot you will need to remake.
+
+```{r analyze}
+# run PLSC
+pls.res <- tepPLS(data1,data2, DESIGN = data.design, make_design_nominal = FALSE, graphs = FALSE)
+
+```
+
+### Scree Plot
+Show the results from permutation with Scree plot (i.e., color the significant components) by adding the estimated p-values to the `PlotScree` function.
+
+```{r scree plot}
+my.scree <- PlotScree(ev = pls.res$TExPosition.Data$eigs)
+# How many eigen-value do we have here
+nL <- min(ncol(data1),ncol(data2))
+```
+
+
+> Exercise 1: try to add the permutation results to your scree plot
+
+
+```{r}
+# First: Go for a permutation test
+resPerm4PLSC <- perm4PLSC(data1, # First Data matrix 
+                          data2, # Second Data matrix
+                          nIter = 1000 # How mny iterations
+                          )
+# to see what results we have
+print(resPerm4PLSC)
+
+# Now, can you add this to your "my.scree" scree plot?
+#------------------------------
+
+# YOUR CODE HERE 
+
+#------------------------------
+
+my.scree <- recordPlot() # you need this line to be able to save them in the end
+```
+
+
+### Factor scores maps
+
+
+> Exercise 2: Make the graphs for PLSC
+
+Here are the 4 types of factor scores maps you need to include.
+Remember to add group means and confidence intervals.
+
+plots|   X axis    |    Y axis  
+-----|-------------|--------------
+  1: |   Lx[,1]    |    Ly[,1]
+  2: |   Lx[,2]    |    Ly[,2]
+  
+Barplots:
+
+plots|     Top     |    Bootom
+-----|-------------|--------------
+  3: |    p[,1]    |     q[,1]
+  4: |    p[,2]    |     q[,2]
+
+* plot1: the observations viewed from the 1st latent variable of both tables.  --> colors of the observations are in fii.col (but you can use your own colors too).
+
+* plot2: the observations viewed from the 2nd latent variable of both tables. 
+
+* plot3: two bar plots of the column loadings. One illustrates the loadings of the 1st component of X and the other the loadings of the 1st component of Y. --> colors of the columns are in fi.col and fj.col (but you can use your own colors too). This should go next to your plot 1 in your slides.
+
+* plot4: the same bar plots as the previous one but with the 2nd component of X and of Y. --> colors of the columns are in fi.col and fj.col (but you can use your own colors too). This should go next to your plot 2 in your slides.
+
+I will show how you can make the first plot:
+
+First, we start from computing all the things we need to create the plots.
+
+```{r factormaps}
+# get colors for groups
+uniquecol <- unique(pls.res$Plotting.Data$fii.col)
+grpcol <- uniquecol
+rownames(grpcol) <- data.design.vec[rownames(uniquecol),]
+
+# First, given how CreateFactorMap works, you need to create a matrix with observations on the rows, and whatever you want to put as the x-axis in the first column, and whatever you want to put as the y-axis in the second column.
+
+# For the first plot, the first component of the latent variable of X is the x-axis, and the first component of the latent variable of Y is the y-axis
+latvar.1 <- cbind(pls.res$TExPosition.Data$lx[,1],pls.res$TExPosition.Data$ly[,1])
+colnames(latvar.1) <- c("Lx 1", "Ly 1")
+
+# compute means
+lv.1.group <- getMeans(latvar.1,data.design.vec)
+
+# get bootstrap intervals of groups
+lv.1.group.boot <- Boot4Mean(latvar.1, data.design.vec)
+colnames(lv.1.group.boot$BootCube) <- c("Lx 1", "Ly 1")
+```
+
+Next, we can start plotting:
+
+```{r plotfactormaps}
+plot.lv1 <- createFactorMap(latvar.1,
+                         col.points = pls.res$Plotting.Data$fii.col,
+                         col.labels = pls.res$Plotting.Data$fii.col,
+                         alpha.points = 0.2
+                         )
+
+plot1.mean <- createFactorMap(lv.1.group,
+                              col.points = grpcol[rownames(lv.1.group),],
+                              col.labels = grpcol[rownames(lv.1.group),],
+                              cex = 4,
+                              pch = 17,
+                              alpha.points = 0.8)
+
+plot1.meanCI <- MakeCIEllipses(lv.1.group.boot$BootCube[,c(1:2),], # get the first two components
+                              col = grpcol[rownames(lv.1.group.boot$BootCube),],
+                              names.of.factors = c("Lx 1", "Ly 1")
+                              )
+
+plot1 <- plot.lv1$zeMap_background + plot.lv1$zeMap_dots + plot1.mean$zeMap_dots + plot1.mean$zeMap_text + plot1.meanCI
+plot1
+ 
+```
+
+**Now it's your turn to create the other three plots.**
+
+#### Contributions and bootstrap ratios barplots
+
+##### Contribution barplots
+
+For PLSC, we also plot the contributions for both rows and columns
+
+> Exercise 3: Create contribution barplots
+
+```{r contribution}
+
+# THIS PART OF YOUR CODE SHOULD BE SIMILAR TO WHAT YOU HAD BEFORE
+
+```
+
+##### Bootstrap ratios
+
+Compute the bootstrap ratios
+```{r}
+resBoot4PLSC <- Boot4PLSC(data1, # First Data matrix 
+                          data2, # Second Data matrix
+                          nIter = 1000, # How many iterations
+                      Fi = pls.res$TExPosition.Data$fi,
+                      Fj = pls.res$TExPosition.Data$fj,
+                      nf2keep = 3,
+                      critical.value = 2,
+                      # To be implemented later
+                      # has no effect currently
+                      alphaLevel = .05)
+#
+# to see what results we have
+print(resBoot4PLSC)
+#--------------------------------------------------------------------
+
+```
+
+
+``` {r BR}
+BR.I <- resBoot4PLSC$bootRatios.i
+BR.J <- resBoot4PLSC$bootRatios.j
+
+laDim = 1
+
+# Plot the bootstrap ratios for Dimension 1
+ba001.BR1.I <- PrettyBarPlot2(BR.I[,laDim],
+                        threshold = 2,
+                        font.size = 3,
+                   color4bar = gplots::col2hex(pls.res$Plotting.Data$fi.col), # we need hex code
+                  ylab = 'Bootstrap ratios'
+                  #ylim = c(1.2*min(BR[,laDim]), 1.2*max(BR[,laDim]))
+) + ggtitle(paste0('Component ', laDim), subtitle = 'Table 1')
+
+ba002.BR1.J <- PrettyBarPlot2(BR.J[,laDim],
+                        threshold = 2,
+                        font.size = 3,
+                   color4bar = gplots::col2hex(pls.res$Plotting.Data$fj.col), # we need hex code
+                  ylab = 'Bootstrap ratios'
+                  #ylim = c(1.2*min(BR[,laDim]), 1.2*max(BR[,laDim]))
+) + ggtitle("", subtitle = 'Table 2')
+
+# Plot the bootstrap ratios for Dimension 2
+laDim = 2
+ba003.BR2.I <- PrettyBarPlot2(BR.I[,laDim],
+                        threshold = 2,
+                        font.size = 3,
+                   color4bar = gplots::col2hex(pls.res$Plotting.Data$fi.col), # we need hex code
+                  ylab = 'Bootstrap ratios'
+                  #ylim = c(1.2*min(BR[,laDim]), 1.2*max(BR[,laDim]))
+) + ggtitle(paste0('Component ', laDim), subtitle = 'Table 1')
+
+ba004.BR2.J <- PrettyBarPlot2(BR.J[,laDim],
+                        threshold = 2,
+                        font.size = 3,
+                   color4bar = gplots::col2hex(pls.res$Plotting.Data$fj.col), # we need hex code
+                  ylab = 'Bootstrap ratios'
+                  #ylim = c(1.2*min(BR[,laDim]), 1.2*max(BR[,laDim]))
+) + ggtitle("", subtitle = 'Table 2')
+
+```
+
+We then use the next line of code to put two figures side to side:
+
+```{r grid_BR, echo = T}
+grid.arrange(
+    as.grob(ba001.BR1.I),as.grob(ba002.BR1.J),as.grob(ba003.BR2.I),as.grob(ba004.BR2.J),
+    ncol = 2,nrow = 2,
+    top = textGrob("Bootstrap ratios", gp = gpar(fontsize = 18, font = 3))
+  )
+BR.IJ <- recordPlot() # you need this line to be able to save them in the end
+```
+
+You can also arrange these plots to put contribution and bootstrap ratio plots side by side.
+
+```{r}
+# add your contribution barplots to your bootstrap ratio barplots after you create them
+```
+
+
+### Save figures to PPT
+
+You can also save all your figures in the directory as .pttx just as before.
+
+*REMEMBER: Never use a screen shot*
+
+## Summary
+
+* From the latent variables:
+
+  * Component 1: ...
+
+  * Component 2: ...
+
+* From the scores of Table 1:
+
+  * Component 1: ...
+  
+  * Component 2: ...
+  
+* From the scores of Table 2:
+
+  * Component 1: ...
+  
+  * Component 2: ...
+  
+(These are the perspectives from which you need to interpret the data. You can of course have a more concise summary if you want to, but make sure to include all of them.)

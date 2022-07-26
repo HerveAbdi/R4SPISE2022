@@ -1,0 +1,82 @@
+---
+title: "A Sensory Data Set on Beers"
+author: "Vincent Guillemot, Hervé Abdi, Ju-Chi Yu & Soudeh Ardestani Khoubrouy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A Sensory Data Set on Beers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE, 
+  dev = "svg",
+  fig.ext = "svg"
+)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+```
+
+## Load the data
+
+With the following command
+
+```{r winesOf3Colors}
+data("sixBeers12Descriptors10Judges", package = "data4PCCAR")
+```
+
+```{r hidden colors, echo = FALSE}
+beers <- sixBeers12Descriptors10Judges$ratingsIntensity
+beerColors <- sixBeers12Descriptors10Judges$color4Products
+descColors <- sixBeers12Descriptors10Judges$color4Descriptors
+```
+
+## The Beers {.smaller}
+
+```{r beers, echo = FALSE, results='asis'}
+fontsize <- 8
+beers %>%
+    kable("html") %>%
+    kable_styling("striped", full_width = F)  %>%
+    row_spec(1:nrow(beers),
+             font_size = fontsize) %>%
+    row_spec(0, angle = 0, align = "right", font_size = fontsize)
+```
+
+
+## The ratings
+
+
+```{r ratings, echo = FALSE, fig.width = 8, fig.height = 5}
+beers_long <- tibble(
+    yids = rownames(beers), 
+    as_tibble(beers)) %>%
+    tidyr::pivot_longer(
+        -yids,
+        values_to = "scores",
+        names_to = "xids")
+
+
+(suppressWarnings(heatmap.rxy <- beers_long  %>%
+    ggplot(aes(xids, yids, fill = scores)) +
+    geom_tile() +
+    # geom_text(aes(label = round(scores, 2))) +
+    scale_fill_gradient2() +
+    theme_bw() +
+    theme(
+        axis.ticks.x = element_line(color = beerColors),
+        axis.text.x = element_text(color = beerColors, size = 7),
+        axis.ticks.y = element_line(color = descColors),
+        axis.text.y = element_text(color = descColors, size = 7),
+    ) +
+    labs(x = "", y = ""))) + 
+    coord_flip() + 
+    theme(legend.position = "bottom")
+```
+
+

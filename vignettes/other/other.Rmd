@@ -1,0 +1,8 @@
+---
+title: "Additionnal references"
+output: html_document
+---
+
+ * Principal Component Analysis [paper](abdi-awPCA2010.pdf).
+ * Partial Least Methods: A review [paper](abdi-PLSC_and_PLSR2012.pdf).
+

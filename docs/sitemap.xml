@@ -4,10 +4,52 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/404.html</loc>
   </url>
   <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/articles/R4SPISEE2022.html</loc>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/A1_DataBeers.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/A2_DataChewingGum.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/A2_DataChewingGums.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/A3_DataWines.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/B1_PCAonBeers.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/B2_PCAonChewingGum.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/B2_PCAonChewingGums.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C1_PLSConWines.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C1_PLSonWines.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C2_CCAonWines.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C3_RAonWines.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C4_PLSRonWines_part1.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/C5_PLSRonWines_part2.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/other/other.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/R4SPISEE2022.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/authors.html</loc>
@@ -16,10 +58,7 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/index.html</loc>
   </url>
   <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/R4SPISE2022-package.html</loc>
-  </url>
-  <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/empty.html</loc>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/Boot4Eigs.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4epPCA.html</loc>
@@ -28,9 +67,24 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/PlotScreeWithCI.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/PLSRplot.html</loc>
+  </url>
+  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/print.save2pptx.html</loc>
   </url>
   <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/R4SPISE2022-package.html</loc>
+  </url>
+  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/saveAllGraphsInList2pptx.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/TTAplot.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/TTAplotInference.html</loc>
   </url>
 </urlset>

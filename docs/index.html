@@ -8,8 +8,8 @@
 <meta name="description" content="Provides a set of Programs, Vignettes, and Data for the SPISE2022 Advanced Workshop (Hanoi Vietnam).">
 <title>Provides a set of Programs, Vignettes, and Data for the SPISE2022 Workshop • R4SPISE2022</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Provides a set of Programs, Vignettes, and Data for the SPISE2022 Workshop">
 <meta property="og:description" content="Provides a set of Programs, Vignettes, and Data for the SPISE2022 Advanced Workshop (Hanoi Vietnam).">
@@ -41,6 +41,17 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/A1_DataBeers.html">A Sensory Data Set on Beers</a>
+    <a class="dropdown-item" href="articles/A2_DataChewingGums.html">A Sensory Data Set on Chewing-gums</a>
+    <a class="dropdown-item" href="articles/A3_DataWines.html">A Sensory Data Set on Wines of The World</a>
+    <a class="dropdown-item" href="articles/B1_PCAonBeers.html">PCA on Beers</a>
+    <a class="dropdown-item" href="articles/B2_PCAonChewingGums.html">PCA on Chewing-gums</a>
+    <a class="dropdown-item" href="articles/C1_PLSConWines.html">PLSC on Wines</a>
+    <a class="dropdown-item" href="articles/C2_CCAonWines.html">Canonical Correlation Analysis on Wines</a>
+    <a class="dropdown-item" href="articles/C3_RAonWines.html">Redundancy Analysis on Wines</a>
+    <a class="dropdown-item" href="articles/C4_PLSRonWines_part1.html">PLSR on Wines (Part 1)</a>
+    <a class="dropdown-item" href="articles/C5_PLSRonWines_part2.html">PLSR on Wines (Part 2)</a>
+    <a class="dropdown-item" href="articles/other/other.html">Additionnal references</a>
     <a class="dropdown-item" href="articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
   </div>
 </li>
@@ -68,7 +79,7 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of the package R4SPISE2022 is to provide data, programs, and documentation for the SPISE-2022 <em>Advanced Workshop on Sensory Evaluation</em> (July 27, 2022 to July 28, 2022; to take place in Hanoi Vietnam).</p>
+<p>R4SPISE2022 provide data, programs, and documentation for the SPISE-2022 <em>Advanced Workshop on Sensory Evaluation</em> (July 27, 2022 to July 28, 2022; to take place in Hanoi Vietnam).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -77,30 +88,66 @@
 <code class="sourceCode R"><span><span class="co"># if remotes is not installed, decomment the following line</span></span>
 <span><span class="co"># install.packages('remotes')</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'HerveAbdi/R4SPISE2022'</span><span class="op">)</span></span></code></pre></div>
+<p>To install the vignettes while installing the package, then run the following commands:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'HerveAbdi/R4SPISE2022'</span>, </span>
+<span>  build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://herveabdi.github.io/R4SPISE2022/">R4SPISE2022</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span>
-<span><span class="fu"><a href="reference/empty.html">empty</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>More to come soon</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/HerveAbdi/R4SPISE2022" class="external-link">R4SPISE2022</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## load data</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sixBeers12Descriptors10Judges"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span>
+<span><span class="va">beers</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">ratingsIntensity</span></span>
+<span></span>
+<span><span class="co">## run PCA</span></span>
+<span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">beers</span>, </span>
+<span>                 center <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Center the data</span></span>
+<span>                 scale <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># **Do not** scale the variables</span></span>
+<span>                 graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co">## generate plots for descriptive results       </span></span>
+<span><span class="va">res.plot.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph4epPCA.html">OTAplot</a></span><span class="op">(</span>resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
+<span>                        data <span class="op">=</span> <span class="va">beers</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## generate plots for inference results</span></span>
+<span><span class="va">res.plot.pca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph4epPCA.html">OTAplotInference</a></span><span class="op">(</span>resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
+<span>                                           data <span class="op">=</span> <span class="va">beers</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="list-of-functions">List of functions<a class="anchor" aria-label="anchor" href="#list-of-functions"></a>
+<h2 id="list-of-main-functions">List of main functions<a class="anchor" aria-label="anchor" href="#list-of-main-functions"></a>
 </h2>
+<ul>
+<li><p><code><a href="reference/graph4epPCA.html">OTAplot()</a></code>: Core function to generate figures for descriptive results from one table analysis (i.e., principal component analysis; PCA)</p></li>
+<li><p><code><a href="reference/graph4epPCA.html">OTAplotInference()</a></code>: Core function to generate figures for inference results from one table analysis (i.e., PCA)</p></li>
+<li><p><code><a href="reference/TTAplot.html">TTAplot()</a></code>: Core function to generate figures for descriptive results from two table analyses (i.e., PLSC, CCA, and RA)</p></li>
+<li><p><code>TTAplotInferenct()</code>: Core function to generate figures for inference results from two table analyses (only PLSC for now)</p></li>
+<li><p><code><a href="reference/PLSRplot.html">PLSRplot()</a></code>: Core function to generate figures for descriptive and inference results from partial least square regression (PLSR)</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="list-of-data-sets">List of data sets<a class="anchor" aria-label="anchor" href="#list-of-data-sets"></a>
 </h2>
+<ul>
+<li><p><a href="articles/A1_DataBeers.html"><code>sixBeers12Descriptors10Judges</code></a></p></li>
+<li><p><a href="articles/A2_DataChewingGums.html"><code>sixteenGums4Descriptors</code></a></p></li>
+<li><p><a href="articles/A3_DataWines.html"><code>winesOf3Colors</code></a></p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="other-material">Other material<a class="anchor" aria-label="anchor" href="#other-material"></a>
 </h2>
 <ul>
-<li>Principal Component Analysis <a href="inst/extdata/abdi-awPCA2010.pdf">paper</a>.</li>
+<li>Principal Component Analysis <a href="articles/other/abdi-awPCA2010.pdf">paper</a>.</li>
+<li>Partial Least Square Methods: A review <a href="articles/other/abdi-PLSC_and_PLSR2012.pdf">paper</a>.</li>
+<li>Canonical Correlation Analysis <a href="articles/other/abdi-CCA2018.pdf">paper</a>
+</li>
 </ul>
 </div>
 </div>
@@ -109,6 +156,7 @@
 <ul class="list-unstyled">
 <li><a href="http://github.com/HerveAbdi/R4SPISE2022/" class="external-link">Browse source code</a></li>
 <li><a href="http://github.com/HerveAbdi/R4SPISE2022/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/HerveAbdi/data4PCCAR" class="external-link">External data sets</a></li>
 </ul>
 </div>
 
@@ -130,7 +178,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Hervé Abdi <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/YOUR-ORCID-ID" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Hervé Abdi <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9522-1978" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -148,7 +196,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
