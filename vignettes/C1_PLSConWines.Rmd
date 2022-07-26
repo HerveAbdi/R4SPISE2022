@@ -46,7 +46,7 @@ With the following command
 data("winesOf3Colors", package = "data4PCCAR")
 ```
 
-```{r hidden colors, echo = FALSE}
+```{r hidden colors, echo = TRUE}
 wineColors <- list()
 wineColors$oc <- as.matrix(as.character(recode(winesOf3Colors$winesDescriptors$color, red = 'indianred4', 
                 white = 'gold', rose = 'lightpink2')))

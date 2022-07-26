@@ -43,13 +43,13 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/C5_PLSRonWines_part2.html</loc>
   </url>
   <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/articles/R4SPISEE2022.html</loc>
+  </url>
+  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/index.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/articles/other/other.html</loc>
-  </url>
-  <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/articles/R4SPISEE2022.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/authors.html</loc>
@@ -61,30 +61,30 @@
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/Boot4Eigs.html</loc>
   </url>
   <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4epPCA.html</loc>
-  </url>
-  <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/index.html</loc>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/PLSRplot.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/PlotScreeWithCI.html</loc>
   </url>
   <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/PLSRplot.html</loc>
-  </url>
-  <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/print.save2pptx.html</loc>
-  </url>
-  <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/R4SPISE2022-package.html</loc>
-  </url>
-  <url>
-    <loc>https://herveabdi.github.io/R4SPISE2022/reference/saveAllGraphsInList2pptx.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/TTAplot.html</loc>
   </url>
   <url>
     <loc>https://herveabdi.github.io/R4SPISE2022/reference/TTAplotInference.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/graph4epPCA.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/print.save2pptx.html</loc>
+  </url>
+  <url>
+    <loc>https://herveabdi.github.io/R4SPISE2022/reference/saveAllGraphsInList2pptx.html</loc>
   </url>
 </urlset>
