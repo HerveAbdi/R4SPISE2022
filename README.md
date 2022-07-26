@@ -40,5 +40,5 @@ More to come soon
 ## Other material
 
  * Principal Component Analysis [paper](inst/extdata/abdi-awPCA2010.pdf).
- * Partial Least Methods: A review [paper](inst/extdata/abdi-PLSC_and_PLSR2012.pdf).
+ * Partial Least Methods: A Review [paper](inst/extdata/abdi-PLSC_and_PLSR2012.pdf).
 
