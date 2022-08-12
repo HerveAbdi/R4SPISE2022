@@ -51,8 +51,8 @@
     <a class="dropdown-item" href="../articles/C3_RAonWines.html">Redundancy Analysis on Wines</a>
     <a class="dropdown-item" href="../articles/C4_PLSRonWines_part1.html">PLSR on Wines (Part 1)</a>
     <a class="dropdown-item" href="../articles/C5_PLSRonWines_part2.html">PLSR on Wines (Part 2)</a>
-    <a class="dropdown-item" href="../articles/other/other.html">Additionnal references</a>
     <a class="dropdown-item" href="../articles/R4SPISEE2022.html">Introduction to the SPISE 2022 Advanced Workshop</a>
+    <a class="dropdown-item" href="../articles/other/other.html">Additionnal references</a>
   </div>
 </li>
       </ul>
@@ -107,13 +107,24 @@ body {
 <p>With the following command</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"winesOf3Colors"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">wineColors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">wineColors</span><span class="op">$</span><span class="va">oc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu">recode</span><span class="op">(</span><span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span><span class="op">$</span><span class="va">color</span>, red <span class="op">=</span> <span class="st">'indianred4'</span>, </span>
+<span>                white <span class="op">=</span> <span class="st">'gold'</span>, rose <span class="op">=</span> <span class="st">'lightpink2'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">wineColors</span><span class="op">$</span><span class="va">gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>red <span class="op">=</span> <span class="st">'indianred4'</span>, </span>
+<span>                white <span class="op">=</span> <span class="st">'gold'</span>, rose <span class="op">=</span> <span class="st">'lightpink2'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">varColors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">varColors</span><span class="op">$</span><span class="va">oc</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"darkorange1"</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">varColors</span><span class="op">$</span><span class="va">oc</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"olivedrab3"</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span></code></pre></div>
 <p>More information on the dataset is available on the corresponding
 vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="two-tables-with-descriptors-and-other-supplementary-information">Two tables with descriptors and other supplementary information<a class="anchor" aria-label="anchor" href="#two-tables-with-descriptors-and-other-supplementary-information"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">descr</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
 <span>    <span class="fu">select</span><span class="op">(</span><span class="va">origin</span>, <span class="va">color</span>, <span class="va">varietal</span><span class="op">)</span></span>
 <span><span class="va">suppl</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
@@ -150,7 +161,7 @@ vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")
 <div class="section level2">
 <h2 id="run-partial-least-square-correlation-pls-c-on-the-two-tables">Run Partial Least Square Correlation (PLS-C) on the two tables<a class="anchor" aria-label="anchor" href="#run-partial-least-square-correlation-pls-c-on-the-two-tables"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls</span> <span class="op">&lt;-</span> <span class="fu">tepPLS</span><span class="op">(</span><span class="va">chemi</span>, <span class="va">senso</span>, DESIGN <span class="op">=</span> <span class="va">descr</span><span class="op">$</span><span class="va">color</span>, graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The default of this function will center (to have means equal 0) and
 scale (to have the <em>sums of squares</em> equal 1) all variables in
@@ -162,7 +173,7 @@ results of PLS-C.</p>
 <div class="section level2">
 <h2 id="generate-the-figures">Generate the figures<a class="anchor" aria-label="anchor" href="#generate-the-figures"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## You might need to load these packages if the error is saying that it couldn't find some functions</span></span>
 <span></span>
 <span><span class="va">res.pls.plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TTAplot.html">TTAplot</a></span><span class="op">(</span></span>
@@ -184,7 +195,7 @@ confidence intervals.</p>
 <p>We can check the data by plotting first the correlation matrix
 between the two data sets. This correlation matrix is where the
 dimensions are extracted.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">heatmap.rxy</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/hetamap.rxy-1.svg" width="672"></p>
 </div>
@@ -197,7 +208,7 @@ variables. In other words, the singular values, which are the square
 root of the eigenvalues, give the <em>covariance</em> of these pairs of
 latent variables. The sum of the eigenvalues is equal to the sum of the
 squared covariance between all variables in both tables.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree.eig</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/scree-1.svg" width="672"></p>
 </div>
@@ -222,7 +233,7 @@ are reliably different from each other.</p>
 <p><em>Note</em>: The grouping information are independent from PLS-C
 and are only use to help provide a summary description of the
 observations.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">lv.plot</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/LV%20map-1.svg" width="672"></p>
 <p>The results from Dimension 1 show that the association between the
@@ -250,10 +261,10 @@ When the variables are centered and scaled to have their <em>sums of
 squares equals 1</em>, each variable contributes one unit of variance;
 therefore, the average contribution is 1/(# of variables of the
 table).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrX.plot</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/loadings-1.svg" width="672"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">ctrY.plot</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/loadings-2.svg" width="672"></p>
 <p>From these two bar plots, the first dimension is characterized by (1)
@@ -284,10 +295,10 @@ this implication of correlation might only be true within the given
 dimensions. When a variable is far away from the circle, it is not fully
 explained by the dimensions, and other dimensions might be characterized
 by other pattern of relationship between this and other variables.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorX.plot</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/corcircles-1.svg" width="672"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.pls.plot</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cirCorY.plot</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/corcircles-2.svg" width="672"></p>
 <p>These circles of correlations show that <code>Alcohol</code>,
@@ -307,7 +318,7 @@ included and discussed in the previous sections).</p>
 of variance explained, permutation tests of the eigenvalues, the
 bootstrap tests of the loadings (i.e., the left and the right singular
 vectors).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.plsc.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TTAplotInference.html">TTAplotInference</a></span><span class="op">(</span></span>
 <span>    res <span class="op">=</span> <span class="va">res.pls</span>,</span>
 <span>    tab1 <span class="op">=</span> <span class="va">chemi</span>, </span>
@@ -322,7 +333,7 @@ vectors).</p>
 <p>The inference scree plot illustrates the 95% bootstrap confidence
 intervals of the eigenvalues. If an interval includes 0, the eigenvalue
 is reliably larger than 0.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.plsc.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/scree%20inference-1.svg" width="672"></p>
 <p>The bootstrap test identifies two significant dimensions having
@@ -339,13 +350,13 @@ the bootstrapped sample of the <em>j</em>th loading and <span class="math inline
 standard deviation of the factor score. A bootstrap ratio is equivalent
 to a <em>t</em>-statistics for the column factor score with the <span class="math inline">\(\mathrm{H}_0: g_j = 0\)</span>. The threshold is
 set to 2 to approximate the critical <em>t</em>-value of 1.96 at <span class="math inline">\(\alpha\)</span> = .05.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.plsc.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.X</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
 <p>The bootstrap test identifies <code>Alcohol</code>,
 <code>Sugar</code>, and <code>Tannin</code> as chemical variables with
 loadings significantly different from 0.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.plsc.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR.Y</span></span></code></pre></div>
 <p><img src="C1_PLSConWines_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
 <p>The bootstrap test identifies <code>Floral</code>,

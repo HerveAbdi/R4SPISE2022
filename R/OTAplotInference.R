@@ -133,8 +133,8 @@ OTAplotInference <- function(
     printTest <- FALSE # to debug the graphs
     data <- ExPosition::expo.scale(
         data,
-        center = res.pca$ExPosition.Data$center,
-        scale = res.pca$ExPosition.Data$scale)
+        center = resPCA$ExPosition.Data$center,
+        scale = resPCA$ExPosition.Data$scale)
     # NB use namenameExpositionResults() to have
     # Dimensions named
     if (is.null(col4I)) {
