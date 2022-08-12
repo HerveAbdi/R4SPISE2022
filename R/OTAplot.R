@@ -150,7 +150,11 @@ OTAplot <- function(
     # NB use namenameExpositionResults() to have
     # Dimensions named
     if (is.null(col4I)) {
-        col4I <- resPCA$Plotting.Data$fi.col
+        if (is.null(DESIGN)){
+            col4I <- resPCA$Plotting.Data$fi.col
+        }else{
+            col4I <- createColorVectorsByDesign(makeNominalData(as.matrix(DESIGN)))$oc
+        }
     }
     if (is.null(col4J)) {
         col4J <- resPCA$Plotting.Data$fj.col
@@ -294,11 +298,12 @@ OTAplot <- function(
 
     if (!is.null(DESIGN)) {
         fi.mean <- getMeans(resPCA$ExPosition.Data$fi, DESIGN)
+        colnames(fi.mean) <- paste0("Dimension ", 1:ncol(fi.mean))
         if (is.null(mean.constraints)) {
             mean.constraints <- lapply(minmaxHelper(fi.mean), '*', scale.mean.constraints)
         }
 
-        grpidx.tmp <- tapply(seq_along(resPCA$Plotting.Data$fi.col), resPCA$Plotting.Data$fi.col, identity)[unique(resPCA$Plotting.Data$fi.col)]
+        grpidx.tmp <- tapply(seq_along(col4I), col4I, identity)[unique(col4I)]
         grpidx <- sapply(grpidx.tmp, "[[", 1)
         col4CI <- names(grpidx)
         names(col4CI) <- DESIGN[grpidx]
@@ -342,7 +347,7 @@ OTAplot <- function(
                 a5.JolieggMap<- jolie.ggplot1$zeMap_background + label4Map2 + jolie.ggplot1$zeMap_dots + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
             }
             if (only.mean) {
-                a5.JolieggMap <- plot.fi.mean$zeMap_background + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+                a5.JolieggMap <- plot.fi.mean$zeMap_background + label4Map2 + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text + fi.CI
             }
         }
         if (printGraphs) {
