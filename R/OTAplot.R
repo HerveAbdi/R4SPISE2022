@@ -785,7 +785,6 @@ OTAplot <- function(
         ctrI.1 = ctrI1,
         ctrI.2 = ctrI2,
         factorScoresI12 = a4.JolieggMap.2,
-        factorScoresI12design = a5.JolieggMap,
         cosineCircle4I12 = a02.jolieggMap.I,
         cosineCircleJ12  =  b1.jolieggMap.J,
         ctrJ.1 = ctrJ1,
@@ -806,7 +805,6 @@ OTAplot <- function(
         ctrI.1 = "Observations: Contributions Dimension 1",
         ctrI.2 = "Observations: Contributions Dimension 2",
         factorScoresI12 =  "Observations: Factor Scores 1*2",
-        factorScoresI12design = "Observations with design: Factor Scores 1*2",
         cosineCircle4I12 = "Observations: Cosine Circle 1*2",
         cosineCircleJ12  = "Variables: Correlation Circle 1*2",
         ctrJ.1 = "Variables: Contributions Dimension 1",
@@ -817,6 +815,11 @@ OTAplot <- function(
         loadings12.arrow = "Variables: Loadings as Weights  1*2" #,
         # biplot12 = e.JolieBiplot
     )
+
+    if (!is.null(DESIGN)){
+        results.graphs$factorScoresI12design = a5.JolieggMap
+        description.graphs$factorScoresI12design = "Observations with design: Factor Scores 1*2"
+    }
 
     ### graph biplots ----
     if (isTRUE(biplot)) {
