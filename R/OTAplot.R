@@ -298,7 +298,7 @@ OTAplot <- function(
             mean.constraints <- lapply(minmaxHelper(fi.mean), '*', scale.mean.constraints)
         }
 
-        grpidx.tmp <- tapply(seq_along(res.pca$Plotting.Data$fi.col), res.pca$Plotting.Data$fi.col, identity)[unique(res.pca$Plotting.Data$fi.col)]
+        grpidx.tmp <- tapply(seq_along(resPCA$Plotting.Data$fi.col), resPCA$Plotting.Data$fi.col, identity)[unique(resPCA$Plotting.Data$fi.col)]
         grpidx <- sapply(grpidx.tmp, "[[", 1)
         col4CI <- names(grpidx)
         names(col4CI) <- DESIGN[grpidx]
