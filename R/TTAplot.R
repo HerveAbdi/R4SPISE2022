@@ -336,7 +336,7 @@ TTAplot <- function(
       saveAllGraphsInList2pptx(
           list2Save = results.graphs,
           titles4list2Save = description.graphs,
-          file2Save.pptx = "TTA.pptx",
+          file2Save.pptx = paste0(title4pptx, ".pptx"),
           title = title4pptx
       )
   }

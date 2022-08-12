@@ -76,12 +76,20 @@
 #' larger than average (when \code{scaled == 'SS1'}
 #' this is the familiar rule: "keep only
 #' the components with eigenvalue larger than 1").
-#' @param biplot De we want to create biplots
-#'  (Default: \code{FALSE})?
-#' @param inferences Run inferences
-#'  from \code{InPosition}
-#'  Remains to be done,
-#'  Default is \code{FALSE}.
+#' @param TI whether to plot the tolerance intervals or not. Default: FALSE
+#' @param mean.cex the size of the dots of the means. Default: 3
+#' @param mean.textcex the size of the texts of the means. Default: 3
+#' @param only.mean If TRUE, only the mean will be plotted,
+#' and the individual points will not be plotted. Default: FALSE
+#' @param only.ind If TRUE, only the individual points will be plotted but not the means.
+#' This is used when you want to plot only the individual points along with the tolerance
+#' intervals. Default: FALSE
+#' @param mean.constraints A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+#' The constraints of the figure that only includes the means. This constraints
+#' will be used if \code{only.mean = TRUE}. Default: NULL
+#' @param scale.mean.constraints A value used to scale the constraints (by multiplication).
+#' This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
+#' Default: 1.5
 #' @param save2pptx  Default: FALSE
 #' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.
@@ -124,6 +132,13 @@ OTAplot <- function(
         biplot   = FALSE,
         rotation = FALSE,
         nfactor4rotation = 'Kaiser',
+        TI = FALSE,
+        mean.cex = 3,
+        mean.textcex = 3,
+        only.mean = FALSE,
+        only.ind = FALSE,
+        mean.constraints = NULL,
+        scale.mean.constraints = 1.5,
         save2pptx = FALSE,
         title4pptx = "PCA Results"
     ) { # title of pptx
@@ -153,6 +168,11 @@ OTAplot <- function(
         }
         if (nfactor4rotation > nK)
             nfactor4rotation <- 2
+    }
+    if ((is.data.frame(DESIGN)|is.matrix(DESIGN)) && ncol(DESIGN) > 1){
+        DESIGN <- DESIGN %*% diag(1:ncol(DESIGN)) |> rowSums()
+    }else if((is.data.frame(DESIGN)|is.matrix(DESIGN)) && ncol(DESIGN) == 1){
+        DESIGN <- as.vector(as.matrix(DESIGN))
     }
     #_________________________________________________
     # Get the loadings ----
@@ -232,6 +252,7 @@ OTAplot <- function(
     a3.JolieggMap <- jolie.ggplot1$zeMap +
         label4Map +
         labs(title = 'The Observation Map.')
+
     # to look at the map
     # if( printTest) print(a3.JolieggMap)
     # To make some changes at the labels:
@@ -262,12 +283,76 @@ OTAplot <- function(
     # print(a4.JolieggMap)
     a4.JolieggMap.2 <-
         a3.JolieggMap + label4Map2
-    # to look at the map
+
     if (printGraphs) {
         png('ObservationImap.png')
         print(a4.JolieggMap.2)
         dev.off()
     }
+
+    # to look at the map with or without the means
+
+    if (!is.null(DESIGN)) {
+        fi.mean <- getMeans(resPCA$ExPosition.Data$fi, DESIGN)
+        if (is.null(mean.constraints)) {
+            mean.constraints <- lapply(minmaxHelper(fi.mean), '*', scale.mean.constraints)
+        }
+
+        grpidx.tmp <- tapply(seq_along(res.pca$Plotting.Data$fi.col), res.pca$Plotting.Data$fi.col, identity)[unique(res.pca$Plotting.Data$fi.col)]
+        grpidx <- sapply(grpidx.tmp, "[[", 1)
+        col4CI <- names(grpidx)
+        names(col4CI) <- DESIGN[grpidx]
+        # reorder according to fi.mean
+        col4CI <- col4CI[rownames(fi.mean)]
+
+        plot.fi.mean <- createFactorMap(fi.mean,
+                                        col.background = NULL,
+                                        col.axes = "orchid4",
+                                        alpha.axes = 0.5,
+                                        title = "The Observation Map.",
+                                        col.points = col4CI[rownames(fi.mean)],
+                                        col.labels =  col4CI[rownames(fi.mean)],
+                                        constraints = mean.constraints,
+                                        cex = mean.cex,
+                                        text.cex = mean.textcex,
+                                        pch = 17,
+                                        alpha.points = 0.8)
+
+        bootCI.res <- Boot4Mean(resPCA$ExPosition.Data$fi, DESIGN)
+        colnames(bootCI.res$BootCube) <- paste0("Dimension ", 1:ncol(resPCA$ExPosition.Data$fi))
+        fi.CI <- MakeCIEllipses(bootCI.res$BootCube,
+                                col = col4CI,
+                                alpha.ellipse = 0.1,
+                                line.size = 0.5, alpha.line = 0.2)
+
+        data4TI <- resPCA$ExPosition.Data$fi
+        colnames(data4TI) <- paste0("Dimension ", 1:ncol(data4TI))
+        fi.TI <- MakeToleranceIntervals(data4TI,
+                                        design = DESIGN,
+                                        axis1 = 1, axis2 = 2,
+                                        col = col4CI,
+                                        line.size = 1,
+                                        alpha.ellipse = 0.05, alpha.line = 0.3,
+                                        p.level = .80)
+        if (!only.ind) {
+            if (TI) {
+                # lv.plot <- lv.plot$background + lv.TI + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
+                a5.JolieggMap <- jolie.ggplot1$zeMap_background + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            } else {
+                a5.JolieggMap<- jolie.ggplot1$zeMap_background + label4Map2 + jolie.ggplot1$zeMap_dots + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            }
+            if (only.mean) {
+                a5.JolieggMap <- plot.fi.mean$zeMap_background + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            }
+        }
+        if (printGraphs) {
+            png('ObservationImapWithDesign.png')
+            print(a5.JolieggMap)
+            dev.off()
+        }
+
+    }
+
 
     ### Contributions ----
     signed.ctrI <- resPCA$ExPosition.Data$ci *
@@ -496,6 +581,7 @@ OTAplot <- function(
     if (printGraphs) {
         png('J-CircleOfCorr_noArrow.png')
         print(b1.jolieggMap.J)
+        dev.off()
     }
     #  Add some arrows
     arrows <-
@@ -699,6 +785,7 @@ OTAplot <- function(
         ctrI.1 = ctrI1,
         ctrI.2 = ctrI2,
         factorScoresI12 = a4.JolieggMap.2,
+        factorScoresI12design = a5.JolieggMap,
         cosineCircle4I12 = a02.jolieggMap.I,
         cosineCircleJ12  =  b1.jolieggMap.J,
         ctrJ.1 = ctrJ1,
@@ -719,6 +806,7 @@ OTAplot <- function(
         ctrI.1 = "Observations: Contributions Dimension 1",
         ctrI.2 = "Observations: Contributions Dimension 2",
         factorScoresI12 =  "Observations: Factor Scores 1*2",
+        factorScoresI12design = "Observations with design: Factor Scores 1*2",
         cosineCircle4I12 = "Observations: Cosine Circle 1*2",
         cosineCircleJ12  = "Variables: Correlation Circle 1*2",
         ctrJ.1 = "Variables: Contributions Dimension 1",
@@ -750,7 +838,7 @@ OTAplot <- function(
         saveAllGraphsInList2pptx(
             list2Save = results.graphs,
             titles4list2Save = description.graphs,
-            file2Save.pptx = "OTA.pptx",
+            file2Save.pptx = paste0(title4pptx, ".pptx"),
             title = title4pptx
             )
     }

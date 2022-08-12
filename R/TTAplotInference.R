@@ -60,7 +60,7 @@ TTAplotInference <- function(
         mean.constraints = NULL,
         scale.mean.constraints = 3,
         save2pptx = FALSE,
-        title4pptx = "TTA Results") {
+        title4pptx = "TTA Inference Results") {
 
   # res: two lists (lx and ly) each with two obs x var. matrices of factor scores
   # leDim: a vector the component to plot for each table. e.g., c(component of table1, component of table2)
@@ -196,7 +196,7 @@ TTAplotInference <- function(
       saveAllGraphsInList2pptx(
           list2Save = results.graphs,
           titles4list2Save = description.graphs,
-          file2Save.pptx = "TTA.pptx",
+          file2Save.pptx = paste0(title4pptx, ".pptx"),
           title = title4pptx
       )
   }

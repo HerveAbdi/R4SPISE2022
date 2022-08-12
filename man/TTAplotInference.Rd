@@ -29,7 +29,7 @@ TTAplotInference(
   mean.constraints = NULL,
   scale.mean.constraints = 3,
   save2pptx = FALSE,
-  title4pptx = "TTA Results"
+  title4pptx = "TTA Inference Results"
 )
 }
 \arguments{

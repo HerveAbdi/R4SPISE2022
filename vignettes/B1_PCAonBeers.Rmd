@@ -68,7 +68,7 @@ The default of this function will center (to have means equal 0) and scale (to h
 ```{r plotPCA, fig.show = 'hide'}
 res.plot.pca <- OTAplot(
     resPCA = res.pca,
-    data = beers
+    data = beers,
     )
 ```
 

@@ -23,6 +23,13 @@ OTAplot(
   biplot = FALSE,
   rotation = FALSE,
   nfactor4rotation = "Kaiser",
+  TI = FALSE,
+  mean.cex = 3,
+  mean.textcex = 3,
+  only.mean = FALSE,
+  only.ind = FALSE,
+  mean.constraints = NULL,
+  scale.mean.constraints = 1.5,
   save2pptx = FALSE,
   title4pptx = "PCA Results"
 )
@@ -126,6 +133,27 @@ is chosen, we keep only the components with an eigenvalue
 larger than average (when \code{scaled == 'SS1'}
 this is the familiar rule: "keep only
 the components with eigenvalue larger than 1").}
+
+\item{TI}{whether to plot the tolerance intervals or not. Default: FALSE}
+
+\item{mean.cex}{the size of the dots of the means. Default: 3}
+
+\item{mean.textcex}{the size of the texts of the means. Default: 3}
+
+\item{only.mean}{If TRUE, only the mean will be plotted,
+and the individual points will not be plotted. Default: FALSE}
+
+\item{only.ind}{If TRUE, only the individual points will be plotted but not the means.
+This is used when you want to plot only the individual points along with the tolerance
+intervals. Default: FALSE}
+
+\item{mean.constraints}{A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+The constraints of the figure that only includes the means. This constraints
+will be used if \code{only.mean = TRUE}. Default: NULL}
+
+\item{scale.mean.constraints}{A value used to scale the constraints (by multiplication).
+This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
+Default: 1.5}
 
 \item{save2pptx}{Default: ''
 Not yet implemented,}
