@@ -19,8 +19,7 @@ knitr::opts_chunk$set(
 R4SPISE2022 provide data, programs, 
 and documentation for the SPISE-2022 
 *Advanced Workshop on Sensory Evaluation*
-(July 27, 2022 to July 28, 2022;
-to take place in Hanoi Vietnam).
+(July 27, 2022 to July 28, 2022. Hanoi Vietnam).
 
 ## Installation
 
