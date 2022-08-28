@@ -59,9 +59,8 @@ Core function to generate two-table analysis plots.
 
 ## List of data sets
 
-To be update soon ...
+To be updated soon ...
 
->>>>>>> e7f01dfc49bb7808a1d8777abe09fa646cfb617a
 
 ## Some Related Papers 
 
@@ -69,5 +68,4 @@ To be update soon ...
  * Partial Least Methods: A Review [paper](inst/extdata/abdi-PLSC_and_PLSR2012.pdf).
  * Canonical Correation Analysis [paper](inst/extdata/abdi2017-CanonicalCorrelationAnalysis.pdf).
 
-=======
->>>>>>> 174eece5b0e310c163cd116420a9939c477f85ef
+
