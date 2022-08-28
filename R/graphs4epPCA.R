@@ -151,6 +151,8 @@ save2pptx = "", # default is NO. If provided
 title4pptx = "PCA Results" # title of pptx
 
 ){
+# ggrepel option
+options(ggrepel.max.overlaps = Inf)
 printTest = TRUE  # to debug the graphs
 printTest = FALSE # to debug the graphs
 if (isTRUE(scale)) {scale = 'SS1'}

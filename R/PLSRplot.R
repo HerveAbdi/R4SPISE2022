@@ -63,7 +63,6 @@ PLSRplot <- function(
         scale.mean.constraints = 3,
         save2pptx = FALSE,
         title4pptx = "PLSR Results") {
-
   # res: two lists (lx and ly) each with two obs x var. matrices of factor scores
   # leDim: a vector the component to plot for each table. e.g., c(component of table1, component of table2)
   # color.obs: a list that contains oc (colors for individual observations) and gc (colors for individuals' groups)
@@ -73,7 +72,11 @@ PLSRplot <- function(
   # tab1.name: name for table 1
   # tab2.name: name for table 2
   # bar.font.size: a vector with font sizes for labels in barplots for respectively x and y
-  options(ggrepel.max.overlaps = Inf)
+
+    # A strange fix to avoid the  note: "Undefined global functions or variables:"
+    # utils::globalVariables(c("Factor",PRESSy","RESSy","correlation","xids","yids"))
+    #options for ggrepel
+     options(ggrepel.max.overlaps = Inf)
   rxy <- cor(tab1,tab2)
   I <- nrow(rxy)
   J <- ncol(rxy)

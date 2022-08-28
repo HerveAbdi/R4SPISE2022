@@ -13,4 +13,9 @@
 #' @docType package
 #' @name R4SPISE2022-package
 #' @aliases R4SPISE2022
-NULL
+# NULL
+"_PACKAGE"
+
+# A strange fix to avoid the note: "Undefined global functions or variables:"
+utils::globalVariables(c("Factor","PRESSy","RESSy","correlation","xids","yids"))
+

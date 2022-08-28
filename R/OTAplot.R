@@ -148,6 +148,8 @@ OTAplot <- function(
     ) { # title of pptx
     printTest <- TRUE  # to debug the graphs
     printTest <- FALSE # to debug the graphs
+    # print option for ggrepel
+    options(ggrepel.max.overlaps = Inf)
     if (isTRUE(scale)) {
         scale = 'SS1'
     }

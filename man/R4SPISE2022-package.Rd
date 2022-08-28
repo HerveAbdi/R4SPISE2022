@@ -3,6 +3,7 @@
 \docType{package}
 \name{R4SPISE2022-package}
 \alias{R4SPISE2022-package}
+\alias{_PACKAGE}
 \alias{R4SPISE2022}
 \title{A set of Programs, Vignettes,
 and Data for the SPISE2022 Advanced Workshop}
@@ -16,4 +17,24 @@ and Data for the SPISE2022 Advanced Workshop
 Provides a set of Programs, Vignettes,
 and Data for the SPISE2022 Advanced Workshop
 (Hanoi Vietnam).
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://github.com/HerveAbdi/R4SPISE2022}
+  \item \url{https://herveabdi.github.io/R4SPISE2022/}
+  \item Report bugs at \url{http://github.com/HerveAbdi/R4SPISE2022/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Hervé Abdi \email{herve@utdallas.edu} (\href{https://orcid.org/0000-0002-9522-1978}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Vincent Guillemot \email{vincent.guillemot@pasteur.fr} (\href{https://orcid.org/0000-0002-7421-0655}{ORCID}) [contributor]
+  \item Ju-Chi Yu \email{Ju-Chi.Yu@camh.org} (\href{https://orcid.org/0000-0002-6360-1861}{ORCID}) [contributor]
+  \item Soudeh A. Khoubrouy \email{SA.Khoubrouy@utdallas.edu} (\href{https://orcid.org/0000-0002-2656-7756}{ORCID}) [contributor]
+}
+
 }

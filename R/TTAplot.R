@@ -86,6 +86,8 @@ TTAplot <- function(
   # tab1.name: name for table 1
   # tab2.name: name for table 2
   # bar.font.size: a vector with font sizes for labels in barplots for respectively x and y
+  # ggrepel print option
+    options(ggrepel.max.overlaps = Inf)
   rxy <- res$TExPosition.Data$X
   I <- nrow(rxy)
   J <- ncol(rxy)
