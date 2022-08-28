@@ -2,8 +2,8 @@
 % Please edit documentation in R/saveAllGraphsList2pptx.R
 \name{saveAllGraphsInList2pptx}
 \alias{saveAllGraphsInList2pptx}
-\title{saves all the graphics present in
-the Global Environment into a PowerPoint file.}
+\title{saves all the graphics in a list
+into a PowerPoint file.}
 \usage{
 saveAllGraphsInList2pptx(
   list2Save,
@@ -21,7 +21,8 @@ saveAllGraphsInList2pptx(
 
 \item{titles4list2Save}{A list (with the same number of items as
 \code{list2Save}) that will serve as the title
-of the graphs. When \code{NULL} (default)
+of the graphs.
+When \code{NULL} (default)
 the title of the graph will the name of the
 graph in \code{list2Save}.}
 
@@ -43,7 +44,7 @@ in the console.}
 if titles have been provided in
 \code{titles4list2Save} these will be used,
 if not the name of the graphs is used
-for the title.}
+for the title of the slide.}
 }
 \value{
 a list (of class \code{"save2pptx"})
@@ -60,11 +61,13 @@ saved as \code{listOfGraph} use
 \code{print(get(listOfGraph$listOfsavedGraphs[[1]]))}.
 }
 \description{
-\code{saveAllGraphsList2pptx}: a nifty function that
-saves into a Powerpoint file
+\code{saveAllGraphsInList2pptx}:
+a nifty function that
+saves into a PowerPoint file
 all the graphics given in a list
 (Possibly with titles if given
-in an additional list). Requires packages \code{rsv}
+in an additional list).
+Requires packages \code{rsv}
 and \code{officer}.
 }
 \examples{

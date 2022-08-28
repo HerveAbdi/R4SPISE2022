@@ -56,7 +56,7 @@
 #' default is
 #' \code{"Explained Variance per Dimension"}.
 #' @param xlab The names of the dimensions
-#' (default \code{'Dimensions '}).
+#' (default \code{'Dimensions'}).
 #' @param plotKaiser  when \code{TRUE}
 #' plot a line corresponding to the average inertia
 #' (Kaiser criterion); do not plot when
@@ -68,6 +68,7 @@
 #' @param lwd4Kaiser lwd value (i.e., width)
 #' for Kaiser's criterion line.
 #' (default is \code{'2.5'})
+#' @import graphics
 #' @examples  # PlotScree(ev)
 #' @export
 #'
@@ -80,6 +81,7 @@ PlotScreeWithCI <- function(ev,
                             alpha = .05,
                             col.ns = '#006D2C', col.sig = '#54278F',
                             title = "Explained Variance per Dimension",
+                            xlab = "Dimensions",
                             plotKaiser = FALSE,
                             color4Kaiser = 'darkorchid4',
                             lwd4Kaiser = 2.5
@@ -102,7 +104,7 @@ PlotScreeWithCI <- function(ev,
   par(mar = c(5,6,4,4))
   # plot.window(xlim = c(0, length(val.tau)+5),
   #         ylim = c(0,Top.y),asp = .6)
-  plot(x = seq(1, length(val.tau)), y = val.tau, xlab = 'Dimensions',
+  plot(x = seq(1, length(val.tau)), y = val.tau, xlab = xlab,
        ylab = 'Percentage of Explained Variance',
        main = title,
        type = 'l', col = col.ns, lwd = 1,

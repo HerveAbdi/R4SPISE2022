@@ -34,13 +34,13 @@ PLSRplot(
 \arguments{
 \item{res}{the result of a two-table analysis;}
 
-\item{displayJack}{whether to plot the jacknife results;}
+\item{displayJack}{whether to plot the jackknife results;}
 
 \item{tab1}{the result of a two-table analysis;}
 
 \item{tab2}{the result of a two-table analysis;}
 
-\item{leDim}{vector containning the dimensions to be plotted;}
+\item{leDim}{vector containing the dimensions to be plotted;}
 
 \item{color.obs}{list containing the colors for the observations;}
 
@@ -60,7 +60,7 @@ PLSRplot(
 
 \item{tab2.name}{the name of the second table (default to "2");}
 
-\item{TI}{whether to plot toerance intervals (default to FALSE);}
+\item{TI}{whether to plot tolerance intervals (default to FALSE);}
 
 \item{mean.cex}{size expansion for the mean symbols;}
 
@@ -68,13 +68,17 @@ PLSRplot(
 
 \item{only.mean}{whether to plot only means;}
 
-\item{only.ind}{whether to plot only observations on the latent variable plot (default to FALSE);}
+\item{only.ind}{whether to plot only observations
+on the latent variable plot (default to FALSE);}
 
-\item{score.constraints}{constraints on the plot (use with care);}
+\item{score.constraints}{constraints on the plot
+(use with care);}
 
-\item{mean.constraints}{constraints on the plot (use with care);}
+\item{mean.constraints}{constraints on the plot
+(use with care);}
 
-\item{scale.mean.constraints}{constraints on the plot (use with care).}
+\item{scale.mean.constraints}{constraints on the plot
+(use with care).}
 
 \item{save2pptx}{Default: FALSE}
 

@@ -18,15 +18,17 @@
 
 #_________________________________________________
 #*************************************************
-#* Preamble saveAllGraphsList2pptx ----
-#'  saves all the graphics present in
-#'  the Global Environment into a PowerPoint file.
+#* Preamble saveAllGraphsInList2pptx ----
+#'  saves all the graphics in a list
+#'  into a PowerPoint file.
 #'
-#' \code{saveAllGraphsList2pptx}: a nifty function that
-#' saves into a Powerpoint file
+#' \code{saveAllGraphsInList2pptx}:
+#' a nifty function that
+#' saves into a PowerPoint file
 #' all the graphics given in a list
 #' (Possibly with titles if given
-#' in an additional list). Requires packages \code{rsv}
+#' in an additional list).
+#' Requires packages \code{rsv}
 #' and \code{officer}.
 #' @param list2Save A list with graphics
 #' (that could have been created by
@@ -35,7 +37,8 @@
 #' @param titles4list2Save
 #' A list (with the same number of items as
 #' \code{list2Save}) that will serve as the title
-#' of the graphs. When \code{NULL} (default)
+#' of the graphs.
+#'  When \code{NULL} (default)
 #' the title of the graph will the name of the
 #' graph in \code{list2Save}.
 #' @param file2Save.pptx
@@ -55,7 +58,7 @@
 #' if titles have been provided in
 #' \code{titles4list2Save} these will be used,
 #' if not the name of the graphs is used
-#' for the title.
+#' for the title of the slide.
 #' @return a list (of class \code{"save2pptx"})
 #' with  \code{listOfsavedGraphs} (the list of the graph objects
 #' saved)  and
@@ -160,7 +163,7 @@ saveAllGraphsInList2pptx <- function(
   # Save  in a powerpoint
   #   all the graphs created by either recordPlot or ggplots
   # Old Code from saveGraph2pptx()
-  ignore = TRUE
+  ignore = TRUE # Horrible trick!
   if (!isTRUE(ignore)){ # Ignore from Here ******
   listOfGraphs <- list()
   k = 0
@@ -237,6 +240,7 @@ saveAllGraphsInList2pptx <- function(
 #'   output of function: \code{saveGraph2pptx}.
 #' @param ... everything else for the function
 #' @author Herve Abdi
+#' @keywords internal
 #' @export
 print.save2pptx <- function (x, ...) {
   ndash = 78 # How many dashes for separation lines
@@ -245,7 +249,7 @@ print.save2pptx <- function (x, ...) {
   # cat("\n List name: ",deparse(eval(substitute(substitute(x)))),"\n")
   cat(rep("-", ndash), sep = "")
   cat("\n$listOfsavedGraphs     ", "The list of the names of the saved graphs")
-  cat("\n                       ", "  NB To print a graph use print(get())")
+  cat("\n                       ", "  NB To print a given graph use print(get())")
   cat("\n$nameOfSavingFile4pptx ", "The powerpoint file where the graphs were saved")
   cat("\n",rep("-", ndash), sep = "")
   cat("\n")

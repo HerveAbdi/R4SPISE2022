@@ -3,27 +3,44 @@
 #' @param res the result of a two-table analysis;
 #' @param tab1 the result of a two-table analysis;
 #' @param tab2 the result of a two-table analysis;
-#' @param leDim vector containning the dimensions to be plotted;
-#' @param leDim4CirCor vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;
-#' @param color.obs list containing the colors for the observations;
-#' @param color.tab list containing the colors for the two-tables;
+#' @param leDim vector containing the dimensions to be plotted;
+#' @param leDim4CirCor vector containing the dimensions
+#' to be correlated with the latent variables
+#' for the circle of correlation plot;
+#' @param color.obs list containing the colors
+#' for the observations;
+#' @param color.tab list containing the colors
+#' for the two-tables;
 #' @param title.plot plot of the title;
 #' @param alpha.points opacity for points;
 #' @param DESIGN design for the observations;
-#' @param sigbar.p whether to plot only significant bars or not for the contribution plot of the first block (default to FALSE);
-#' @param sigbar.q whether to plot only significant bars or not for the contribution plot of the second block (default to FALSE);
-#' @param tab1.name the name of the first table (default to "1");
-#' @param tab2.name the name of the second table (default to "2");
-#' @param TI whether to plot toerance intervals (default to FALSE);
+#' @param sigbar.p whether to plot only significant bars
+#' or not for the contribution plot of the first block
+#' (default to \code{FALSE});
+#' @param sigbar.q whether to plot only significant bars
+#' or not for the contribution plot of the second block
+#' (default to \code{FALSE});
+#' @param tab1.name the name of the first table
+#' (default to "1");
+#' @param tab2.name the name of the second table
+#' (default to "2");
+#' @param TI whether to plot tolerance intervals
+#' (default to \code{FALSE});
 #' @param mean.cex size expansion for the mean symbols;
 #' @param mean.textcex size expansion for the mean symbols;
 #' @param only.mean whether to plot only means;
-#' @param only.ind whether to plot only observations on the latent variable plot (default to FALSE);
-#' @param score.constraints constraints on the plot (use with care);
-#' @param mean.constraints constraints on the plot (use with care);
+#' @param only.ind whether to plot only observations
+#' on the latent variable plot (default to FALSE);
+#' @param score.constraints (default to \code{NULL})
+#' constraints on the plot
+#'  (use with care);
+#' @param mean.constraints (default to \code{NULL}).
+#' constraints
+#' on the plot (use with care);
 #' @param scale.mean.constraints constraints on the plot (use with care).
-#' @param save2pptx  Default: FALSE
-#' @param title4pptx Title of the PPTX, Default: 'TTA Results'.
+#' @param save2pptx  Default: \code{FALSE}, when \code{TRUE}
+#' save the graphs in a PowerPoint file.
+#' @param title4pptx Title of the PPTX, Default: \code{"TTA Results"}.
 #'
 #' @return a list of plots
 #' @export
@@ -219,7 +236,7 @@ TTAplot <- function(
       color4bar = color.tab$oc[[1]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions – ", tab1.name, ": LV", leDim[1]),
+      main = paste0("Important Contributions ", tab1.name, ": LV", leDim[1]),
       ylab = "Signed Contributions")
   ##### Ctr K-set ----
   Fj   <- res$TExPosition.Data$fj
@@ -233,7 +250,7 @@ TTAplot <- function(
       color4bar = color.tab$oc[[2]],
       color4ns = "gray75",
       plotnames = TRUE,
-      main = paste0("Important Contributions – ", tab2.name, ": LV", leDim[2]),
+      main = paste0("Important Contributions ", tab2.name, ": LV", leDim[2]),
       ylab = "Signed Contributions")
 
   ##_________________________________________________
@@ -341,7 +358,8 @@ TTAplot <- function(
       )
   }
 
-  return(results)
+  return.list <- structure(results, class = "graphList")
+  return(return.list)
   # EOF ----
 }
 

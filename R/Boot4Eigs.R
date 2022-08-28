@@ -6,8 +6,9 @@
 #' @param design whether there is a design;
 #' @param niter number of bootstrap iterations;
 #' @param CI.perc vector of the two levels of confidence for the left and right limits of the bootstrap confidence interval (default to \code{c(0.025, 0.0975)});
-#' @param suppressProgressBar whether to show a progress bar or not (default to FALSE).
-#'
+#' @param suppressProgressBar whether to show a progress bar or not
+#' (default to \code{TRUE}).
+#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @return list containing four objects
 #' @export
 #'
@@ -49,7 +50,7 @@ Boot4Eigs <- function(data,
 
    if (suppressProgressBar != TRUE){
     print('Starting Bootstrap.')
-    pb <-txtProgressBar(min = 0, max = niter,
+    pb <- utils::txtProgressBar(min = 0, max = niter,
                         initial = 0, char = "=",
                         title = 'Bootstrap Iterations', style = 1)
   }
@@ -73,7 +74,7 @@ Boot4Eigs <- function(data,
   colnames(ZeMatOfEigs) <- paste0('Dimension ',seq(1,nComp))
     # Bootstrapped estimates for the eigenvalues
   BootstrappedEstEigs <- apply(ZeMatOfEigs,2,mean)
-  # Bootstrapped confidence intervales for the eigenvalues
+  # Bootstrapped confidence intervals for the eigenvalues
   CIind <- c(floor(CI.perc[1]*niter), ceiling(CI.perc[2]*niter))
   # Create a nComp x 2 (i.e., low, high) empty matrix that stores the confidence intervals
   ZeMatOfEigsCI = matrix(NA, nrow = nComp, ncol = 2, dimnames = list(colnames(ZeMatOfEigs),c("LowCI", "HighCI")))

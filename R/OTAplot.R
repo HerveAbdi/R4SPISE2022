@@ -12,31 +12,24 @@
 # ExPosition
 #
 # Documentation -----
-#' @title graph4epPCA run a PCA
-#' (with the \code{ExPosition} package)
-#' and generates the standard graphs and tables.
+#' @title
+#' create the graphs for a PCA analysis
+#' from \code{ExPosition}
+#' and generate the standard graphs and tables.
 #' Note: *Still Under Development*.
-#' @description \code{graph4epPCA}
-#' graph4epPCA run a principal component
-#' analysis
-#' (with the \code{ExPosition} package)
-#' and generates the standard graphs and tables.
-#' Note that the parameters
-#' \code{data, scale, center, DESIGN,
-#'  make_design_nominal, k} are passed
-#'  to  the \code{ExPosition} package unchanged
-#'  except for \code{scale} which defaults now
-#'  to \code{'SS1'}.
-#' @param resPCA Output from epPCA
-#' @param data A data frame or a matrix with
-#' numerical data suitable for a PCA. Passed to
+#' @description \code{OTAPlot}
+#' creates the graphs for a PCA analysis
+#' from \code{ExPosition}.
+#' Note: *Still Under Development*.
+#' @param resPCA Output from \code{ExPosition::epPCA()}
+#' @param data the data frame or a matrix with
+#' numerical data suitable for a PCA
+#' that was used by
 #' \code{ExPosition::epPCA}.
 #' @param DESIGN  Default: NULL.
 #' A design vector (could be factor or character)
-#' or (Boolean) matrix used to assigne oobservations
+#' or (Boolean) matrix used to assign observations
 #' to groups.
-#' Passed to
-#' \code{ExPosition::epPCA}.
 #' @param make_design_nominal
 #' if TRUE (Default) transform
 #' the vector from \code{DESIGN} into
@@ -44,7 +37,7 @@
 #' Passed to
 #' \code{ExPosition::epPCA}.
 #' @param k number
-#' of factor to keep; when equql to
+#' of factor to keep; when equal to
 #' 0  (Default), all factors are kept.
 #' Passed to
 #' \code{ExPosition::epPCA}.
@@ -76,27 +69,36 @@
 #' larger than average (when \code{scaled == 'SS1'}
 #' this is the familiar rule: "keep only
 #' the components with eigenvalue larger than 1").
-#' @param TI whether to plot the tolerance intervals or not. Default: FALSE
-#' @param mean.cex the size of the dots of the means. Default: 3
-#' @param mean.textcex the size of the texts of the means. Default: 3
+#' @param TI whether to plot the tolerance intervals or not.
+#' Default: FALSE
+#' @param mean.cex the size of the dots of the means.
+#'  Default: 3
+#' @param mean.textcex the size of the texts of the means.
+#'  Default: 3
 #' @param only.mean If TRUE, only the mean will be plotted,
 #' and the individual points will not be plotted. Default: FALSE
 #' @param only.ind If TRUE, only the individual points will be plotted but not the means.
 #' This is used when you want to plot only the individual points along with the tolerance
 #' intervals. Default: FALSE
-#' @param mean.constraints A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
-#' The constraints of the figure that only includes the means. This constraints
-#' will be used if \code{only.mean = TRUE}. Default: NULL
-#' @param scale.mean.constraints A value used to scale the constraints (by multiplication).
-#' This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
+#' @param mean.constraints A list of the constraints
+#' (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+#' The constraints of the figure that only includes the means.
+#'  This constraints
+#' will be used if \code{only.mean = TRUE}. Default: \code{NULL}
+#' @param scale.mean.constraints
+#' A value used to scale the constraints (by multiplication).
+#' This function is used to adjust
+#'  the constraints when the confidence
+#'  or the tolerance intervals are outside of the figure.
 #' Default: 1.5
-#' @param save2pptx  Default: FALSE
+#' @param save2pptx  Default: FALSE, when TRUE
+#' save the graphs in a PowerPoint file
 #' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.
 #' @return A list made of two lists
 #'
 #' @details Work in Progress
-#' @author Hervé Abdi
+#' @author Herve Abdi
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -107,8 +109,9 @@
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[ExPosition]{epPCA}}
-#'  \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
+#'  \code{\link[ExPosition]{epPCA}},
+#'  \code{\link[PTCA4CATA]{PlotScree}},
+#'  \code{\link[PTCA4CATA]{createFactorMap}}
 #' @rdname graph4epPCA
 #' @export
 #' @import prettyGraphs
@@ -118,7 +121,8 @@
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #'
 #' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
-#' @importFrom stats cor  cov varimax
+#' @importFrom stats cor cov varimax
+#' @importFrom ExPosition makeNominalData
 OTAplot <- function(
         resPCA,
         data,
@@ -153,7 +157,8 @@ OTAplot <- function(
         if (is.null(DESIGN)){
             col4I <- resPCA$Plotting.Data$fi.col
         }else{
-            col4I <- createColorVectorsByDesign(makeNominalData(as.matrix(DESIGN)))$oc
+            col4I <- createColorVectorsByDesign(
+                ExPosition::makeNominalData(as.matrix(DESIGN)))$oc
         }
     }
     if (is.null(col4J)) {
@@ -337,7 +342,8 @@ OTAplot <- function(
                                         axis1 = 1, axis2 = 2,
                                         col = col4CI,
                                         line.size = 1,
-                                        alpha.ellipse = 0.05, alpha.line = 0.3,
+                                        alpha.ellipse = 0.05,
+                                        alpha.line = 0.3,
                                         p.level = .80)
         if (!only.ind) {
             if (TI) {

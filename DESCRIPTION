@@ -1,6 +1,6 @@
 Package: R4SPISE2022
 Type: Package
-Title: Provides a set of Programs, Vignettes, and Data for the SPISE2022 Workshop
+Title: Provides a Set of Programs, Vignettes, and Data for the SPISE2022 Workshop
 Version: 0.0.0.9000
 Authors@R: 
    c( person(given = "Hervé",   family = "Abdi",      email = "herve@utdallas.edu",           role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9522-1978")),
@@ -20,11 +20,12 @@ URL: http://github.com/HerveAbdi/R4SPISE2022,
 BugReports: http://github.com/HerveAbdi/R4SPISE2022/issues
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    kableExtra,
+    TExPosition
 VignetteBuilder: utils, knitr
 Imports:
     ExPosition,
-    TExPosition,
     InPosition,
     corrplot,
     ggplot2,
@@ -34,7 +35,6 @@ Imports:
     PTCA4CATA,
     data4PCCAR,
     dplyr,
-    kableExtra,
     tibble,
     tidyr
 Remotes:

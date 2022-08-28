@@ -27,7 +27,8 @@ Boot4Eigs(
 
 \item{CI.perc}{vector of the two levels of confidence for the left and right limits of the bootstrap confidence interval (default to \code{c(0.025, 0.0975)});}
 
-\item{suppressProgressBar}{whether to show a progress bar or not (default to FALSE).}
+\item{suppressProgressBar}{whether to show a progress bar or not
+(default to \code{TRUE}).}
 }
 \value{
 list containing four objects

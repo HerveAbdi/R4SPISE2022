@@ -121,8 +121,8 @@
 #' @importFrom ExPosition epPCA
 ##  @importFrom
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
-#' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
-#' @importFrom stats cor  cov varimax
+#' @importFrom grDevices colorRampPalette dev.off jpeg png recordPlot
+#' @importFrom stats cor cov varimax
 # function ----
 graph4epPCA <- function(
 data         ,# the data. No default
@@ -712,7 +712,36 @@ results <- list(results.stats = results.stats,
                 results.graphs = results.graphs,
                 description.graphs = description.graphs
                 )
-return(results)
+return.list <- structure(results, class = "graphList")
+return(return.list)
 # EOF ----
 }
+#*********************************************************************
+# ********************************************************************
+# ********************************************************************
+#' Change the print function for object of class save2pptx
+#'
+#'  Change the print function for objects of class \code{save2pptx}.
+#'
+#' @param x a list: object of class \code{save2pptx},
+#'   output of function: \code{saveGraph2pptx}.
+#' @param ... everything else for the function
+#' @author Herve Abdi
+#' @keywords internal
+#' @export
+print.graphList <- function (x, ...) {
+    ndash = 78 # How many dashes for separation lines
+    cat(rep("-", ndash), sep = "")
+    cat("\n List of Saved Graphics by functions of the OTA/TTA family  \n")
+    # cat("\n List name: ",deparse(eval(substitute(substitute(x)))),"\n")
+    cat(rep("-", ndash), sep = "")
+    cat("\nresults.stats     : ", "The results from the analysis with (T)ExPosition")
+    cat("\nresults.graphs    : ", "The list of the graphs")
+    cat("\ndescription.graphs: ", "The names of the graphs")
+    cat("\n                   ", "NB: To print a given graph use print(get())")
+    cat("\n",rep("-", ndash), sep = "")
+    cat("\n")
+    invisible(x)
+} # end of function print.graphList
+#_____________________________________________________________________
 

@@ -5,9 +5,9 @@
 \alias{OTAplot}
 \alias{OTAplotInference}
 \alias{graph4epPCA}
-\title{graph4epPCA run a PCA
-(with the \code{ExPosition} package)
-and generates the standard graphs and tables.
+\title{create the graphs for a PCA analysis
+from \code{ExPosition}
+and generate the standard graphs and tables.
 Note: \emph{Still Under Development}.}
 \usage{
 OTAplot(
@@ -73,7 +73,8 @@ graph4epPCA(
 )
 }
 \arguments{
-\item{resPCA}{Output from epPCA}
+\item{resPCA}{Output from
+\code{InPosition::epCA.inference.battery}}
 
 \item{data}{A data frame or a matrix with
 numerical data suitable for a PCA. Passed to
@@ -134,11 +135,14 @@ larger than average (when \code{scaled == 'SS1'}
 this is the familiar rule: "keep only
 the components with eigenvalue larger than 1").}
 
-\item{TI}{whether to plot the tolerance intervals or not. Default: FALSE}
+\item{TI}{whether to plot the tolerance intervals or not.
+Default: FALSE}
 
-\item{mean.cex}{the size of the dots of the means. Default: 3}
+\item{mean.cex}{the size of the dots of the means.
+Default: 3}
 
-\item{mean.textcex}{the size of the texts of the means. Default: 3}
+\item{mean.textcex}{the size of the texts of the means.
+Default: 3}
 
 \item{only.mean}{If TRUE, only the mean will be plotted,
 and the individual points will not be plotted. Default: FALSE}
@@ -147,12 +151,16 @@ and the individual points will not be plotted. Default: FALSE}
 This is used when you want to plot only the individual points along with the tolerance
 intervals. Default: FALSE}
 
-\item{mean.constraints}{A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
-The constraints of the figure that only includes the means. This constraints
-will be used if \code{only.mean = TRUE}. Default: NULL}
+\item{mean.constraints}{A list of the constraints
+(that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+The constraints of the figure that only includes the means.
+This constraints
+will be used if \code{only.mean = TRUE}. Default: \code{NULL}}
 
 \item{scale.mean.constraints}{A value used to scale the constraints (by multiplication).
-This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
+This function is used to adjust
+the constraints when the confidence
+or the tolerance intervals are outside of the figure.
 Default: 1.5}
 
 \item{save2pptx}{Default: ''
@@ -161,6 +169,15 @@ Not yet implemented,}
 \item{title4pptx}{PARAM_DESCRIPTION, Default:
 'PCA Results'.
 Not yet implemented,.}
+
+\item{niter.boot}{(default = 100)
+How many iteration for the
+bootstrap for the mean of the \code{DESIGN}
+variable.}
+
+\item{niter.perm}{(default = 100)
+How many iteration for the
+permutation test for the eigenvalues.}
 
 \item{scale}{scale (i.e., normalize) the
 columns of \code{data}.
@@ -188,29 +205,15 @@ A list made of two lists
 A list made of two lists
 }
 \description{
-\code{graph4epPCA}
-graph4epPCA run a principal component
-analysis
-(with the \code{ExPosition} package)
-and generates the standard graphs and tables.
-Note that the parameters
-\code{data, scale, center, DESIGN,
- make_design_nominal, k} are passed
-to  the \code{ExPosition} package unchanged
-except for \code{scale} which defaults now
-to \code{'SS1'}.
+\code{OTAPlot}
+creates the graphs for a PCA analysis
+from \code{ExPosition}.
+Note: \emph{Still Under Development}.
 
-\code{graph4epPCA}
-graph4epPCA run a principal component
-analysis
-(with the \code{ExPosition} package)
-and generates the standard graphs and tables.
-Note that the parameters
-\code{data, scale, center, DESIGN,
- make_design_nominal, k} are passed
-to  the \code{ExPosition} package unchanged
-except for \code{scale} which defaults now
-to \code{'SS1'}.
+\code{OTAplotInference}
+graph4epPCA  Create the inferential graphs from
+results of a PCA run with
+the package \code{InPosition}.
 
 \code{graph4epPCA}
 graph4epPCA run a principal component
@@ -258,8 +261,9 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[ExPosition]{epPCA}}
-\code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
+\code{\link[ExPosition]{epPCA}},
+\code{\link[PTCA4CATA]{PlotScree}},
+\code{\link[PTCA4CATA]{createFactorMap}}
 
 \code{\link[ExPosition]{epPCA}}, \code{\link[InPosition]{epPCA.inference.battery}}
 \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
@@ -268,5 +272,7 @@ if(interactive()){
 \code{\link[PTCA4CATA]{PlotScree}}, \code{\link[PTCA4CATA]{createFactorMap}}
 }
 \author{
+Herve Abdi
+
 Hervé Abdi
 }

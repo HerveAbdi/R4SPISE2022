@@ -18,6 +18,7 @@ PlotScreeWithCI(
   col.ns = "#006D2C",
   col.sig = "#54278F",
   title = "Explained Variance per Dimension",
+  xlab = "Dimensions",
   plotKaiser = FALSE,
   color4Kaiser = "darkorchid4",
   lwd4Kaiser = 2.5
@@ -67,6 +68,9 @@ Default is \code{'Violet'}.}
 default is
 \code{"Explained Variance per Dimension"}.}
 
+\item{xlab}{The names of the dimensions
+(default \code{'Dimensions'}).}
+
 \item{plotKaiser}{when \code{TRUE}
 plot a line corresponding to the average inertia
 (Kaiser criterion); do not plot when
@@ -79,9 +83,6 @@ line
 \item{lwd4Kaiser}{lwd value (i.e., width)
 for Kaiser's criterion line.
 (default is \code{'2.5'})}
-
-\item{xlab}{The names of the dimensions
-(default \code{'Dimensions '}).}
 }
 \description{
 \code{PlotScreeWithCI}: Plot the scree for the eigenvalues

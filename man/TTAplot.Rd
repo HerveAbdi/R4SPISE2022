@@ -38,13 +38,17 @@ TTAplot(
 
 \item{tab2}{the result of a two-table analysis;}
 
-\item{leDim}{vector containning the dimensions to be plotted;}
+\item{leDim}{vector containing the dimensions to be plotted;}
 
-\item{leDim4CirCor}{vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;}
+\item{leDim4CirCor}{vector containing the dimensions
+to be correlated with the latent variables
+for the circle of correlation plot;}
 
-\item{color.obs}{list containing the colors for the observations;}
+\item{color.obs}{list containing the colors
+for the observations;}
 
-\item{color.tab}{list containing the colors for the two-tables;}
+\item{color.tab}{list containing the colors
+for the two-tables;}
 
 \item{title.plot}{plot of the title;}
 
@@ -52,15 +56,22 @@ TTAplot(
 
 \item{DESIGN}{design for the observations;}
 
-\item{sigbar.p}{whether to plot only significant bars or not for the contribution plot of the first block (default to FALSE);}
+\item{sigbar.p}{whether to plot only significant bars
+or not for the contribution plot of the first block
+(default to \code{FALSE});}
 
-\item{sigbar.q}{whether to plot only significant bars or not for the contribution plot of the second block (default to FALSE);}
+\item{sigbar.q}{whether to plot only significant bars
+or not for the contribution plot of the second block
+(default to \code{FALSE});}
 
-\item{tab1.name}{the name of the first table (default to "1");}
+\item{tab1.name}{the name of the first table
+(default to "1");}
 
-\item{tab2.name}{the name of the second table (default to "2");}
+\item{tab2.name}{the name of the second table
+(default to "2");}
 
-\item{TI}{whether to plot toerance intervals (default to FALSE);}
+\item{TI}{whether to plot tolerance intervals
+(default to \code{FALSE});}
 
 \item{mean.cex}{size expansion for the mean symbols;}
 
@@ -68,17 +79,23 @@ TTAplot(
 
 \item{only.mean}{whether to plot only means;}
 
-\item{only.ind}{whether to plot only observations on the latent variable plot (default to FALSE);}
+\item{only.ind}{whether to plot only observations
+on the latent variable plot (default to FALSE);}
 
-\item{score.constraints}{constraints on the plot (use with care);}
+\item{score.constraints}{(default to \code{NULL})
+constraints on the plot
+(use with care);}
 
-\item{mean.constraints}{constraints on the plot (use with care);}
+\item{mean.constraints}{(default to \code{NULL}).
+constraints
+on the plot (use with care);}
 
 \item{scale.mean.constraints}{constraints on the plot (use with care).}
 
-\item{save2pptx}{Default: FALSE}
+\item{save2pptx}{Default: \code{FALSE}, when \code{TRUE}
+save the graphs in a PowerPoint file.}
 
-\item{title4pptx}{Title of the PPTX, Default: 'TTA Results'.}
+\item{title4pptx}{Title of the PPTX, Default: \code{"TTA Results"}.}
 }
 \value{
 a list of plots

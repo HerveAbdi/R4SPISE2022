@@ -6,55 +6,43 @@
 # Author Hervé
 # Entête -----
 # install.packages('sinew')
-# sinew::makeOxygen(graph4epPCA)
+# sinew::makeOxygen(OTA)
 # Preamble ----
 # Pass Results from Exposition
 # ExPosition
 #
 # Documentation -----
-#' @title graph4epPCA run a PCA
-#' (with the \code{ExPosition} package)
-#' and generates the standard graphs and tables.
+#' @title Create the inferential graphs from
+#' results of a PCA run with
+#' the package \code{InPosition}
 #' Note: *Still Under Development*.
-#' @description \code{graph4epPCA}
-#' graph4epPCA run a principal component
-#' analysis
-#' (with the \code{ExPosition} package)
-#' and generates the standard graphs and tables.
-#' Note that the parameters
-#' \code{data, scale, center, DESIGN,
-#'  make_design_nominal, k} are passed
-#'  to  the \code{ExPosition} package unchanged
-#'  except for \code{scale} which defaults now
-#'  to \code{'SS1'}.
-#' @param resPCA Output from epPCA
-#' @param data A data frame or a matrix with
-#' numerical data suitable for a PCA. Passed to
-#' \code{ExPosition::epPCA}.
-#' @param DESIGN  Default: NULL.
+#' @description \code{OTAplotInference}
+#' graph4epPCA  Create the inferential graphs from
+#' results of a PCA run with
+#' the package \code{InPosition}.
+#' @param resPCA Output from
+#' \code{InPosition::epCA.inference.battery}
+#' @param data The data frame used for the PCA.
+#' Note will be defunct in the next version.
+#' @param DESIGN  Default: \code{NULL}.
 #' A design vector (could be factor or character)
 #' or (Boolean) matrix used to assigne oobservations
 #' to groups.
-#' Passed to
-#' \code{ExPosition::epPCA}.
 #' @param make_design_nominal
 #' if TRUE (Default) transform
 #' the vector from \code{DESIGN} into
 #' a Boolean matrix.
-#' Passed to
-#' \code{ExPosition::epPCA}.
 #' @param k number
 #' of factor to keep; when equql to
 #' 0  (Default), all factors are kept.
-#' Passed to
-#' \code{ExPosition::epPCA}.
-#' @param graphs  do we want graphs?
+#' @param graphs  What graphs do we want?
 #' Current Default is \code{12} which indicates that
 #' the graphs are generated for the first
-#' 2 components. Note that current version
+#' 2 components.
+#' Note that current version
 #' is creating output only for the first two
 #' components,
-#' @param printGraphs  (Default: FALSE)
+#' @param printGraphs  (Default: \code{FALSE})
 #' do we want to print the graphics as \code{.png}?
 #' @param col4I  a color vector for
 #' plotting the observations (if \code{NULL}
@@ -82,6 +70,24 @@
 #'  from \code{InPosition}
 #'  Remains to be done,
 #'  Default is \code{FALSE}.
+#'  @param col4I a color-name or a vector color-names
+#'  (or correct dimensions) for the rows of the data
+#'  (i.e., the I-set).
+#'  @param col4J a color-name or a vector color-names
+#'  (or correct dimensions) for the columns of the data
+#'  (i.e., the J-set).
+#' @param biplot (default \code{FALSE}) do we want
+#' to compute and plot a biplot.
+#' @param rotation
+#' (default \code{FALSE}) do we want
+#' to compute and plot a rotation.
+#' @param niter.boot (default = 100)
+#' How many iteration for the
+#' bootstrap for the mean of the \code{DESIGN}
+#' variable.
+#' @param niter.perm (default = 100)
+#' How many iteration for the
+#' permutation test for the eigenvalues.
 #' @param save2pptx  Default: FALSE
 #' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.
@@ -109,8 +115,8 @@
 #' @importFrom InPosition epPCA.inference.battery
 ##  @importFrom PTCA4CATA PlotScree createFactorMap createxyLabels.gen
 #'
-#' @importFrom grDevices colorRampPalette  dev.off  jpeg png recordPlot
-#' @importFrom stats cor  cov varimax
+#' @importFrom grDevices colorRampPalette dev.off jpeg png recordPlot
+#' @importFrom stats cor cov varimax
 OTAplotInference <- function(
     resPCA,
     data,
