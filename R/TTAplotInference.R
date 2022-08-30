@@ -2,8 +2,12 @@
 #'
 #' @param res the result of a two-table analysis;
 #' @param method the method used; 'PLSC' or 'CCA' (default to 'PLSC');
-#' @param tab1 the result of a two-table analysis;
-#' @param tab2 the result of a two-table analysis;
+#' @param tab1 the first data table;
+#' @param tab2 the second data table;
+#' @param center1 how the variables in tab1 is centered (default to TRUE);
+#' @param scale1 how the variables in tab1 is centered (default to "ss1");
+#' @param center2 how the variables in tab1 is centered (default to TRUE);
+#' @param scale2 how the variables in tab1 is centered (default to "ss1");
 #' @param leDim vector containning the dimensions to be plotted;
 #' @param leDim4CirCor vector containning the dimensions to be correlated with the latent variables for the circle of correlation plot;
 #' @param color.obs list containing the colors for the observations;
@@ -40,6 +44,10 @@ TTAplotInference <- function(
         method = 'PLSC',
         tab1,
         tab2,
+        center1 = TRUE,
+        scale1 = "ss1",
+        center2 = TRUE,
+        scale2 = "ss1",
         leDim = c(1, 1),
         leDim4CirCor = c(1, 2),
         color.obs = NULL,
@@ -87,6 +95,10 @@ TTAplotInference <- function(
       resPerm <- data4PCCAR::perm4PLSC(
           tab1, # First Data matrix
           tab2, # Second Data matrix
+          center1 = center1,
+          scale1 = scale1,
+          center2 = center2,
+          scale2 = scale2,
           nIter = 1000,# How many iterations
           permType = 'byColumns'
       )
@@ -94,6 +106,10 @@ TTAplotInference <- function(
       resBoot <- data4PCCAR::Boot4PLSC(
           tab1, # First Data matrix
           tab2, # Second Data matrix
+          center1 = center1,
+          scale1 = scale1,
+          center2 = center2,
+          scale2 = scale2,
           nIter = 1000,# How many iterations
           Fi = res$TExPosition.Data$fi,
           Fj = res$TExPosition.Data$fj,

@@ -9,6 +9,10 @@ TTAplotInference(
   method = "PLSC",
   tab1,
   tab2,
+  center1 = TRUE,
+  scale1 = "ss1",
+  center2 = TRUE,
+  scale2 = "ss1",
   leDim = c(1, 1),
   leDim4CirCor = c(1, 2),
   color.obs = NULL,
@@ -37,9 +41,17 @@ TTAplotInference(
 
 \item{method}{the method used; 'PLSC' or 'CCA' (default to 'PLSC');}
 
-\item{tab1}{the result of a two-table analysis;}
+\item{tab1}{the first data table;}
 
-\item{tab2}{the result of a two-table analysis;}
+\item{tab2}{the second data table;}
+
+\item{center1}{how the variables in tab1 is centered (default to TRUE);}
+
+\item{scale1}{how the variables in tab1 is centered (default to "ss1");}
+
+\item{center2}{how the variables in tab1 is centered (default to TRUE);}
+
+\item{scale2}{how the variables in tab1 is centered (default to "ss1");}
 
 \item{leDim}{vector containning the dimensions to be plotted;}
 

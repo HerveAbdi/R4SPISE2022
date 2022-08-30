@@ -23,13 +23,18 @@ OTAplot(
   biplot = FALSE,
   rotation = FALSE,
   nfactor4rotation = "Kaiser",
-  TI = FALSE,
+  show.TI = FALSE,
+  show.CI = TRUE,
   mean.cex = 3,
   mean.textcex = 3,
-  only.mean = FALSE,
-  only.ind = FALSE,
+  display.labels.ind = FALSE,
+  display.labels.var = TRUE,
+  display.points.mean = TRUE,
   mean.constraints = NULL,
   scale.mean.constraints = 1.5,
+  max.n4bar = 40,
+  max.n4heat = 50,
+  title.size.heatmap = 20,
   save2pptx = FALSE,
   title4pptx = "PCA Results"
 )
@@ -135,33 +140,33 @@ larger than average (when \code{scaled == 'SS1'}
 this is the familiar rule: "keep only
 the components with eigenvalue larger than 1").}
 
-\item{TI}{whether to plot the tolerance intervals or not.
-Default: FALSE}
+\item{show.TI}{whether to plot the tolerance intervals or not. Default: FALSE}
 
-\item{mean.cex}{the size of the dots of the means.
-Default: 3}
+\item{show.CI}{whether to plot the confidence intervals or not. Default: TRUE}
 
-\item{mean.textcex}{the size of the texts of the means.
-Default: 3}
+\item{mean.cex}{the size of the dots of the means. Default: 3}
 
-\item{only.mean}{If TRUE, only the mean will be plotted,
-and the individual points will not be plotted. Default: FALSE}
+\item{mean.textcex}{the size of the texts of the means. Default: 3}
 
-\item{only.ind}{If TRUE, only the individual points will be plotted but not the means.
-This is used when you want to plot only the individual points along with the tolerance
-intervals. Default: FALSE}
+\item{display.labels.ind}{If TRUE, the labels of observations will be printed. Default: FALSE.}
 
-\item{mean.constraints}{A list of the constraints
-(that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
-The constraints of the figure that only includes the means.
-This constraints
-will be used if \code{only.mean = TRUE}. Default: \code{NULL}}
+\item{display.labels.var}{If TRUE, the labels of variables will be printed. Default: TRUE.}
+
+\item{display.points.mean}{If TRUE, the mean factor scores will be plotted. Default: TRUE.}
+
+\item{mean.constraints}{A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+The constraints of the figure that only includes the means. This constraints
+will be used if \code{only.mean = TRUE}. Default: NULL}
 
 \item{scale.mean.constraints}{A value used to scale the constraints (by multiplication).
-This function is used to adjust
-the constraints when the confidence
-or the tolerance intervals are outside of the figure.
+This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
 Default: 1.5}
+
+\item{max.n4bar}{When the number of bars exceed this value, the labels will be hidden. Default: 40.}
+
+\item{max.n4heat}{When the number of row/columns of a heatmap exceed this value, the labels will be hidden. Default: 50.}
+
+\item{title.size.heatmap}{the size of the title of the heatmaps. Default: 20.}
 
 \item{save2pptx}{Default: ''
 Not yet implemented,}

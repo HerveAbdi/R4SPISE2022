@@ -69,30 +69,23 @@
 #' larger than average (when \code{scaled == 'SS1'}
 #' this is the familiar rule: "keep only
 #' the components with eigenvalue larger than 1").
-#' @param TI whether to plot the tolerance intervals or not.
-#' Default: FALSE
-#' @param mean.cex the size of the dots of the means.
-#'  Default: 3
-#' @param mean.textcex the size of the texts of the means.
-#'  Default: 3
-#' @param only.mean If TRUE, only the mean will be plotted,
-#' and the individual points will not be plotted. Default: FALSE
-#' @param only.ind If TRUE, only the individual points will be plotted but not the means.
-#' This is used when you want to plot only the individual points along with the tolerance
-#' intervals. Default: FALSE
-#' @param mean.constraints A list of the constraints
-#' (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
-#' The constraints of the figure that only includes the means.
-#'  This constraints
-#' will be used if \code{only.mean = TRUE}. Default: \code{NULL}
-#' @param scale.mean.constraints
-#' A value used to scale the constraints (by multiplication).
-#' This function is used to adjust
-#'  the constraints when the confidence
-#'  or the tolerance intervals are outside of the figure.
+#' @param show.TI whether to plot the tolerance intervals or not. Default: FALSE
+#' @param show.CI whether to plot the confidence intervals or not. Default: TRUE
+#' @param mean.cex the size of the dots of the means. Default: 3
+#' @param mean.textcex the size of the texts of the means. Default: 3
+#' @param display.labels.ind If TRUE, the labels of observations will be printed. Default: FALSE.
+#' @param display.labels.var If TRUE, the labels of variables will be printed. Default: TRUE.
+#' @param display.points.mean If TRUE, the mean factor scores will be plotted. Default: TRUE.
+#' @param mean.constraints A list of the constraints (that include \code{minx}, \code{miny}, \code{maxx}, and \code{maxy})
+#' The constraints of the figure that only includes the means. This constraints
+#' will be used if \code{only.mean = TRUE}. Default: NULL
+#' @param scale.mean.constraints A value used to scale the constraints (by multiplication).
+#' This function is used to adjust the constraints when the confidence or the tolerance intervals are outside of the figure.
 #' Default: 1.5
-#' @param save2pptx  Default: FALSE, when TRUE
-#' save the graphs in a PowerPoint file
+#' @param max.n4bar When the number of bars exceed this value, the labels will be hidden. Default: 40.
+#' @param max.n4heat When the number of row/columns of a heatmap exceed this value, the labels will be hidden. Default: 50.
+#' @param title.size.heatmap the size of the title of the heatmaps. Default: 20.
+#' @param save2pptx  Default: FALSE
 #' @param title4pptx Title of the PPTX, Default:
 #' 'PCA Results'.
 #' @return A list made of two lists
@@ -136,13 +129,18 @@ OTAplot <- function(
         biplot   = FALSE,
         rotation = FALSE,
         nfactor4rotation = 'Kaiser',
-        TI = FALSE,
+        show.TI = FALSE,
+        show.CI = TRUE,
         mean.cex = 3,
         mean.textcex = 3,
-        only.mean = FALSE,
-        only.ind = FALSE,
+        display.labels.ind = FALSE,
+        display.labels.var = TRUE,
+        display.points.mean = TRUE,
         mean.constraints = NULL,
         scale.mean.constraints = 1.5,
+        max.n4bar = 40,
+        max.n4heat = 50,
+        title.size.heatmap = 20,
         save2pptx = FALSE,
         title4pptx = "PCA Results"
     ) { # title of pptx
@@ -255,6 +253,14 @@ OTAplot <- function(
         col.labels = col4I,
         font.face = 'italic'
     )
+    jolie.ggplot1.transparent <- PTCA4CATA::createFactorMap(
+        resPCA$ExPosition.Data$fi,
+        col.points = col4I,
+        col.labels = col4I,
+        display.labels = display.labels.ind,
+        alpha.points = 0.2,
+        font.face = 'italic'
+    )
     # Create the labels for Inertia per dimension
     label4Map <- PTCA4CATA::createxyLabels.gen(1,
                                     2,
@@ -347,22 +353,50 @@ OTAplot <- function(
                                         alpha.ellipse = 0.05,
                                         alpha.line = 0.3,
                                         p.level = .80)
-        if (!only.ind) {
-            if (TI) {
-                # lv.plot <- lv.plot$background + lv.TI + lv.CI + plot.lv.mean$zeMap_dots + plot.lv.mean$zeMap_text + theme(plot.margin = unit(c(1,1,1,1), "lines"))
-                a5.JolieggMap <- jolie.ggplot1$zeMap_background + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
-            } else {
-                a5.JolieggMap<- jolie.ggplot1$zeMap_background + label4Map2 + jolie.ggplot1$zeMap_dots + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
-            }
-            if (only.mean) {
-                a5.JolieggMap <- plot.fi.mean$zeMap_background + label4Map2 + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text + fi.CI
+        a5.JolieggMap <- jolie.ggplot1.transparent$zeMap + label4Map2 + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+
+        if (show.TI) {
+            a5.JolieggMap.Fi.TI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.TI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            a5.JolieggMap.Fimean.TI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.TI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            if (printGraphs) {
+                png('ObservationImapWithTI.png')
+                print(a5.JolieggMap.Fi.TI)
+                dev.off()
+
+                png('ObservationImapWithTI(MeansOnly).png')
+                print(a5.JolieggMap.Fimean.TI)
+                dev.off()
             }
         }
-        if (printGraphs) {
-            png('ObservationImapWithDesign.png')
-            print(a5.JolieggMap)
-            dev.off()
+        if (show.CI) {
+            a5.JolieggMap.Fi.CI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            a5.JolieggMap.Fimean.CI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            if (printGraphs) {
+                png('ObservationImapWithCI.png')
+                print(a5.JolieggMap.Fi.CI)
+                dev.off()
+
+                png('ObservationImapWithCI(MeansOnly).png')
+                print(a5.JolieggMap.Fimean.CI)
+                dev.off()
+            }
         }
+        if (show.TI == TRUE & show.CI == TRUE) {
+            a5.JolieggMap.Fi.CITI <- jolie.ggplot1.transparent$zeMap + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            a5.JolieggMap.Fimean.CITI <- jolie.ggplot1.transparent$zeMap_background + label4Map2 + fi.TI + fi.CI + plot.fi.mean$zeMap_dots + plot.fi.mean$zeMap_text
+            if (printGraphs) {
+                png('ObservationImapWithCITI.png')
+                print(a5.JolieggMap.Fi.CITI)
+                dev.off()
+
+                png('ObservationImapWithCITI(MeansOnly).png')
+                print(a5.JolieggMap.Fimean.CITI)
+                dev.off()
+            }
+        }
+
+
+
 
     }
 
@@ -370,14 +404,31 @@ OTAplot <- function(
     ### Contributions ----
     signed.ctrI <- resPCA$ExPosition.Data$ci *
         sign(resPCA$ExPosition.Data$fi)
+    if (!is.null(DESIGN)){
+        signed.ctrI <- signed.ctrI[order(DESIGN),]
+    }
     ### ctr4I -----
     leStem <-  'I-Set'
     nfac  <- 1
+    nind <- nrow(signed.ctrI)
+    if (nind < 10){
+        font.size.ctr <- 5
+    }else {
+        font.size.ctr = 5-(round((nind-10)/10)-1)
+    }
     ctrI1 <- plotCtr(signed.ctrI, col4I,
-                     nfac, stem = leStem)
+                     nfac, stem = leStem,
+                     font.size = font.size.ctr)
+
     nfac  <- 2
     ctrI2 <- plotCtr(signed.ctrI, col4I,
-                     nfac, stem = leStem)
+                     nfac, stem = leStem,
+                     font.size = font.size.ctr)
+
+    if (nind > max.n4bar){
+        ctrI1$layers[[3]] <- NULL
+        ctrI2$layers[[3]] <- NULL
+    }
     ### I-Cosines -----
     cos4I <- sqrt(resPCA$ExPosition.Data$ri) *
         sign(resPCA$ExPosition.Data$fi)
@@ -387,6 +438,7 @@ OTAplot <- function(
             cos4I,
             col.points = col4I,
             col.labels = col4I,
+            display.labels = display.labels.ind,
             constraints = list(
                 minx = -1,
                 miny = -1,
@@ -418,12 +470,16 @@ OTAplot <- function(
     #________________________________________________
     ### A heat map ----
     ####  V1a data raw ----
+    font.size.heatmap.x <- 14*(2/(ncol(data)))
+    font.size.heatmap.y <- 8*(20/(nrow(data)))
+
     a001.heatMap <- suppressWarnings(
         makeggHeatMap4CT(
             data,
-            colorProducts = col4I,
-            colorAttributes = col4J,
-            fontSize.x = 15,
+            colorProducts = c(col4I, col4I),
+            colorAttributes = c(col4J, col4J),
+            fontSize.x = font.size.heatmap.x,
+            fontSize.y = font.size.heatmap.y,
             face.x = 'bold',
             face.y = 'italic',
         )
@@ -432,8 +488,15 @@ OTAplot <- function(
         theme(plot.title = element_text(
             family = "Helvetica",
             face   = "bold",
-            size = (20)
+            size = title.size.heatmap
         ))
+    if (ncol(data) > max.n4heat){
+        a001.heatMap <- a001.heatMap + theme(axis.text.x = element_blank())
+    }
+    if (nrow(data) > max.n4heat) {
+        a001.heatMap <- a001.heatMap + theme(axis.text.y = element_blank())
+    }
+
     if (printGraphs) {
         png('JIntensityHeatMap.png')
         print(a001.heatMap)
@@ -450,7 +513,8 @@ OTAplot <- function(
             df.centered,
             colorProducts = col4I,
             colorAttributes = col4J,
-            fontSize.x = 15,
+            fontSize.x = font.size.heatmap.x,
+            fontSize.y = font.size.heatmap.y,
             face.x = 'bold',
             face.y = 'italic',
         )
@@ -459,8 +523,14 @@ OTAplot <- function(
         theme(plot.title = element_text(
             family = "Helvetica",
             face = "bold",
-            size = (20)
+            size = title.size.heatmap
         ))
+    if (ncol(data) > max.n4heat){
+        a002.heatMap <- a002.heatMap + theme(axis.text.x = element_blank())
+    }
+    if (nrow(data) > max.n4heat) {
+        a002.heatMap <- a002.heatMap + theme(axis.text.y = element_blank())
+    }
     if (printTest) {
         df.centered
     }
@@ -477,7 +547,8 @@ OTAplot <- function(
             df.normed,
             colorProducts = col4I,
             colorAttributes = col4J,
-            fontSize.x = 15,
+            fontSize.x = font.size.heatmap.x,
+            fontSize.y = font.size.heatmap.y,
             face.x = 'bold',
             face.y = 'italic',
         )
@@ -486,8 +557,14 @@ OTAplot <- function(
         theme(plot.title = element_text(
             family = "Helvetica",
             face = "bold",
-            size = (20)
+            size = title.size.heatmap
         ))
+    if (ncol(data) > max.n4heat){
+        a002n.heatMap <- a002n.heatMap + theme(axis.text.x = element_blank())
+    }
+    if (nrow(data) > max.n4heat) {
+        a002n.heatMap <- a002n.heatMap + theme(axis.text.y = element_blank())
+    }
     if (printTest) {
         a002n.heatMap
     }
@@ -521,6 +598,8 @@ OTAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
+        tl.cex = (10/ncol(Smat)),
+        number.font = (10/ncol(Smat)),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,
@@ -555,6 +634,8 @@ OTAplot <- function(
         addCoefasPercent	= TRUE,
         # Add coefficient of correlation
         tl.srt = 45,
+        tl.cex = (10/ncol(Rmat)),
+        number.font = (10/ncol(Rmat)),
         #Text label color and rotation
         # Combine with significance
         #p.mat = p.mat,
@@ -581,6 +662,7 @@ OTAplot <- function(
             t(loadings.2),
             col.points = col4J,
             col.labels = col4J,
+            display.labels = display.labels.var,
             constraints = list(
                 minx = -1,
                 miny = -1,
@@ -590,7 +672,7 @@ OTAplot <- function(
         )
     # draw the circle
     b1.jolieggMap.J <- jolie.ggplot.J$zeMap +
-        addCircleOfCor(color = "darkorchid4")
+        addCircleOfCor(color = "darkorchid4") + label4Map2
     if (printGraphs) {
         png('J-CircleOfCorr_noArrow.png')
         print(b1.jolieggMap.J)
@@ -613,7 +695,7 @@ OTAplot <- function(
     ## I & J Circle -----
     b2.jolieggMap.IJ <- b2.jolieggMap.J +
         jolie.ggplot.I$zeMap_text +
-        jolie.ggplot.I$zeMap_dots
+        jolie.ggplot.I$zeMap_dots + label4Map2
     #print(b2.jolieggMap.IJ)
     if (printGraphs) {
         png('IJ-CircleOfCorr.png')
@@ -624,19 +706,13 @@ OTAplot <- function(
     corJ_PC <- round(t(loadings.2 ^ 2), 2)
     colnames(corJ_PC) <-
         paste0('f', 1:ncol(corJ_PC))
+
     ### 2. Loadings as Q ----
-    #
     jolie.ggplot.J.Q <-
         PTCA4CATA::createFactorMap(
             loadings.3,
             col.points = col4J,
-            col.labels = col4J,
-            constraints = list(
-                minx = -1,
-                miny = -1,
-                maxx =  1,
-                maxy =  1
-            )
+            col.labels = col4J
         )
     arrows.Q <-
         addArrows(loadings.3, color = col4J)
@@ -659,6 +735,35 @@ OTAplot <- function(
         print(b3.jolieggMap.J.Q.arrow)
         dev.off()
     }
+    ### 3. Loadings as Fj ----
+    jolie.ggplot.J.fj <-
+        PTCA4CATA::createFactorMap(
+            loadings.1,
+            display.labels = display.labels.var,
+            col.points = col4J,
+            col.labels = col4J
+        )
+    arrows.fj <-
+        addArrows(loadings.1, color = col4J)
+    b3.jolieggMap.J.fj <-
+        jolie.ggplot.J.fj$zeMap +
+        #arrows.Q +
+        label4Map2
+    b3.jolieggMap.J.fj.arrow <-
+        jolie.ggplot.J.fj$zeMap +
+        arrows.fj +
+        label4Map2
+    # print(b3.jolieggMap.J.Q)
+    if (printGraphs) {
+        png('J-LoadingAsFj.png')
+        print(b3.jolieggMap.J.fj)
+        dev.off()
+    }
+    if (printGraphs) {
+        png('J-LoadingAsFjArrows.png')
+        print(b3.jolieggMap.J.fj.arrow)
+        dev.off()
+    }
     # Contributions ----
     signed.ctrJ <- resPCA$ExPosition.Data$cj *
         sign(resPCA$ExPosition.Data$fj)
@@ -667,11 +772,25 @@ OTAplot <- function(
     col4J.bar <- col4J
     #col4J.bar[3] <- '#2F7D1F'
     nfac  <- 1
+    nvar <- nrow(signed.ctrJ)
+    if (nvar < 10){
+        font.size.ctr <- 5
+    }else {
+        font.size.ctr = 5-(round((nvar-10)/10)-1)
+    }
+
     ctrJ1 <-
-        plotCtr(signed.ctrJ, col4J.bar, nfac)
+        plotCtr(signed.ctrJ, col4J.bar, nfac,
+                font.size = font.size.ctr)
     nfac  <- 2
     ctrJ2 <-
-        plotCtr(signed.ctrJ, col4J.bar, nfac)
+        plotCtr(signed.ctrJ, col4J.bar, nfac,
+                font.size = font.size.ctr)
+    if (nvar > max.n4bar){
+        ctrJ1$layers[[3]] <- NULL
+        ctrJ2$layers[[3]] <- NULL
+    }
+
 
     # ***Rotation Here ----
     if (isTRUE(rotation)) {
@@ -789,15 +908,14 @@ OTAplot <- function(
     ## graphs ----
     results.graphs <- list(
         # cor and cov mat here
-        rawData = a001.heatMap,
-        centeredData = a002.heatMap,
-        centeredScaledData = a002n.heatMap,
         covariance = a5.02.covMap,
         correlation = a5.02.correlationMap,
         scree = a01.leScree,
         ctrI.1 = ctrI1,
         ctrI.2 = ctrI2,
         factorScoresI12 = a4.JolieggMap.2,
+        factorScoresJ12 = b3.jolieggMap.J.fj,
+        factorScoresJ12.arrow = b3.jolieggMap.J.fj.arrow,
         cosineCircle4I12 = a02.jolieggMap.I,
         cosineCircleJ12  =  b1.jolieggMap.J,
         ctrJ.1 = ctrJ1,
@@ -809,29 +927,55 @@ OTAplot <- function(
         # biplot12 = e.JolieBiplot
     )
     description.graphs <- list(
-        rawData = "The Row Data (Heat Map)",
-        centeredData = "The Centered Data",
-        centeredScaledData = "The Centered and Normalized Data",
         covariance = "The Covariance Matrix Heat Map",
         correlation = "The Correlation Matrix Heat Map",
         scree = "The Eigenvalues Scree Plot",
         ctrI.1 = "Observations: Contributions Dimension 1",
         ctrI.2 = "Observations: Contributions Dimension 2",
         factorScoresI12 =  "Observations: Factor Scores 1*2",
+        factorScoresJ12 = "Variables: Loadings as Inertia 1*2",
+        factorScoresJ12.arrow = "Variables: Loadings as Inertia 1*2 (with arrows)",
         cosineCircle4I12 = "Observations: Cosine Circle 1*2",
         cosineCircleJ12  = "Variables: Correlation Circle 1*2",
         ctrJ.1 = "Variables: Contributions Dimension 1",
         ctrJ.2 = "Variables: Contributions Dimension 2",
         cosineCircleArrowJ12  =  "Variables: Correlation Circle 1*2 (with arrows)",
         cosineCircleArrowIJ12 = "Variables & Observations: Correlation Circle 1*2",
-        loadings12 = "Variables: Loadings as Inertia  1*2",
-        loadings12.arrow = "Variables: Loadings as Weights  1*2" #,
+        loadings12 = "Variables: Loadings as Weights  1*2",
+        loadings12.arrow = "Variables: Loadings as Weights  1*2 (with arrows)" #,
         # biplot12 = e.JolieBiplot
     )
+
+    if (ncol(data) < max.n4heat) {
+        results.graphs$rawData = a001.heatMap
+        results.graphs$centeredData = a002.heatMap
+        results.graphs$centeredScaledData = a002n.heatMap
+        description.graphs$rawData = "The Row Data (Heat Map)"
+        description.graphs$centeredData = "The Centered Data"
+        description.graphs$centeredScaledData = "The Centered and Normalized Data"
+    }
 
     if (!is.null(DESIGN)){
         results.graphs$factorScoresI12design = a5.JolieggMap
         description.graphs$factorScoresI12design = "Observations with design: Factor Scores 1*2"
+        if (show.TI) {
+            results.graphs$factorScoresI12design.TI = a5.JolieggMap.Fi.TI
+            results.graphs$meanfactorScoresI12design.TI = a5.JolieggMap.Fimean.TI
+            description.graphs$factorScoresI12design.TI = "Observations with tolerance intervals: Factor Scores 1*2"
+            description.graphs$meanfactorScoresI12design.TI = "Observations with tolerance intervals: Mean Factor Scores 1*2"
+        }
+        if (show.CI) {
+            results.graphs$factorScoresI12design.CI = a5.JolieggMap.Fi.CI
+            results.graphs$meanfactorScoresI12design.CI = a5.JolieggMap.Fimean.CI
+            description.graphs$factorScoresI12design.CI = "Observations with confidence intervals: Factor Scores 1*2"
+            description.graphs$meanfactorScoresI12design.CI = "Observations with confidence intervals: Mean Factor Scores 1*2"
+        }
+        if (show.TI == TRUE & show.CI == TRUE) {
+            results.graphs$factorScoresI12design.CITI = a5.JolieggMap.Fi.CITI
+            results.graphs$meanfactorScoresI12design.CITI = a5.JolieggMap.Fimean.CITI
+            description.graphs$factorScoresI12design.CITI = "Observations with CI and TI: Factor Scores 1*2"
+            description.graphs$meanfactorScoresI12design.CITI = "Observations with CI and TI: Mean Factor Scores 1*2"
+        }
     }
 
     ### graph biplots ----
@@ -856,7 +1000,7 @@ OTAplot <- function(
             titles4list2Save = description.graphs,
             file2Save.pptx = paste0(title4pptx, ".pptx"),
             title = title4pptx
-            )
+        )
     }
 
     return(results)
