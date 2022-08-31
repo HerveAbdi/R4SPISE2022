@@ -8,3 +8,5 @@
 ^\.DS_Store
 
 ^README\.Rmd$
+^doc$
+^Meta$

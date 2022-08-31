@@ -50,7 +50,7 @@ set.seed(564)
 The data for this example come from
 the package `data4PCCAR` (which is loaded
 with the present package).
-The following command get the data:
+The following commands get the data:
 
 ```{r beers, warning=FALSE, message=FALSE}
 
@@ -77,7 +77,18 @@ res.pca <- epPCA(beers,
                  graphs = FALSE) 
 ```
 
-The default of this function will center (to have means equal 0) and scale (to have the _standard deviations_ equal 1) all variables.
+By default, 
+this function will preprocess the variables in the darta set
+(i.e., the columns of the data table) 
+by 1) centering them (`option center = TRUE` 
+after pre-processing all variables 
+ have mean equals to  0) 
+ and 2)
+scaling them
+(`option scale = TRUE` 
+after pre-processing all variables 
+ have a sum of squares equals to  \eqn{N - 1},
+ \eqn{N} being the number of rows).
 
 ## Plot the results
 
