@@ -24,6 +24,18 @@ knitr::opts_chunk$set(
   fig.width = 7, 
   fig.height = 7
 )
+```
+
+
+In this vignette we show how
+to perform a principal component analysis
+
+## Load the libraries
+
+The following  code loads the libraries needed
+for the analysis:
+
+```{r loadlib, message = FALSE, warning = FALSE,error = FALSE}
 library(dplyr)
 library(ExPosition)
 library(knitr)
@@ -33,26 +45,30 @@ library(InPosition)
 set.seed(564)
 ```
 
-## Load the data and the packages
+## Load the data
 
-With the following command
+The data for this example come from
+the package `data4PCCAR` (which is loaded
+with the present package).
+The following command get the data:
 
 ```{r beers, warning=FALSE, message=FALSE}
+
 library(R4SPISE2022)
 data("sixBeers12Descriptors10Judges", package = "data4PCCAR")
 beers <- sixBeers12Descriptors10Judges$ratingsIntensity
 beerColors <- sixBeers12Descriptors10Judges$color4Products
 descColors <- sixBeers12Descriptors10Judges$color4Descriptors
 ```
-
- * `beers`: the ratings;
- * `beerColors`: colors for the beers;
- * `descColors`: colors for the descriptors.
+These data comprise three items
+ * `beers`: the ratings (a data frame with intensity ratings);
+ * `beerColors`: a vector with the names of the colors for the beers;
+ * `descColors`: a vector with the names of the colors for the descriptors.
 
 More information on the dataset is available on the corresponding vignette: `vignette("A1_DataBeers")`.
 
 
-## Do the Principal Component Analysis (PCA)
+## Run the Principal Component Analysis (PCA)
 
 ```{r epPCA}
 res.pca <- epPCA(beers, 
@@ -92,11 +108,16 @@ The scree plot shows the eigenvalues of each component. These eigenvalues give t
 res.plot.pca$results.graphs$scree
 ```
 
-According to an elbow test, there are 4 dimensions in this data.
+According to the elbow test, 
+there are four dimensions to keep for these data.
 
 ### Factor scores (rows)
 
-Here, the observation map shows how the observations (i.e., rows) are represented in the component space. If `center = TRUE` when running PCA, the origin should be at the center of all observations. (If it's not, something is off.)
+Here, the observation map shows how the observations (i.e., rows) are represented in the component space. 
+If `center = TRUE` when running a PCA
+with `epPCA`, the origin is at the center
+(i.e., is the average / barycenter)
+of all observations. (If it's not, something's wrong)
 
 ```{r factor scores}
 res.plot.pca$results.graphs$factorScoresI12
