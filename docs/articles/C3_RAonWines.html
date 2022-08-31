@@ -114,14 +114,14 @@ vignette: <code><a href="../articles/A3_DataWines.html">vignette("A3_DataWines")
 <h2 id="two-tables-with-descriptors-and-other-supplementary-information">Two tables with descriptors and other supplementary information<a class="anchor" aria-label="anchor" href="#two-tables-with-descriptors-and-other-supplementary-information"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">descr</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
-<span>    <span class="fu">select</span><span class="op">(</span><span class="va">origin</span>, <span class="va">color</span>, <span class="va">varietal</span><span class="op">)</span></span>
-<span><span class="va">suppl</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
-<span>    <span class="fu">select</span><span class="op">(</span><span class="va">Price</span><span class="op">)</span></span>
-<span><span class="va">chemi</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
-<span>    <span class="fu">select</span><span class="op">(</span><span class="va">Acidity</span>, <span class="va">Alcohol</span>, <span class="va">Sugar</span>, <span class="va">Tannin</span><span class="op">)</span></span>
-<span><span class="va">senso</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op">%&gt;%</span> </span>
-<span>    <span class="fu">select</span><span class="op">(</span><span class="va">fruity</span>, <span class="va">floral</span>, <span class="va">vegetal</span>, </span>
+<code class="sourceCode R"><span><span class="va">descr</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">color</span>, <span class="va">varietal</span><span class="op">)</span></span>
+<span><span class="va">suppl</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Price</span><span class="op">)</span></span>
+<span><span class="va">chemi</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Acidity</span>, <span class="va">Alcohol</span>, <span class="va">Sugar</span>, <span class="va">Tannin</span><span class="op">)</span></span>
+<span><span class="va">senso</span> <span class="op">&lt;-</span> <span class="va">winesOf3Colors</span><span class="op">$</span><span class="va">winesDescriptors</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">fruity</span>, <span class="va">floral</span>, <span class="va">vegetal</span>, </span>
 <span>           <span class="va">spicy</span>, <span class="va">woody</span>, <span class="va">sweet</span>, <span class="va">astringent</span>, </span>
 <span>           <span class="va">hedonic</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">

@@ -70,6 +70,10 @@
 <span>  method <span class="op">=</span> <span class="st">"PLSC"</span>,</span>
 <span>  <span class="va">tab1</span>,</span>
 <span>  <span class="va">tab2</span>,</span>
+<span>  center1 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scale1 <span class="op">=</span> <span class="st">"ss1"</span>,</span>
+<span>  center2 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scale2 <span class="op">=</span> <span class="st">"ss1"</span>,</span>
 <span>  leDim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  leDim4CirCor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  color.obs <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -90,7 +94,7 @@
 <span>  mean.constraints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale.mean.constraints <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  save2pptx <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  title4pptx <span class="op">=</span> <span class="st">"TTA Results"</span></span>
+<span>  title4pptx <span class="op">=</span> <span class="st">"TTA Inference Results"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,11 +109,27 @@
 
 
 <dt>tab1</dt>
-<dd><p>the result of a two-table analysis;</p></dd>
+<dd><p>the first data table;</p></dd>
 
 
 <dt>tab2</dt>
-<dd><p>the result of a two-table analysis;</p></dd>
+<dd><p>the second data table;</p></dd>
+
+
+<dt>center1</dt>
+<dd><p>how the variables in tab1 is centered (default to TRUE);</p></dd>
+
+
+<dt>scale1</dt>
+<dd><p>how the variables in tab1 is centered (default to "ss1");</p></dd>
+
+
+<dt>center2</dt>
+<dd><p>how the variables in tab1 is centered (default to TRUE);</p></dd>
+
+
+<dt>scale2</dt>
+<dd><p>how the variables in tab1 is centered (default to "ss1");</p></dd>
 
 
 <dt>leDim</dt>

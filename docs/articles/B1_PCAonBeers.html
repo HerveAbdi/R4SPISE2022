@@ -95,43 +95,60 @@ body {
   font-size: 14pt;
 }
 </style>
+<p>In this vignette we show how to perform a principal component
+analysis</p>
 <div class="section level2">
-<h2 id="load-the-data-and-the-packages">Load the data and the packages<a class="anchor" aria-label="anchor" href="#load-the-data-and-the-packages"></a>
+<h2 id="load-the-libraries">Load the libraries<a class="anchor" aria-label="anchor" href="#load-the-libraries"></a>
 </h2>
-<p>With the following command</p>
+<p>The following code loads the libraries needed for the analysis:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/HerveAbdi/R4SPISE2022" class="external-link">R4SPISE2022</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ExPosition</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/" class="external-link">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">InPosition</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">564</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load-the-data">Load the data<a class="anchor" aria-label="anchor" href="#load-the-data"></a>
+</h2>
+<p>The data for this example come from the package
+<code>data4PCCAR</code> (which is loaded with the present package). The
+following commands get the data:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/HerveAbdi/R4SPISE2022" class="external-link">R4SPISE2022</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sixBeers12Descriptors10Judges"</span>, package <span class="op">=</span> <span class="st">"data4PCCAR"</span><span class="op">)</span></span>
 <span><span class="va">beers</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">ratingsIntensity</span></span>
 <span><span class="va">beerColors</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">color4Products</span></span>
 <span><span class="va">descColors</span> <span class="op">&lt;-</span> <span class="va">sixBeers12Descriptors10Judges</span><span class="op">$</span><span class="va">color4Descriptors</span></span></code></pre></div>
-<ul>
-<li>
-<code>beers</code>: the ratings;</li>
-<li>
-<code>beerColors</code>: colors for the beers;</li>
-<li>
-<code>descColors</code>: colors for the descriptors.</li>
-</ul>
+<p>These data comprise three items * <code>beers</code>: the ratings (a
+data frame with intensity ratings); * <code>beerColors</code>: a vector
+with the names of the colors for the beers; * <code>descColors</code>: a
+vector with the names of the colors for the descriptors.</p>
 <p>More information on the dataset is available on the corresponding
 vignette: <code><a href="../articles/A1_DataBeers.html">vignette("A1_DataBeers")</a></code>.</p>
 </div>
 <div class="section level2">
-<h2 id="do-the-principal-component-analysis-pca">Do the Principal Component Analysis (PCA)<a class="anchor" aria-label="anchor" href="#do-the-principal-component-analysis-pca"></a>
+<h2 id="run-the-principal-component-analysis-pca">Run the Principal Component Analysis (PCA)<a class="anchor" aria-label="anchor" href="#run-the-principal-component-analysis-pca"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">beers</span>, </span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ExPosition/man/epPCA.html" class="external-link">epPCA</a></span><span class="op">(</span><span class="va">beers</span>, </span>
 <span>                 center <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Center the data</span></span>
 <span>                 scale <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># **Do not** scale the variables</span></span>
 <span>                 graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
-<p>The default of this function will center (to have means equal 0) and
-scale (to have the <em>standard deviations</em> equal 1) all
-variables.</p>
+<p>By default, this function will preprocess the variables in the darta
+set (i.e., the columns of the data table) by 1) centering them
+(<code>option center = TRUE</code> after pre-processing all variables
+have mean equals to 0) and 2) scaling them
+(<code>option scale = TRUE</code> after pre-processing all variables
+have a sum of squares equals to , being the number of rows).</p>
 </div>
 <div class="section level2">
 <h2 id="plot-the-results">Plot the results<a class="anchor" aria-label="anchor" href="#plot-the-results"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplot</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
 <span>    data <span class="op">=</span> <span class="va">beers</span></span>
@@ -154,7 +171,7 @@ titles in the PPTX file.</li>
 <p>We can check the data by plotting the correlation matrix between the
 variables. This correlation matrix is where the components are
 extracted.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">correlation</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/heatmat%20cor-1.svg" width="672"></p>
 </div>
@@ -167,19 +184,21 @@ dimension in the figure). In other words, the singular values, which are
 the square root of the eigenvalues, give the <em>standard
 deviations</em> of these components. The sum of the eigenvalues is equal
 to the total inertia of the data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/scree-1.svg" width="672"></p>
-<p>According to an elbow test, there are 4 dimensions in this data.</p>
+<p>According to the elbow test, there are four dimensions to keep for
+these data.</p>
 </div>
 <div class="section level3">
 <h3 id="factor-scores-rows">Factor scores (rows)<a class="anchor" aria-label="anchor" href="#factor-scores-rows"></a>
 </h3>
 <p>Here, the observation map shows how the observations (i.e., rows) are
 represented in the component space. If <code>center = TRUE</code> when
-running PCA, the origin should be at the center of all observations. (If
-it’s not, something is off.)</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+running a PCA with <code>epPCA</code>, the origin is at the center
+(i.e., is the average / barycenter) of all observations. (If it’s not,
+something’s wrong)</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">factorScoresI12</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/factor%20scores-1.svg" width="672"></p>
 <p>The result in this plot showed that the first dimension separates
@@ -203,7 +222,7 @@ this implication of correlation might only be true within the given
 dimensions. When a variable is far away from the circle, it is not fully
 explained by the dimensions, and other dimensions might be characterized
 by other pattern of relationship between this and other variables.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">cosineCircleArrowJ12</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/correlation%20circle-1.svg" width="672"></p>
 <p>This circle of correlation plot illustrates that Dimension 1 is
@@ -232,11 +251,11 @@ corresponding singular value; <span class="math inline">\(\mathbf{G} =
 P}\boldsymbol{\Delta}\mathbf{Q}^\top\)</span>). These column factor
 scores are stored as <code>fj</code> in the output of
 <code>epPCA</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplotInference</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
 <span>    data <span class="op">=</span> <span class="va">beers</span></span>
-<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="bootstrap-and-permutation-tests-on-the-eigenvalues">Bootstrap and permutation tests on the eigenvalues<a class="anchor" aria-label="anchor" href="#bootstrap-and-permutation-tests-on-the-eigenvalues"></a>
 </h3>
@@ -244,7 +263,7 @@ scores are stored as <code>fj</code> in the output of
 intervals of the percentage of variance explained by each eigenvalue. If
 an interval includes 0, the component explains reliably larger than 0%
 of the variance.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">scree</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/scree%20inference-1.svg" width="672"></p>
 <p>The bootstrap test identifies one significant dimension explains the
@@ -263,10 +282,10 @@ the bootstrapped sample of the <em>j</em>th column factor score and
 standard deviation of the factor score. A bootstrap ratio is equivalent
 to a <em>t</em>-statistics for the column factor score with the <span class="math inline">\(\mathrm{H}_0: g_j = 0\)</span>. The threshold is
 set to 2 to approximate the critical <em>t</em>-value of 1.96 at <span class="math inline">\(\alpha\)</span> = .05.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR1</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/bootstrap%20ratios%201-1.svg" width="672"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.plot.pca.inference</span><span class="op">$</span><span class="va">results.graphs</span><span class="op">$</span><span class="va">BR2</span></span></code></pre></div>
 <p><img src="B1_PCAonBeers_files/figure-html/bootstrap%20ratios%202-1.svg" width="672"></p>
 <p>The results show no significant factor scores for both dimensions

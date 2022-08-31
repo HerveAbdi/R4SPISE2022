@@ -120,7 +120,7 @@ vignette: <code><a href="../articles/A2_DataChewingGums.html">vignette("A2_DataC
 <h2 id="do-the-pca">Do the PCA<a class="anchor" aria-label="anchor" href="#do-the-pca"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu">epPCA</span><span class="op">(</span><span class="va">chgu</span>, </span>
+<code class="sourceCode R"><span><span class="va">res.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ExPosition/man/epPCA.html" class="external-link">epPCA</a></span><span class="op">(</span><span class="va">chgu</span>, </span>
 <span>                 center <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Center the data</span></span>
 <span>                 scale <span class="op">=</span> <span class="st">"ss1"</span>, <span class="co"># Scale the variables</span></span>
 <span>                 graphs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
@@ -137,7 +137,7 @@ of squares equal 1.</p>
 <code class="sourceCode R"><span><span class="va">res.plot.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph4epPCA.html">OTAplot</a></span><span class="op">(</span></span>
 <span>    resPCA <span class="op">=</span> <span class="va">res.pca</span>,</span>
 <span>    data <span class="op">=</span> <span class="va">chgu</span></span>
-<span>    <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <code>results.stats</code>: useful statistics after performing PCA,
