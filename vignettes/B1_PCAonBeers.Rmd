@@ -61,6 +61,7 @@ beerColors <- sixBeers12Descriptors10Judges$color4Products
 descColors <- sixBeers12Descriptors10Judges$color4Descriptors
 ```
 These data comprise three items
+
  * `beers`: the ratings (a data frame with intensity ratings);
  * `beerColors`: a vector with the names of the colors for the beers;
  * `descColors`: a vector with the names of the colors for the descriptors.
