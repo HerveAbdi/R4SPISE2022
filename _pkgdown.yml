@@ -2,10 +2,3 @@ url: https://herveabdi.github.io/R4SPISE2022/
 template:
   bootstrap: 5
 
-home:
-  links:
-  - text: External data sets
-    href: https://github.com/HerveAbdi/data4PCCAR
-
-
-
